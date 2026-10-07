@@ -1,0 +1,8 @@
+/* PDS Toast — transient inverse-surface notification with optional action buttons.
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+.pds-toasts{background-color:var(--pds-theme-color-background-raised-inverse);border-radius:var(--pds-global-border-radius-200);box-shadow:var(--pds-global-shadow-medium-bottom);padding-top:var(--pds-global-space-300);padding-right:var(--pds-global-space-200);padding-bottom:var(--pds-global-space-300);padding-left:var(--pds-global-space-300);min-width:var(--pds-global-size-width-2300);max-width:var(--pds-global-size-width-max-w-2200)}
+.pds-toasts__close{top:calc(-1 * var(--pds-global-space-100));position:relative}
+.pds-toasts__body{width:85%}
+.pds-toasts__footer{display:flex;width:auto;justify-content:flex-end}
+.pds-toasts__button{width:auto}
+.pds-toasts__button:focus-visible:not([disabled]){outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high-inverse);outline-offset:var(--pds-global-border-width-300)}

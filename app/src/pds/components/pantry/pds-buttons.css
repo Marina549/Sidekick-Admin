@@ -1,0 +1,58 @@
+/* PDS Button — ported from _buttons-pds.scss.
+   Markup: <button class="pds-btn pds-btn-size__large pds-btn-filled--primary">Label</button>
+   Hover/pressed states flatten the base colour over white at the theme opacity, matching the SCSS. */
+.pds-btn{display:inline-flex;align-items:center;justify-content:center;font-weight:600;border-radius:var(--pds-global-border-radius-1000);border:none;width:100%;min-width:auto;font-family:var(--pds-global-font-family-nunito-sans),sans-serif;transition:var(--pds-global-animation-duration-150);background:none}
+.pds-btn:focus-visible:not([disabled]){outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high);outline-offset:var(--pds-global-border-width-300)}
+.pds-btn:focus:not([disabled]){box-shadow:none}
+.pds-btn-wrapper{background-color:var(--pds-theme-color-background-baseline-inverse)}
+.pds-btn-label{color:var(--pds-theme-color-foreground-on-primary)!important}
+
+/* Source _buttons-pds.scss sets height + padding only — font size comes from the text-* utility
+   class on the button (pds-card.html swaps those on resize). Do not add font-size here. */
+.pds-btn-size__small{height:var(--pds-global-size-height-600);padding-left:var(--pds-global-space-300);padding-right:var(--pds-global-space-300)}
+.pds-btn-size__medium{height:var(--pds-global-size-height-800);padding-left:var(--pds-global-space-500);padding-right:var(--pds-global-space-500)}
+.pds-btn-size__large{height:var(--pds-global-size-height-900);padding-left:var(--pds-global-space-500);padding-right:var(--pds-global-space-500)}
+
+/* filled */
+.pds-btn-filled--primary{background-color:var(--pds-theme-color-background-primary);color:var(--pds-theme-color-foreground-on-primary)}
+.pds-btn-filled--primary:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-filled--primary:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-filled--primary:disabled{background-color:var(--pds-theme-color-background-disabled)}
+.pds-btn-filled--neutral{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);background-color:var(--pds-theme-color-background-baseline);color:var(--pds-theme-color-outline-neutral-high)}
+.pds-btn-filled--neutral:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-filled--neutral:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-filled--neutral:disabled{color:var(--pds-theme-color-foreground-on-primary);background-color:var(--pds-theme-color-background-disabled)}
+.pds-btn-filled--inverse-neutral{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-high-inverse);color:var(--pds-theme-color-foreground-neutral-high-inverse);background-color:var(--pds-theme-color-background-raised-inverse)}
+.pds-btn-filled--inverse-neutral:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-filled--inverse-neutral:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-filled--inverse-neutral:disabled{border-color:var(--pds-theme-color-outline-disabled);color:var(--pds-theme-color-foreground-disabled);background-color:var(--pds-theme-color-background-transparent)}
+
+/* outlined */
+.pds-btn-outlined--primary{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-background-primary);color:var(--pds-theme-color-background-primary);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-outlined--primary:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-outlined--primary:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-outlined--primary:disabled{color:var(--pds-theme-color-foreground-disabled);border-color:var(--pds-theme-color-outline-disabled)}
+.pds-btn-outlined--neutral{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-high);color:var(--pds-theme-color-outline-neutral-high);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-outlined--neutral:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-outlined--neutral:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-outlined--neutral:disabled{border-color:var(--pds-theme-color-outline-disabled);color:var(--pds-theme-color-foreground-disabled);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-outlined--inverse-neutral{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-high-inverse);color:var(--pds-theme-color-foreground-neutral-high-inverse);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-outlined--inverse-neutral:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-outlined--inverse-neutral:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-outlined--inverse-neutral:disabled{border-color:var(--pds-theme-color-outline-disabled);color:var(--pds-theme-color-foreground-disabled);background-color:var(--pds-theme-color-background-transparent)}
+
+/* subtle */
+.pds-btn-subtle--primary{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);color:var(--pds-theme-color-background-primary);background-color:var(--pds-theme-color-background-baseline)}
+.pds-btn-subtle--primary:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-subtle--primary:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-subtle--primary:disabled{color:var(--pds-theme-color-foreground-on-primary);background-color:var(--pds-theme-color-background-disabled)}
+
+/* transparent */
+.pds-btn-transparent--primary{color:var(--pds-theme-color-background-primary);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-transparent--primary:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-transparent--primary:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-background-primary) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-transparent--primary:disabled{color:var(--pds-theme-color-foreground-disabled)}
+.pds-btn-transparent--neutral{color:var(--pds-theme-color-outline-neutral-high);background-color:var(--pds-theme-color-background-transparent)}
+.pds-btn-transparent--neutral:hover:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-hover) * 100%),#fff);transition:var(--pds-global-animation-duration-150)}
+.pds-btn-transparent--neutral:active:not([disabled]){background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transition:var(--pds-global-animation-duration-100)}
+.pds-btn-transparent--neutral:disabled{color:var(--pds-theme-color-foreground-disabled);background-color:var(--pds-theme-color-background-transparent)}

@@ -1,0 +1,32 @@
+/* PDS Shadow Tokens */
+
+:root {
+  /* === ELEVATION SHADOWS === */
+  --pds-shadow-lowest: 0px 2px 6px 0px rgba(0,0,0,0.2);   /* lowest elevation */
+  --pds-shadow-low: 0px 2px 12px 0px rgba(0,0,0,0.2);     /* cards, dropdowns */
+  --pds-shadow-low-top: 0px -2px 12px 0px rgba(0,0,0,0.2); /* sheets from bottom */
+  --pds-shadow-medium: 0px 4px 16px 0px rgba(0,0,0,0.2);  /* modals, popovers */
+  --pds-shadow-high: 0px 8px 24px 0px rgba(0,0,0,0.2);    /* dialogs, overlays */
+  --pds-shadow-high-top: 0px -8px 24px 0px rgba(0,0,0,0.2);
+  --pds-shadow-high-left: -8px 0px 24px 0px rgba(0,0,0,0.2);
+  --pds-shadow-high-right: 8px 0px 24px 0px rgba(0,0,0,0.2);
+
+  /* === OPACITY SCALE === */
+  --pds-opacity-0: 0; /* @kind other */
+  --pds-opacity-hover: 0.2; /* @kind other */
+  --pds-opacity-pressed: 0.3; /* @kind other */
+  --pds-opacity-overlay-low: 0.3; /* @kind other */
+  --pds-opacity-disabled: 0.5; /* @kind other */
+  --pds-opacity-overlay-medium: 0.7; /* @kind other */
+  --pds-opacity-overlay-high: 0.8; /* @kind other */
+
+  /* === MOTION === */
+  --pds-easing-standard: cubic-bezier(0.4, 0.03, 0.3, 0.96); /* @kind other */
+  --pds-easing-decelerate: cubic-bezier(0.1, 0.8, 0.1, 1); /* @kind other */
+  --pds-easing-accelerate: cubic-bezier(0.7, 0, 0.7, 0.18); /* @kind other */
+  --pds-duration-100: 100ms; /* @kind other */
+  --pds-duration-150: 150ms; /* @kind other */
+  --pds-duration-200: 200ms; /* @kind other */
+  --pds-duration-300: 300ms; /* @kind other */
+  --pds-duration-400: 400ms; /* @kind other */
+}

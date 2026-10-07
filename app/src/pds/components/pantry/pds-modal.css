@@ -1,0 +1,30 @@
+/* PDS Modal — centred dialog and bottom sheet.
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+.pds-modal-size__large{max-width:var(--pds-global-size-width-max-w-2660);max-height:80vh;background-color:var(--pds-theme-color-background-baseline)}
+.pds-modal-size__medium{max-width:var(--pds-global-size-width-max-w-2300);max-height:80vh}
+.pds-modal-size__small{max-width:var(--pds-global-size-width-max-w-2200);max-height:80vh}
+.pds-modal-dialog{overflow:auto;cursor:pointer;border-radius:var(--pds-global-border-radius-400)}
+.pds-modal-content{border:var(--pds-global-border-width-0);width:100% !important}
+.pds-modal-header{padding-top:var(--pds-global-space-50);padding-right:var(--pds-global-space-50)}
+.pds-modal-header--large{padding-left:var(--pds-global-space-800)}
+.pds-modal-header--small{padding-left:var(--pds-global-space-600)}
+.pds-modal-header--sticky{position:sticky;top:var(--pds-global-space-0);background-color:inherit;z-index:1055}
+.pds-modal-header__close-btn{top:var(--pds-global-space-100);right:var(--pds-global-space-100);position:relative}
+.pds-modal-header__box{padding-right:var(--pds-global-space-600);width:100%}
+.pds-modal-body--large{padding-left:var(--pds-global-space-800);padding-right:var(--pds-global-space-800)}
+.pds-modal-body--small{padding-left:var(--pds-global-space-600);padding-right:var(--pds-global-space-600)}
+.pds-modal-footer{padding-top:var(--pds-global-space-300);padding-bottom:var(--pds-global-space-400)}
+.pds-modal-footer--large{padding-left:var(--pds-global-space-1000);padding-right:var(--pds-global-space-1000)}
+.pds-modal-footer--small{padding-left:var(--pds-global-space-600);padding-right:var(--pds-global-space-600);align-content:center}
+.pds-modal-footer--sticky{position:sticky;bottom:var(--pds-global-space-0);background-color:inherit;z-index:1055;background-color:var(--pds-theme-color-background-baseline)}
+.pds-modal-footer__button-box{width:100%;gap:var(--pds-global-space-400)}
+.pds-modal-footer__button{width:var(--pds-global-size-width-2000)}
+.pds-modal-footer__link:focus-visible:not([disabled]){outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high);outline-offset:var(--pds-global-border-width-300)}
+.pds-modal-footer__link:focus:not([disabled]){box-shadow:none}
+.modal.fade .modal-dialog.pds-modal-dialog{transform:translate3d(0, 100vh, 0)}
+.modal.show .modal-dialog.pds-modal-dialog{transform:translate3d(0, 0, 0)}
+::-webkit-scrollbar{width:var(--pds-global-space-50)}
+::-webkit-scrollbar-track{border-radius:var(--pds-global-border-radius-400);margin-top:var(--pds-global-space-1900);margin-bottom:var(--pds-global-space-1600)}
+::-webkit-scrollbar-thumb{background:var(--pds-theme-color-background-transparent)}
+.pds-modal--elevated{z-index:1060}
+.pds-modal--elevated.show{background-color:var(--pds-global-color-general-black-a50)}

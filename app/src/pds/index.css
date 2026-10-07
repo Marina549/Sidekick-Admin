@@ -1,0 +1,16 @@
+/* Pantry Design System — the subset Sidekick Admin uses (same files the design prototype linked).
+   Vendored from the Claude Design handoff bundle; don't edit these files by hand.
+   Local patch: pds-typography.css header comment reworded (an asterisk-slash in it ended the comment early). */
+@import './tokens/pds-global.css';
+@import './tokens/pds-themes.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+@import './components/pantry/pds-typography.css';
+@import './components/pantry/pds-icons.css';
+@import './components/pantry/pds-buttons.css';
+@import './components/pantry/pds-icon-buttons.css';
+@import './components/pantry/pds-toasts.css';
+@import './components/pantry/pds-modal.css';
+@import './components/pantry/pds-loading.css';
