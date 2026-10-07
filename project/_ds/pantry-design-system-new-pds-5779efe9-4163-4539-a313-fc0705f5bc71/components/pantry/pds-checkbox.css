@@ -1,0 +1,28 @@
+/* PDS Checkbox — ported from _checkbox-pds.scss.
+   Markup: <label class="pds-checkbox" for="id"><input type="checkbox" id="id">
+             <span class="pds-checkbox-checkmark"><span class="pds-svg-checkbox-checkmark"></span></span>
+             <span class="pds-checkbox-label">Label</span></label> */
+.pds-checkbox{display:flex;align-items:center;gap:var(--pds-global-space-200);cursor:pointer;user-select:none;width:fit-content}
+.pds-checkbox input[type="checkbox"]{appearance:none;-webkit-appearance:none;position:absolute;opacity:0;width:0;height:0;margin:0}
+.pds-checkbox-checkmark{display:inline-flex;align-items:center;justify-content:center;flex:none;height:var(--pds-global-size-height-400);width:var(--pds-global-size-width-400);border-radius:var(--pds-global-border-radius-100);border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high);background-color:var(--pds-theme-color-background-baseline)}
+.pds-checkbox-checkmark--error{background-color:var(--pds-theme-color-background-baseline);border-color:var(--pds-theme-color-outline-error)}
+.pds-checkbox-checkmark>.pds-svg-checkbox-checkmark,.pds-checkbox-checkmark>.pds-svg-checkbox-minus{visibility:hidden;background-color:var(--pds-theme-color-foreground-on-primary)}
+.pds-checkbox input[type="checkbox"]:checked~.pds-checkbox-checkmark>.pds-svg-checkbox-checkmark,.pds-checkbox input[type="checkbox"]:checked~.pds-checkbox-checkmark>.pds-svg-checkbox-minus{visibility:visible}
+.pds-checkbox-label{color:var(--pds-theme-color-foreground-neutral-high);font-weight:600}
+.pds-checkbox-label--error{color:var(--pds-theme-color-foreground-error)}
+.pds-checkbox input[type="checkbox"]:disabled~.pds-checkbox-checkmark{border-color:var(--pds-theme-color-outline-disabled)}
+.pds-checkbox input[type="checkbox"]:checked~.pds-checkbox-checkmark{background-color:var(--pds-theme-color-background-baseline-inverse)}
+.pds-checkbox input[type="checkbox"]:checked~.pds-checkbox-checkmark--error{background-color:var(--pds-theme-color-background-error-inverse)}
+.pds-checkbox input[type="checkbox"]:checked:disabled~.pds-checkbox-checkmark{background-color:var(--pds-theme-color-background-disabled);border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-disabled)}
+.pds-checkbox input[type="checkbox"]:checked:disabled~.pds-checkbox-label,.pds-checkbox input[type="checkbox"]:disabled~.pds-checkbox-label{color:var(--pds-theme-color-foreground-disabled)}
+.pds-checkbox input[type="checkbox"]:focus-visible~.pds-checkbox-checkmark,.pds-checkbox input[type="checkbox"]:focus-visible~.pds-checkbox-checkmark--error{outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high);outline-offset:var(--pds-global-space-50)}
+.pds-checkbox:hover input:checked~.pds-checkbox-checkmark{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}
+.pds-checkbox:hover input:checked~.pds-checkbox-checkmark--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}
+.pds-checkbox:active input:checked~.pds-checkbox-checkmark{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff)}
+.pds-checkbox:active input:checked~.pds-checkbox-checkmark--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff)}
+.pds-checkbox:hover input:not(:checked)~.pds-checkbox-checkmark{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-checkbox:hover input:not(:checked)~.pds-checkbox-checkmark--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-checkbox:active input:not(:checked)~.pds-checkbox-checkmark{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-checkbox:active input:not(:checked)~.pds-checkbox-checkmark--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-checkbox:hover input:not(:checked):disabled~.pds-checkbox-checkmark{background-color:var(--pds-theme-color-background-baseline)}
+.pds-checkbox:has(input[type="checkbox"]:disabled){cursor:default}

@@ -1,0 +1,17 @@
+/* PDS Animation Presets — shared enter/exit motion utilities.
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+@keyframes pds-slide-right{from{transform:translateX(0);opacity:var(--pds-global-opacity-1000)}
+to{transform:translateX(100%);opacity:var(--pds-global-opacity-0)}}
+.pds-slide--right{animation:pds-slide-right var(--pds-global-animation-duration-600) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y)) forwards}
+.pds-slide__ramp{width:100%}
+.pds-slide__container{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-medium);height:var(--pds-global-size-height-1500);width:100%;overflow-x:hidden}
+.pds-slide__container-content{width:var(--pds-global-size-width-2100);height:var(--pds-global-size-height-1100);background-color:var(--pds-theme-color-background-baseline-inverse)}
+@keyframes pds-enter-animation-down{from{opacity:var(--pds-global-opacity-0);transform:translateY(-20px)}
+to{opacity:var(--pds-global-opacity-1000);transform:translateY(0)}}
+@keyframes pds-exit-animation-up{from{opacity:var(--pds-global-opacity-1000);transform:translateY(0)}
+to{opacity:var(--pds-global-opacity-0);transform:translateY(-20px)}}
+.pds-enter-exit--effects--enter-down{animation:pds-enter-animation-down var(--pds-global-animation-duration-350) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y)) forwards}
+.pds-enter-exit--effects--exit-up{animation:pds-exit-animation-up var(--pds-global-animation-duration-250) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y)) forwards}
+.pds-enter-exit__ramp{width:100%}
+.pds-enter-exit__container{width:100%;overflow-x:hidden}
+.pds-enter-exit__container-content{width:100%;height:100%}

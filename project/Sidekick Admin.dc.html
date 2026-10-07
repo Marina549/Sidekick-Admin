@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>SideKick Admin</title>
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/pds-global.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/pds-themes.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-typography.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-icons.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-buttons.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-icon-buttons.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-toasts.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-modal.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-loading.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/styles.css">
+  <script src="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/_ds_bundle.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #FAF9F8; }
+    * { box-sizing: border-box; }
+    button, input, textarea, select { font-family: inherit; }
+    a { color: #004488; }
+    a:hover { color: #002D56; }
+    .pds-btn[class*="pds-btn-size__"] { padding-top: 3px; }
+    button[aria-controls]:focus-visible { outline: 2px solid #004488; outline-offset: 4px; }
+    @keyframes sk-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
+</helmet>
+<div data-theme="sutro" style="min-height: 100vh; display: flex; flex-direction: column; background: #FAF9F8; font-family: 'Nunito Sans', sans-serif; color: #1F1E1E;">
+
+  <header ref="{{ headerRef }}" style="position: sticky; top: 0; z-index: 30; height: 88px; flex-shrink: 0; display: flex; align-items: center; gap: 32px; padding: 0 32px; background: #FFFFFF; padding-left: 27px; padding-right: 27px">
+    <button type="button" onClick="{{ goHome }}" aria-label="SideKick Admin home" style="display: flex; align-items: center; gap: 0; border: none; background: transparent; padding: 0; cursor: pointer; font-size: 14px" style-focus="outline: 2px solid #004488; outline-offset: 4px; border-radius: 4px;">
+      <img src="assets/sidekick-logo-full.svg" alt="" width="181" height="32" style="display: block;">
+    </button>
+    <div style="flex: 1;"></div>
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <div data-pop="bell" style="position: relative;">
+        <button type="button" onClick="{{ toggleBell }}" aria-label="{{ bellLabel }}" aria-haspopup="true" aria-expanded="{{ bellOpen }}" style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: #1F1E1E;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
+          <img src="assets/icons/c/notification_outlined_24-dark.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0;">
+          <sc-if value="{{ showDot }}" hint-placeholder-val="{{ false }}">
+            <span aria-hidden="true" style="position: absolute; top: 6px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #B00000; box-shadow: 0 0 0 1px #FFFFFF;"></span>
+          </sc-if>
+        </button>
+        <sc-if value="{{ bellOpen }}" hint-placeholder-val="{{ false }}">
+          <div role="dialog" aria-label="Notifications" style="position: absolute; top: calc(100% + 16px); right: -8px; width: 384px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
+            <div style="padding: 16px 24px; border-bottom: 1px solid #E5E4E3; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #1F1E1E;">Notifications</div>
+            <sc-if value="{{ hasNotifs }}" hint-placeholder-val="{{ false }}">
+              <ul style="list-style: none; margin: 0; padding: 0; max-height: 400px; overflow: auto;">
+                <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="1">
+                  <li style="border-bottom: 1px solid #E5E4E3;">
+                    <button type="button" onClick="{{ n.open }}" style="display: flex; gap: 16px; align-items: flex-start; width: 100%; padding: 16px 24px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">
+                      <span aria-hidden="true" style="{{ n.dotStyle }}"></span>
+                      <span style="display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0;">
+                        <span style="font-size: 14px; line-height: 20px; color: #1F1E1E;"><strong>{{ n.by }}</strong> {{ n.verb }} <strong>{{ n.entity }}</strong> for review</span>
+                        <span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ n.meta }}</span>
+                      </span>
+                    </button>
+                  </li>
+                </sc-for>
+              </ul>
+            </sc-if>
+            <sc-if value="{{ noNotifs }}" hint-placeholder-val="{{ true }}">
+              <p style="margin: 0; padding: 24px; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ emptyNotifText }}</p>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      <span aria-hidden="true" style="width: 1px; height: 32px; background: #E5E4E3;"></span>
+      <div data-pop="user" style="position: relative;">
+        <button type="button" onClick="{{ toggleUser }}" aria-haspopup="menu" aria-expanded="{{ userOpen }}" aria-label="{{ userButtonLabel }}" style="display: flex; align-items: center; gap: 16px; border: none; background: transparent; padding: 0; cursor: pointer; border-radius: 24px;" style-focus="outline: 2px solid #004488; outline-offset: 4px;">
+          <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2px; color: #1F1E1E; white-space: nowrap;">{{ user.name }}</span>
+          <span style="width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 0 0 1px #6E6E6D; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span style="width: 40px; height: 40px; border-radius: 50%; background: #004D96; display: flex; align-items: center; justify-content: center; font-family: Poppins, sans-serif; font-weight: 500; font-size: 20px; line-height: 16px; color: #FFFFFF;">{{ user.initials }}</span>
+          </span>
+        </button>
+        <sc-if value="{{ userOpen }}" hint-placeholder-val="{{ false }}">
+          <div role="menu" aria-label="Switch user" style="position: absolute; top: calc(100% + 16px); right: 0; width: 304px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
+            <div style="padding: 16px 24px; border-bottom: 1px solid #E5E4E3; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #1F1E1E;">Switch user</div>
+            <sc-for list="{{ userOptions }}" as="u" hint-placeholder-count="2">
+              <button type="button" role="menuitemradio" aria-checked="{{ u.current }}" onClick="{{ u.pick }}" style="display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px 24px; border: none; background: transparent; text-align: left; cursor: pointer;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">
+                <span style="width: 32px; height: 32px; border-radius: 50%; background: #004D96; display: flex; align-items: center; justify-content: center; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; color: #FFFFFF; flex-shrink: 0;">{{ u.initials }}</span>
+                <span style="display: flex; flex-direction: column; flex: 1;">
+                  <span style="font-family: Poppins, sans-serif; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ u.name }}</span>
+                  <span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ u.role }}</span>
+                </span>
+                <sc-if value="{{ u.current }}" hint-placeholder-val="{{ false }}">
+                  <img src="assets/icons/c/checkmark_outlined_24-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;">
+                </sc-if>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <div style="flex: 1; display: flex; min-height: 0;">
+    <nav aria-label="Primary" style="{{ navStyle }}">
+      <div style="position: sticky; top: 120px; height: calc(100vh - 152px);">
+      <sc-if value="{{ navCollapsed }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 24px; height: 100%;">
+          <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="0">
+            <button type="button" onClick="{{ it.go }}" aria-label="{{ it.label }}" title="{{ it.label }}" aria-current="{{ it.current }}" aria-disabled="{{ it.disabled }}" style="{{ it.miniStyle }}" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+              <span aria-hidden="true" style="{{ it.iconStyle }}"></span>
+            </button>
+          </sc-for>
+          <div style="flex: 1;"></div>
+          <button type="button" onClick="{{ toggleNav }}" aria-label="Expand navigation" title="Expand navigation" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #1F1E1E;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+            <img src="assets/icons/fig/nav-arrow-right.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0;">
+          </button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ navExpanded }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 24px; height: 100%;">
+          <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="0">
+            <button type="button" onClick="{{ it.go }}" aria-current="{{ it.current }}" aria-disabled="{{ it.disabled }}" style="{{ it.fullStyle }}" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+              <span aria-hidden="true" style="{{ it.iconStyle }}"></span>
+              <span style="flex: 1; text-align: left; white-space: nowrap;">{{ it.label }}</span>
+              <sc-if value="{{ it.hasChevron }}" hint-placeholder-val="{{ false }}">
+                <img src="assets/icons/c/chevron_down_outlined_24-dark.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0; flex-shrink: 0;">
+              </sc-if>
+            </button>
+          </sc-for>
+          <div style="flex: 1;"></div>
+          <button type="button" onClick="{{ toggleNav }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; height: 40px; padding: 0 8px; border: none; background: transparent; border-radius: 4px; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #6E6E6D;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+            <img src="assets/icons/fig/nav-arrow-left.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0;">
+            <span>Collapse navigation</span>
+          </button>
+        </div>
+      </sc-if>
+      </div>
+    </nav>
+
+    <main style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <section data-screen-label="Home" style="display: flex; flex-direction: column; gap: 32px; padding: 32px 40px;">
+          <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #252733;">{{ greeting }}</h1>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+            <button type="button" onClick="{{ goDashboard }}" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border: none; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; cursor: pointer; text-align: center; overflow: hidden;" style-hover="box-shadow: inset 0 0 0 2px #004488;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+              <span style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0; width: 100%;">
+                <span aria-hidden="true" style="width: 124px; height: 124px; border-radius: 50%; background: url(assets/ill-entity-dashboard.png) 74.39% 50% / 133.065% 88.71% no-repeat, #DDEFFF;"></span>
+              </span>
+              <span style="display: flex; flex-direction: column; gap: 8px; padding: 0 24px;">
+                <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #1A1A1A;">Entity Dashboard</span>
+                <span style="font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1A1A1A; text-wrap: pretty;">Add, organize and edit the entities available in Sidekick.</span>
+              </span>
+            </button>
+            <div aria-disabled="true" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
+              <div style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0;">
+                <img src="assets/ill-trace-tool.png" alt="" width="124" height="124" style="display: block; object-fit: cover;">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; padding: 0 24px;">
+                <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #1F1E1E;">Trace Tool</span>
+                <span style="font-size: 16px; line-height: 24px; color: #1A1A1A; text-wrap: pretty;">Trace how Sidekick reached an answer, step by step.</span>
+              </div>
+            </div>
+            <div aria-disabled="true" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
+              <div style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0;">
+                <img src="assets/ill-evaluation.png" alt="" width="124" height="124" style="display: block; object-fit: cover;">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; padding: 0 24px;">
+                <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #1F1E1E;">Evaluation</span>
+                <span style="font-size: 16px; line-height: 24px; color: #1A1A1A; text-wrap: pretty;">Check Sidekick's answers against your evals.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="Entity dashboard" style="display: flex; flex-direction: column; gap: 60px; padding: 40px 32px 64px;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <nav aria-label="Breadcrumb">
+              <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="2">
+                  <li style="display: flex; align-items: center; gap: 16px;">
+                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
+                  </li>
+                </sc-for>
+              </ol>
+            </nav>
+            <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; justify-content: normal; align-items: normal;">
+              <div style="display: flex; align-items: center; gap: 16px; min-width: 0;">
+                <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #0F1D28;">Entity dashboard</h1>
+                <img src="assets/ill-entity-dashboard.png" alt="" width="144" height="76" style="display: block; object-fit: cover; object-position: 0% 50%;">
+              </div>
+              
+            </div>
+          </div>
+
+          
+
+          <sc-if value="{{ showQueue }}" hint-placeholder-val="{{ false }}">
+            <section aria-label="Waiting on your approval" style="display: flex; flex-direction: column; gap: 16px; padding: 24px 32px; border-radius: 8px; background: #FDF3D9; border: 1px solid #F8B775;">
+              <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">{{ queueTitle }}</h2>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <sc-for list="{{ queue }}" as="qi" hint-placeholder-count="1">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 16px 24px; border-radius: 8px; background: #FFFFFF;">
+                    <div style="display: flex; flex-direction: column; min-width: 0;">
+                      <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #1F1E1E;">{{ qi.name }}</span>
+                      <span style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ qi.meta }}</span>
+                    </div>
+                    <button type="button" onClick="{{ qi.open }}" aria-label="{{ qi.label }}" style="border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">Review</button>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+          </sc-if>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: 8px; background: #FFFFFF">
+            <div role="search" style="display: flex; align-items: center; justify-content: flex-start; gap: 24px; flex-wrap: wrap">
+              
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; width: 100%; padding-bottom: 52px; box-sizing: border-box">
+                <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 32px; color: #262524; width: 100%">Entities</h2>
+                <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" onClick="{{ startNew }}" hint-size="200px,48px" style="width: 240px">{{ createLabel }}</x-import>
+              </div></div>
+
+            <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+              <div style="display: block; gap: 16px; flex-wrap: wrap; flex: 0 1 auto; align-items: flex-start; flex-direction: row">
+                <label style="position: relative; flex: 1 1 320px; min-width: 240px; max-width: 400px; display: block;">
+                  <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search entities</span>
+                  
+                </label>
+                <div style="box-sizing: border-box; display: flex; flex-direction: row; gap: 16px; align-items: center; flex-wrap: nowrap; justify-content: flex-end; position: static; align-self: auto; width: 100%; padding-bottom: 16px">
+                  <input type="search" value="{{ search }}" onChange="{{ onSearch }}" placeholder="Search entities by name or description" style="width: 100%; height: 40px; padding: 0 16px; border: 1px solid #7D7C7C; border-radius: 8px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;"><dc-import name="Select" size="small" value="{{ fCat }}" options="{{ catFilterOpts }}" onChange="{{ setFCat }}" accessible-label="Filter by category" style="width: 160px;" hint-size="160px,40px"></dc-import>
+                  <dc-import name="Select" size="small" value="{{ fStatus }}" options="{{ statusFilterOpts }}" onChange="{{ setFStatus }}" accessible-label="Filter by status" style="width: 176px;" hint-size="176px,40px"></dc-import>
+                  <dc-import name="Select" size="small" value="{{ fSrc }}" options="{{ srcFilterOpts }}" onChange="{{ setFSrc }}" accessible-label="Filter by source" style="width: 144px;" hint-size="144px,40px"></dc-import>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 32px;">
+                <sc-for list="{{ groups }}" as="grp" hint-placeholder-count="2">
+                  <section aria-label="{{ grp.name }}" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <h3 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 400; font-size: 12px; line-height: 24px; color: #1F1E1E">{{ grp.name }}</h3>
+                      
+                    </div>
+                    <div role="table" aria-label="{{ grp.tableLabel }}" style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
+                      <div role="row" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) 56px 56px minmax(136px, 1.25fr) minmax(0, 1fr) 112px; column-gap: 16px; align-items: center; min-height: 48px; padding: 8px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE;">
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Entity</span>
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Source</span>
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Tables</span>
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Fields</span>
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Status</span>
+                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Last updated</span>
+                        <span role="columnheader" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Actions</span>
+                      </div>
+                      <sc-for list="{{ grp.rows }}" as="row" hint-placeholder-count="2">
+                        <div role="rowgroup" style="{{ row.wrapStyle }}">
+                          <div role="row" onClick="{{ row.toggle }}" style="{{ row.headStyle }}" style-hover="background: #EBF3F9;">
+                            <div role="cell" style="display: flex; flex-direction: column; gap: 0; min-width: 0;">
+                              <button type="button" onClick="{{ row.toggle }}" aria-expanded="{{ row.open }}" aria-label="{{ row.toggleLabel }}" style="align-self: flex-start; border: none; background: transparent; padding: 0; cursor: pointer; text-align: left; font-family: Poppins, sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #1F1E1E" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ row.name }}</button>
+                              <sc-if value="{{ row.showDesc }}" hint-placeholder-val="{{ true }}"><span style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ row.desc }}</span></sc-if>
+                            </div>
+                            <span role="cell" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere">{{ row.source }}</span>
+                            <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.tableCount }}</span>
+                            <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.fieldCount }}</span>
+                            <div role="cell" style="display: flex; min-width: 0;">
+                              <sc-if value="{{ row.tagButton }}" hint-placeholder-val="{{ false }}">
+                                <button type="button" onClick="{{ row.openReview }}" title="Review submission" aria-label="{{ row.reviewLabel }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 32px; max-width: 100%; padding: 4px 16px; border-radius: 4px; background: #FDF3D9; border: 1px solid #F8B775; font-family: 'Nunito Sans', sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #906700; text-align: left; cursor: pointer;" style-hover="background: #FBE7B5;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ row.tagText }}</button>
+                              </sc-if>
+                              <sc-if value="{{ row.tagStatic }}" hint-placeholder-val="{{ true }}">
+                                <span style="{{ row.tagStyle }}">{{ row.tagText }}</span>
+                              </sc-if>
+                            </div>
+                            <span role="cell" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.updated }}</span>
+                            <div role="cell" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                              <button type="button" onClick="{{ row.edit }}" aria-label="{{ row.editLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><img src="assets/icons/c/edit_outlined_16-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"><span style="font-size: 14px">{{ row.editText }}</span></button>
+                              <button type="button" onClick="{{ row.toggle }}" aria-expanded="{{ row.open }}" aria-label="{{ row.chevLabel }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
+                                <img src="assets/icons/c/chevron_down_outlined_24-dark.svg" alt="" aria-hidden="true" width="24" height="24" style="{{ row.chevronStyle }}">
+                              </button>
+                            </div>
+                          </div>
+                          <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                            <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px 24px 24px; background: #FFFFFF;">
+                              <sc-if value="{{ row.comment }}" hint-placeholder-val="{{ false }}">
+                                <div role="note" style="padding: 16px; margin-bottom: 8px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3;">
+                                  <span style="font-size: 14px; line-height: 24px; color: #1F1E1E;"><strong>{{ row.commentBy }} requested changes:</strong> {{ row.comment }}</span>
+                                </div>
+                              </sc-if>
+                              <h4 style="margin: 0; padding-bottom: 8px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Schema annotation</h4>
+                              <sc-if value="{{ row.hasTables }}" hint-placeholder-val="{{ true }}">
+                                <dc-import name="SchemaTable" tables="{{ row.tables }}" editable="{{ false }}" hint-size="100%,240px"></dc-import>
+                              </sc-if>
+                              <sc-if value="{{ row.noTables }}" hint-placeholder-val="{{ false }}">
+                                <span style="font-size: 14px; line-height: 20px; color: #4B4B49;">No tables mapped yet. Edit the draft to add them.</span>
+                              </sc-if>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </section>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+              <div role="status" style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 64px 24px; text-align: center;">
+                <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">No entities match that search</span>
+                <span style="font-size: 16px; line-height: 24px; color: #4B4B49;">Try another name or description, or clear your filters.</span>
+                <button type="button" onClick="{{ clearFilters }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488; text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">Clear search and filters</button>
+              </div>
+            </sc-if>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ isFlow }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="{{ flowLabel }}" style="flex: 1; display: flex; flex-direction: column;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 40px; padding: 40px 32px 40px;">
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+            <nav aria-label="Breadcrumb">
+              <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
+                  <li style="display: flex; align-items: center; gap: 16px;">
+                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
+                  </li>
+                </sc-for>
+              </ol>
+            </nav>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #0F1D28;">{{ flowTitle }}</h1>
+                <img src="assets/ill-entity-dashboard.png" alt="" width="144" height="76" style="display: block; object-fit: cover; object-position: 0% 50%;">
+              </div>
+              <sc-if value="{{ flowSubtitle }}" hint-placeholder-val="{{ false }}">
+                <p style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #4B4B49;">{{ flowSubtitle }}</p>
+              </sc-if>
+            </div>
+            </div>
+
+            <sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
+              <ol aria-label="Progress" style="list-style: none; margin: 0 auto; padding: 0 0 32px; display: flex; align-items: center; width: 400px; max-width: 100%;">
+                <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+                  <li style="{{ st.liStyle }}">
+                    <sc-if value="{{ st.hasLine }}" hint-placeholder-val="{{ false }}">
+                      <span aria-hidden="true" style="{{ st.lineStyle }}"></span>
+                    </sc-if>
+                    <button type="button" onClick="{{ st.go }}" disabled="{{ st.locked }}" aria-current="{{ st.ariaCurrent }}" aria-label="{{ st.aria }}" style="{{ st.circleStyle }}" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                      <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}">
+                        <img src="assets/icons/c/checkmark_outlined_24-white.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;">
+                      </sc-if>
+                      <sc-if value="{{ st.showNum }}" hint-placeholder-val="{{ true }}">
+                        <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 12px; line-height: 16px;">{{ st.num }}</span>
+                      </sc-if>
+                      <span style="position: absolute; top: 32px; left: 50%; transform: translateX(-50%); font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #4B4B49; white-space: nowrap;">{{ st.label }}</span>
+                    </button>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+
+            <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
+              <div style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
+                <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">Data &amp; schema</h2>
+                <sc-if value="{{ form.comment }}" hint-placeholder-val="{{ false }}">
+                  <div role="note" style="display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3;">
+                    <img src="assets/icons/c/info_outlined_24-red.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0; flex-shrink: 0;">
+                    <span style="font-size: 14px; line-height: 24px; color: #1F1E1E;"><strong>{{ form.commentBy }} requested changes:</strong> {{ form.comment }}</span>
+                  </div>
+                </sc-if>
+                <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start;">
+                  <div style="flex: 1 1 560px; display: flex; flex-direction: column; gap: 24px; min-width: 0;">
+                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px;">
+                      <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label for="sel-category" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Category</label>
+                        <dc-import name="Select" id="sel-category" value="{{ form.category }}" placeholder="Select Category" options="{{ categoryOpts }}" onChange="{{ setCategory }}" disabled="{{ categoryDisabled }}" accessible-label="Category" style="width: 100%;" hint-size="100%,48px"></dc-import>
+                      </div>
+                      <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label for="sel-entity" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Entity</label>
+                        <dc-import name="Select" id="sel-entity" value="{{ form.entity }}" placeholder="{{ entityPlaceholder }}" options="{{ entityOpts }}" onChange="{{ setEntity }}" disabled="{{ entityDisabled }}" accessible-label="Entity" style="width: 100%;" hint-size="100%,48px"></dc-import>
+                      </div>
+                      <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label for="sel-source" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Data source</label>
+                        <dc-import name="Select" id="sel-source" value="{{ form.source }}" placeholder="Select data source" options="{{ sourceOpts }}" onChange="{{ setSource }}" accessible-label="Data source" style="width: 100%;" hint-size="100%,48px"></dc-import>
+                      </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <span id="tables-label" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Tables</span>
+                      <div role="list" aria-labelledby="tables-label" onDragOver="{{ onTableDragOver }}" onDragLeave="{{ onTableDragLeave }}" onDrop="{{ onTableDrop }}" style="{{ dropStyle }}">
+                        <sc-for list="{{ formTables }}" as="tb" hint-placeholder-count="0">
+                          <div role="listitem" style="display: flex; align-items: center; gap: 8px; width: 200px; height: 40px; padding: 0 8px 0 16px; border-radius: 8px; background: #FFFFFF;">
+                            <img src="assets/icons/c/drag_handle_outlined_24-grey.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0; flex-shrink: 0;">
+                            <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 24px; color: #1F1E1E;">{{ tb.name }}</span>
+                            <button type="button" onClick="{{ tb.remove }}" aria-label="{{ tb.removeLabel }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
+                              <img src="assets/icons/c/close_outlined_24-grey.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;">
+                            </button>
+                          </div>
+                        </sc-for>
+                        <span style="{{ dropHintStyle }}">Drag tables from the panel on the right</span>
+                      </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Schema annotation</span>
+                      <dc-import name="SchemaTable" tables="{{ formTablesRaw }}" editable="{{ true }}" onChange="{{ onSchemaChange }}" empty-title="No tables mapped yet" empty-text="Description will auto populate as you select a table" hint-size="100%,320px"></dc-import>
+                    </div>
+                  </div>
+                  <aside aria-label="Data sources" style="flex: 0 0 264px; background: #FAF9F8; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px; min-height: 496px;">
+                    <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; justify-content: normal; align-items: normal"><span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Data sources</span><span style="font-size: 14px; line-height: 20px; color: #4B4B49;">No data sources selected</span></div>
+                    <sc-if value="{{ noSource }}" hint-placeholder-val="{{ true }}">
+                      
+                    </sc-if>
+                    <sc-if value="{{ hasSource }}" hint-placeholder-val="{{ false }}">
+                      <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ form.source }}</span>
+                        <div role="list" style="display: flex; flex-direction: column; gap: 8px;">
+                          <sc-for list="{{ sourceTables }}" as="sv" hint-placeholder-count="5">
+                            <button type="button" role="listitem" draggable="{{ sv.draggable }}" onDragStart="{{ sv.dragStart }}" onDragEnd="{{ sv.dragEnd }}" onClick="{{ sv.add }}" aria-disabled="{{ sv.added }}" aria-label="{{ sv.aria }}" style="{{ sv.style }}" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                              <img src="assets/icons/c/drag_handle_outlined_24-grey.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0; flex-shrink: 0;">
+                              <span style="flex: 1; text-align: left; font-size: 14px; line-height: 24px; color: #1F1E1E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ sv.name }}</span>
+                            </button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </aside>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isFiles }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 32px;">
+                <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap;">
+                  <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1 1 400px;">
+                    <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">Prompts &amp; evals</h2>
+                    <p style="margin: 0; font-size: 14px; line-height: 20px; color: #4B4B49; text-wrap: pretty;">Add files to each category. Drag them onto a category or browse. Up to 10 MB per file.</p>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                    <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ filesStatus }}</span>
+                  </div>
+                </div>
+                <input ref="{{ fileInputRef }}" type="file" multiple="" onChange="{{ onFilePicked }}" aria-label="Upload files" tabindex="-1" style="display: none;">
+                <sc-for list="{{ cats }}" as="ct" hint-placeholder-count="5">
+                  <section id="{{ ct.panelKey }}" aria-labelledby="{{ ct.headId }}" onDragOver="{{ ct.dragOver }}" onDragLeave="{{ ct.dragLeave }}" onDrop="{{ ct.drop }}" style="{{ ct.panelStyle }}">
+                    <h3 style="margin: 0 0 16px;">
+                      <button id="{{ ct.headId }}" type="button" onClick="{{ ct.toggle }}" aria-expanded="{{ ct.open }}" aria-controls="{{ ct.bodyId }}" style="display: flex; align-items: center; gap: 16px; width: 100%; padding: 0; border: none; border-radius: 4px; background: transparent; text-align: left; cursor: pointer; outline: none;">
+                        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;">
+                          <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #262524;">{{ ct.title }}</span>
+                          <span style="font-family: 'Nunito Sans', sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ ct.desc }}</span>
+                        </span>
+                        <span style="{{ ct.countStyle }}">{{ ct.countText }}</span>
+                        <span aria-hidden="true" style="{{ ct.chevStyle }}"></span>
+                      </button>
+                    </h3>
+                    <sc-if value="{{ ct.open }}" hint-placeholder-val="{{ true }}">
+                      <div id="{{ ct.bodyId }}" style="{{ ct.bodyStyle }}">
+                        <sc-if value="{{ ct.hasFiles }}" hint-placeholder-val="{{ false }}">
+                          <div role="table" aria-label="{{ ct.tableLabel }}" style="display: flex; flex-direction: column; gap: 4px;">
+                            <div role="row" style="display: grid; grid-template-columns: minmax(160px, 1fr) 72px 176px 104px; column-gap: 16px; align-items: center; padding: 0 16px 4px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 12px; line-height: 16px; color: #6E6E6D;">
+                              <span role="columnheader">File name</span>
+                              <span role="columnheader">Size</span>
+                              <span role="columnheader">Uploaded</span>
+                              <span role="columnheader" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">Actions</span>
+                            </div>
+                            <sc-for list="{{ ct.files }}" as="f" hint-placeholder-count="0">
+                              <div role="row" style="{{ f.rowStyle }}" style-hover="background: #FAF9F8;">
+                                <div role="cell" style="display: flex; align-items: center; gap: 16px; min-width: 0;">
+                                  <span aria-hidden="true" style="{{ f.tileStyle }}"></span>
+                                  <span style="display: flex; flex-direction: column; min-width: 0;">
+                                    <span title="{{ f.name }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ f.name }}</span>
+                                    <sc-if value="{{ f.showSub }}" hint-placeholder-val="{{ false }}">
+                                      <span style="display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; color: #4B4B49;">
+                                        <span aria-hidden="true" style="display: block; width: 12px; height: 12px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M43.7362%207.42789C44.6045%208.11062%2044.7549%209.36799%2044.0722%2010.2363L19.6972%2041.2363C19.3513%2041.6763%2018.8368%2041.9511%2018.2788%2041.9942C17.7207%2042.0372%2017.1702%2041.8444%2016.7609%2041.4627L2.13591%2027.8227C1.32813%2027.0693%201.28403%2025.8038%202.0374%2024.996C2.79077%2024.1882%204.05633%2024.1441%204.86411%2024.8975L17.8978%2037.0533L40.9278%207.76388C41.6105%206.89558%2042.8679%206.74515%2043.7362%207.42789Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span>
+                                        Uploaded
+                                      </span>
+                                    </sc-if>
+                                  </span>
+                                </div>
+                                <sc-if value="{{ f.isDone }}" hint-placeholder-val="{{ true }}">
+                                  <div role="cell" style="font-size: 14px; line-height: 20px; color: #4B4B49; white-space: nowrap;">{{ f.sizeText }}</div>
+                                  <div role="cell" style="min-width: 0; display: flex; flex-direction: column;">
+                                    <span style="font-size: 14px; line-height: 20px; color: #1F1E1E; white-space: nowrap;">{{ f.dateText }}</span>
+                                    <span title="{{ f.by }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: #6E6E6D;">by {{ f.by }}</span>
+                                  </div>
+                                </sc-if>
+                                <sc-if value="{{ f.isUploading }}" hint-placeholder-val="{{ false }}">
+                                  <div role="cell" style="grid-column: span 2; display: flex; align-items: center; gap: 16px; min-width: 0;">
+                                    <div style="flex: 1; min-width: 0;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.ProgressBar" value="{{ f.progress }}" size="small" aria-label="{{ f.progressLabel }}" hint-size="100%,8px"></x-import></div>
+                                    <span style="width: 40px; text-align: right; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ f.progressText }}</span>
+                                  </div>
+                                </sc-if>
+                                <div role="cell" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
+                                  <sc-if value="{{ f.isDone }}" hint-placeholder-val="{{ true }}">
+                                    <button type="button" onClick="{{ f.preview }}" aria-label="{{ f.previewLabel }}" title="Preview" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                    <button type="button" onClick="{{ f.download }}" aria-label="{{ f.downloadLabel }}" title="Download" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                    <button type="button" onClick="{{ f.remove }}" aria-label="{{ f.removeLabel }}" title="Remove" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #B00000;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M19.5944%2017.0854C20.4228%2017.0854%2021.0944%2017.757%2021.0944%2018.5854V35.1193C21.0944%2035.9477%2020.4228%2036.6193%2019.5944%2036.6193C18.766%2036.6193%2018.0944%2035.9477%2018.0944%2035.1193V18.5854C18.0944%2017.757%2018.766%2017.0854%2019.5944%2017.0854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M30.1573%2018.5854C30.1573%2017.757%2029.4857%2017.0854%2028.6573%2017.0854C27.8289%2017.0854%2027.1573%2017.757%2027.1573%2018.5854V35.1193C27.1573%2035.9477%2027.8289%2036.6193%2028.6573%2036.6193C29.4857%2036.6193%2030.1573%2035.9477%2030.1573%2035.1193V18.5854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.75%207.125V10.125H6C5.17157%2010.125%204.5%2010.7966%204.5%2011.625C4.5%2012.4534%205.17157%2013.125%206%2013.125H9V38.625C9%2041.3174%2011.1826%2043.5%2013.875%2043.5H34.125C36.8174%2043.5%2039%2041.3174%2039%2038.625V13.125H42C42.8284%2013.125%2043.5%2012.4534%2043.5%2011.625C43.5%2010.7966%2042.8284%2010.125%2042%2010.125H32.25V7.125C32.25%205.67525%2031.0747%204.5%2029.625%204.5H18.375C16.9253%204.5%2015.75%205.67525%2015.75%207.125ZM29.25%2010.125V7.5H18.75V10.125H29.25ZM36%2013.125H12V38.625C12%2039.6605%2012.8395%2040.5%2013.875%2040.5H34.125C35.1605%2040.5%2036%2039.6605%2036%2038.625V13.125Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                  </sc-if>
+                                  <sc-if value="{{ f.isUploading }}" hint-placeholder-val="{{ false }}">
+                                    <button type="button" onClick="{{ f.cancel }}" aria-label="{{ f.cancelLabel }}" title="Cancel upload" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #1F1E1E;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M41.4142%2038.5856C42.1953%2039.3666%2042.1953%2040.6329%2041.4142%2041.414C40.6332%2042.195%2039.3668%2042.195%2038.5858%2041.414L24.0001%2026.8283L9.41421%2041.4142C8.63316%2042.1952%207.36684%2042.1952%206.58579%2041.4142C5.80474%2040.6331%205.80474%2039.3668%206.58579%2038.5857L21.1717%2023.9999L6.58602%209.41421C5.80497%208.63317%205.80497%207.36683%206.58602%206.58579C7.36707%205.80474%208.6334%205.80474%209.41444%206.58579L24.0001%2021.1714L38.5856%206.58597C39.3666%205.80492%2040.6329%205.80492%2041.414%206.58597C42.195%207.36702%2042.195%208.63335%2041.414%209.4144L26.8285%2023.9999L41.4142%2038.5856Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                  </sc-if>
+                                </div>
+                              </div>
+                            </sc-for>
+                          </div>
+                          <sc-if value="{{ ct.hasMore }}" hint-placeholder-val="{{ false }}">
+                            <button type="button" onClick="{{ ct.toggleMore }}" style="align-self: flex-start; border: none; background: transparent; padding: 4px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 14px; line-height: 20px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ ct.moreLabel }}</button>
+                          </sc-if>
+                        </sc-if>
+                        <div style="{{ ct.zoneStyle }}">
+                          <span aria-hidden="true" style="{{ ct.zoneIconWrap }}"><span style="{{ ct.zoneIcon }}"></span></span>
+                          <span style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ ct.zoneTitle }}</span>
+                            <span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ ct.zoneHint }}</span>
+                          </span>
+                          <div style="display: flex; width: 128px; flex-shrink: 0;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-s-sb" aria-label="{{ ct.browseLabel }}" onClick="{{ ct.browse }}" hint-size="128px,32px">Browse files</x-import></div>
+                        </div>
+                        <sc-if value="{{ ct.hasErrors }}" hint-placeholder-val="{{ false }}">
+                          <div role="alert" style="display: flex; flex-direction: column; gap: 8px;">
+                            <sc-for list="{{ ct.errors }}" as="er" hint-placeholder-count="0">
+                              <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 20px; color: #B00000;">
+                                <span aria-hidden="true" style="{{ ct.errIcon }}"></span>
+                                <span style="flex: 1; min-width: 0; overflow-wrap: anywhere;"><strong>{{ er.name }}</strong> couldn’t be uploaded. {{ er.msg }}</span>
+                                <button type="button" onClick="{{ er.dismiss }}" aria-label="{{ er.dismissLabel }}" title="Dismiss" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #B00000;" style-hover="background: #FDECEC;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="{{ ct.closeIcon }}"></span></button>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </sc-if>
+                  </section>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isSummary }}" hint-placeholder-val="{{ false }}">
+              <div style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
+                <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">{{ summaryHeading }}</h2>
+                <sc-if value="{{ reviewNote }}" hint-placeholder-val="{{ false }}">
+                  <div role="note" style="display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 8px; background: #EBF3F9; border: 1px solid #A4C9E2;">
+                    <img src="assets/icons/c/info_outlined_24-blue.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0; flex-shrink: 0;">
+                    <span style="font-size: 14px; line-height: 24px; color: #1F1E1E;">{{ reviewNote }}</span>
+                  </div>
+                </sc-if>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    <h3 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #262524">Data &amp; schema</h3>
+                    <sc-if value="{{ showEditLinks }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" onClick="{{ goStep1 }}" aria-label="Edit data and schema" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                        <img src="assets/icons/c/edit_outlined_24-blue.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0; width: 20px; height: 20px">
+                        <span style="font-size: 14px">Edit</span>
+                      </button>
+                    </sc-if>
+                  </div>
+                  <div style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
+                    <div style="display: flex; align-items: center; gap: 64px; padding: 16px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE; flex-wrap: wrap;">
+                      <span style="flex: 1 1 240px; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 30px; color: #000000">{{ sum.name }}</span>
+                      <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">Category: {{ sum.category }}</span>
+                      <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">{{ sum.tablesText }}</span>
+                      <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">{{ sum.fieldsText }}</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 16px; padding: 16px 24px 24px; background: #FFFFFF;">
+                      <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Schema annotation</span>
+                      <dc-import name="SchemaTable" tables="{{ sum.tables }}" editable="{{ false }}" hint-size="100%,320px"></dc-import>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    <h3 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #262524">Prompts &amp; evals</h3>
+                    <sc-if value="{{ showEditLinks }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" onClick="{{ goStep2 }}" aria-label="Edit prompts and evals" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                        <img src="assets/icons/c/edit_outlined_24-blue.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0; width: 20px; height: 20px">
+                        <span style="font-size: 14px">Edit</span>
+                      </button>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ sumMissing }}" hint-placeholder-val="{{ false }}">
+                    
+                  </sc-if>
+                  <div style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
+                    <div role="list" style="display: flex; flex-direction: column; padding: 0 24px 8px; background: #FFFFFF;">
+                    <sc-for list="{{ sumCats }}" as="sc" hint-placeholder-count="5">
+                      <div role="listitem" style="{{ sc.rowStyle }}">
+                        <div style="flex: 0 0 200px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                          <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">{{ sc.title }}</span>
+                          <span style="{{ sc.pillStyle }}">{{ sc.countText }}</span>
+                        </div>
+                        <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column;">
+                          <sc-if value="{{ sc.hasFiles }}" hint-placeholder-val="{{ false }}">
+                            <div role="list" aria-label="{{ sc.listLabel }}" style="display: flex; flex-direction: column;">
+                              <sc-for list="{{ sc.files }}" as="sf" hint-placeholder-count="0">
+                                <div role="listitem" style="{{ sf.rowStyle }}">
+                                  <span aria-hidden="true" style="{{ sf.tileStyle }}"></span>
+                                  <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                                    <span title="{{ sf.name }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ sf.name }}</span>
+                                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ sf.metaText }}</span>
+                                  </span>
+                                  <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                                    <button type="button" onClick="{{ sf.preview }}" aria-label="{{ sf.previewLabel }}" title="Preview" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #FFFFFF; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                    <button type="button" onClick="{{ sf.download }}" aria-label="{{ sf.downloadLabel }}" title="Download" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #FFFFFF; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                  </div>
+                                </div>
+                              </sc-for>
+                            </div>
+                            <sc-if value="{{ sc.hasMore }}" hint-placeholder-val="{{ false }}">
+                              <button type="button" onClick="{{ sc.toggleMore }}" style="align-self: flex-start; border: none; background: transparent; padding: 4px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 14px; line-height: 20px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ sc.moreLabel }}</button>
+                            </sc-if>
+                          </sc-if>
+                          <sc-if value="{{ sc.noFiles }}" hint-placeholder-val="{{ false }}">
+                            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; min-height: 40px;">
+                              <span style="display: flex; align-items: center; gap: 8px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">
+                                <span aria-hidden="true" style="{{ sumIcon }}"></span>
+                                No files added
+                              </span>
+                              <sc-if value="{{ sc.canAdd }}" hint-placeholder-val="{{ false }}">
+                                
+                              </sc-if>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 24px 32px; background: #FFFFFF; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+              <sc-if value="{{ false }}" hint-placeholder-val="{{ false }}">
+                <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ footerHint }}</span>
+              </sc-if>
+              <sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" hint-size="144px,48px">{{ nextLabel }}</x-import></div>
+              </sc-if>
+              <sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 16px;">
+                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ backToDashboard }}" hint-size="144px,48px">Cancel</x-import></div>
+                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="144px,48px">Save</x-import></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ showDecision }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 16px;">
+                  <div style="display: flex; min-width: 184px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ openChanges }}" hint-size="184px,48px">Request changes</x-import></div>
+                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ approving }}" onClick="{{ approve }}" hint-size="144px,48px">{{ approveLabel }}</x-import></div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="Submitted for review" style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 40px 32px 48px; text-align: center;">
+          <nav aria-label="Breadcrumb" style="align-self: stretch;">
+            <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
+                <li style="display: flex; align-items: center; gap: 16px;">
+                  <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                  <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                  <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
+                </li>
+              </sc-for>
+            </ol>
+          </nav>
+          <img src="assets/ill-submitted.png" alt="" width="144" height="144" style="display: block; border-radius: 50%; object-fit: cover;">
+          <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 700; font-size: 32px; line-height: 48px; color: #262524;">Submitted for review</h1>
+          <p style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 30px; color: #1F1E1E;">We will notify you when it will be reviewed and published.</p>
+          <div style="display: flex; gap: 16px; padding-top: 32px; flex-wrap: wrap; justify-content: center;">
+            <div style="display: flex; min-width: 200px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ goDashboard }}" hint-size="200px,48px">Back to Dashboard</x-import></div>
+            <div style="display: flex; min-width: 200px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" onClick="{{ startFresh }}" hint-size="200px,48px">Add another entity</x-import></div>
+          </div>
+        </section>
+      </sc-if>
+    </main>
+  </div>
+
+  <sc-if value="{{ previewOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="large" dc-props="{{ modalLarge }}" hint-size="100%,100%">
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">{{ previewTitle }}</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ closePreview }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+          <sc-if value="{{ previewMeta }}" hint-placeholder-val="{{ false }}">
+            <p style="margin: -8px 0 0; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ previewMeta }}</p>
+          </sc-if>
+          <sc-if value="{{ previewPdf }}" hint-placeholder-val="{{ false }}">
+            <iframe src="{{ previewUrl }}" title="{{ previewTitle }}" style="width: 100%; height: 480px; border: 1px solid #E5E4E3; border-radius: 8px;"></iframe>
+          </sc-if>
+          <sc-if value="{{ previewText }}" hint-placeholder-val="{{ false }}">
+            <pre style="margin: 0; max-height: 480px; overflow: auto; padding: 24px; background: #FAF9F8; border-radius: 8px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E; white-space: pre-wrap;">{{ previewText }}</pre>
+          </sc-if>
+          <sc-if value="{{ previewNone }}" hint-placeholder-val="{{ false }}">
+            <p style="margin: 0; font-size: 16px; line-height: 24px; color: #4B4B49;">{{ previewNone }}</p>
+          </sc-if>
+          <div style="display: flex; justify-content: flex-end; gap: 16px;">
+            <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ previewDownload }}" hint-size="144px,40px">Download</x-import></div>
+            <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ closePreview }}" hint-size="120px,40px">Close</x-import></div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ removeOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="medium" dc-props="{{ modalRemove }}" hint-size="100%,100%">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">Remove this file?</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ cancelRemove }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;"><strong>{{ removeName }}</strong> will be permanently removed from <strong>{{ removeCat }}</strong>. This can’t be undone.</p>
+            <div style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ cancelRemove }}" hint-size="120px,40px">Cancel</x-import></div>
+              <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ confirmRemove }}" hint-size="144px,40px">Remove file</x-import></div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ changesOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="medium" dc-props="{{ modalMedium }}" hint-size="100%,100%">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">Request changes</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ closeChanges }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E;">Tell {{ changesSubmitter }} what to fix in <strong>{{ changesEntity }}</strong>. It stays unpublished until it's resubmitted and approved.</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label for="changes-comment" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Comment</label>
+            <textarea id="changes-comment" value="{{ changesText }}" onChange="{{ onChangesText }}" autoFocus="{{ true }}" rows="4" aria-invalid="{{ changesInvalid }}" aria-describedby="changes-help" placeholder="e.g. Add a description for on_time_flag that explains the stage-by window" style="{{ changesStyle }}"></textarea>
+            <span id="changes-help" style="{{ changesHelpStyle }}">{{ changesHelp }}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 16px;">
+            <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ closeChanges }}" hint-size="120px,40px">Cancel</x-import></div>
+            <div style="display: flex; min-width: 184px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ sendChanges }}" hint-size="184px,40px">Request changes</x-import></div>
+          </div>
+        </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="status" aria-live="polite" style="position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px);">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Toast" tone="{{ toastTone }}" message="{{ toastMessage }}" actions="{{ toastActions }}" dismissible="{{ true }}" onDismiss="{{ dismissToast }}" hint-size="400px,64px"></x-import>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;grouping&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;category&quot;,&quot;none&quot;],&quot;default&quot;:&quot;category&quot;,&quot;tsType&quot;:&quot;'category'|'none'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;approvalQueue&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Approval&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Prompts &amp; evals&quot;,&quot;Review &amp; submit&quot;,&quot;Home&quot;],&quot;default&quot;:&quot;Prompts &amp; evals&quot;,&quot;tsType&quot;:&quot;'Prompts &amp; evals'|'Review &amp; submit'|'Home'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;sampleFiles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+const USERS = {
+  priya: { id: 'priya', name: 'Priya Sethi', first: 'Priya', initials: 'PS', canApprove: false, role: 'Can submit' },
+  gary: { id: 'gary', name: 'Gary Spark', first: 'Gary', initials: 'GS', canApprove: true, role: 'Can submit and approve' }
+};
+const CATEGORIES = ['OTT', 'COE', 'Flash availability', 'OTH'];
+const ENTITY_OPTIONS = {
+  'OTT': ['On-time tilling', 'Stage-by compliance', 'Tilling exceptions', 'Late order recovery'],
+  'COE': ['Store COE score', 'Pick rate by store', 'Substitution acceptance'],
+  'Flash availability': ['Flash item availability', 'Out-of-stock alerts'],
+  'OTH': ['Handoff wait time', 'Curbside arrivals']
+};
+const SOURCES = {
+  'Pulse': ['ott_orders', 'ott_oss_Entitys', 'coe-daily', 'fa-flash', 'oth_summary'],
+  'Snowflake': ['order_events', 'store_daily_kpis'],
+  'BigQuery': ['picking_sessions', 'substitutions']
+};
+const TABLE_FIELDS = {
+  'ott_orders': [['order-id', 'Unique order identifier'], ['tilled_at', 'Timestamp the order was tilled'], ['on_time_flag', '']],
+  'ott_oss_Entitys': [['late_count', 'Orders tilled after stage-by time'], ['missed_count', 'Orders never tilled']],
+  'coe-daily': [['store_id', 'Store number'], ['pick_rate', 'Items picked per labor hour'], ['coe_score', '']],
+  'fa-flash': [['item_id', 'Item UPC'], ['flash_available', '1 when the item can be flashed to customers'], ['updated_at', '']],
+  'oth_summary': [['store_id', 'Store number'], ['handoff_count', 'Orders handed off to customers'], ['avg_wait_min', '']],
+  'order_events': [['event_id', 'Unique event identifier'], ['order-id', 'Unique order identifier'], ['event_type', '']],
+  'store_daily_kpis': [['store_id', 'Store number'], ['business_date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Orders completed per labor hour']],
+  'picking_sessions': [['session_id', 'Unique picking session identifier'], ['picker_id', 'Associate who ran the session'], ['session_minutes', '']],
+  'substitutions': [['order-id', 'Unique order identifier'], ['item_id', 'Original item UPC'], ['sub_accepted', '']]
+};
+const FILLED = {
+  on_time_flag: '1 when tilled before stage-by time', coe_score: 'Composite center-of-excellence score for the store, 0–100',
+  updated_at: 'Timestamp the flash status was last refreshed', avg_wait_min: 'Average customer wait at handoff, in minutes',
+  event_type: 'Order lifecycle event, e.g. picked, staged, handed off', session_minutes: 'Minutes from first scan to last scan in the session',
+  sub_accepted: '1 when the customer accepted the substitution'
+};
+const fieldsFor = (t, fill) => (TABLE_FIELDS[t] || []).map(([name, desc]) => ({ name, desc: desc || (fill ? FILLED[name] || '' : '') }));
+const md = (title, lines) => '# ' + title + '\n\n' + lines.join('\n');
+const seedFile = (name, size, content) => ({ id: 'f' + Math.random().toString(36).slice(2), name, size, ext: name.split('.').pop().toLowerCase(), cat: name.includes('eval') ? 'evals' : 'prompts', by: 'Priya Sethi', at: Date.parse('2026-09-05T10:00:00'), status: 'done', content });
+const seed = (id, category, name, source, tables, files) => ({ id, category, name, source, tables: tables.map(t => ({ name: t, fields: fieldsFor(t, true) })), files, status: 'published', updatedAt: Date.parse({ e1: '2026-09-10', e2: '2026-08-28', e3: '2026-09-12', e4: '2026-09-02', e5: '2026-09-18', e6: '2026-08-21' }[id] + 'T12:00:00') });
+const SEED = [
+  seed('e1', 'OTT', 'Stage-by compliance', 'Pulse', ['ott_orders'], [
+    seedFile('stage_by_prompts.md', 26 * 1024, md('Stage-by compliance prompts', ['- How many orders missed stage-by at store 1234 yesterday?', '- Which stores had the lowest stage-by compliance this week?'])),
+    seedFile('stage_by_evals.md', 18 * 1024, md('Stage-by compliance evals', ['1. Answer cites the ott_orders table.', '2. Compliance is reported as a percentage with one decimal.']))
+  ]),
+  seed('e2', 'OTT', 'Tilling exceptions', 'Pulse', ['ott_oss_Entitys'], [seedFile('tilling_exceptions_prompts.md', 12 * 1024, md('Tilling exceptions prompts', ['- How many orders were never tilled last Sunday?']))]),
+  seed('e3', 'COE', 'Store COE score', 'Pulse', ['coe-daily'], [seedFile('coe_score_evals.md', 22 * 1024, md('Store COE score evals', ['1. Score is between 0 and 100.', '2. Answer names the store and the date.']))]),
+  seed('e4', 'COE', 'Pick rate by store', 'Snowflake', ['store_daily_kpis'], [seedFile('pick_rate_prompts.md', 9 * 1024, md('Pick rate prompts', ['- What was the pick rate at store 0456 last week?']))]),
+  seed('e5', 'Flash availability', 'Flash item availability', 'Pulse', ['fa-flash'], [seedFile('flash_prompts.md', 14 * 1024, md('Flash availability prompts', ['- Which items can be flashed at store 2210 right now?']))]),
+  seed('e6', 'OTH', 'Handoff wait time', 'Pulse', ['oth_summary'], [seedFile('handoff_evals.md', 17 * 1024, md('Handoff wait time evals', ['1. Wait time is reported in minutes.', '2. Answer compares against the 5-minute target.']))])
+];
+const D = (s) => Date.parse(s + 'T10:00:00');
+let sfN = 0;
+const sf = (cat, name, kb, by, date, lines) => ({ id: 'sf' + (++sfN), name, size: Math.round(kb * 1024), ext: name.split('.').pop().toLowerCase(), cat, status: 'done', by, at: D(date), content: md(name.slice(0, name.lastIndexOf('.')).split('_').join(' '), lines) });
+const D1_FILES = [
+  sf('prompts', 'late_order_recovery_prompts.md', 24, 'Priya Sethi', '2026-09-29', ['- Which stores recovered the most late orders last week?', '- How many late orders at store 1234 were recovered yesterday?']),
+  sf('prompts', 'recovery_followup_prompts.docx', 86, 'Priya Sethi', '2026-09-29', ['- What should a store do when an order is running late?', '- Which late orders still need a follow-up call?']),
+  sf('prompts', 'store_manager_prompt_templates.pdf', 1229, 'Gary Spark', '2026-09-24', ['- Show late order recovery for my store this week.', '- Compare my store with the district on recovered orders.']),
+  sf('kb', 'late_order_playbook.pdf', 2457, 'Gary Spark', '2026-09-22', ['A late order is any order handed off after its promised window.', 'Stores should contact the customer before the window closes.']),
+  sf('kb', 'recovery_sla_overview.docx', 312, 'Priya Sethi', '2026-09-22', ['Overview of how recovered orders are counted for each store.']),
+  sf('evals', 'late_order_recovery_evals.md', 18, 'Priya Sethi', '2026-10-01', ['1. Answer cites the ott_orders table.', '2. Recovery rate is reported as a percentage with one decimal.']),
+  sf('evals', 'recovery_golden_answers.docx', 54, 'Priya Sethi', '2026-10-01', ['Expected answers for the recovery prompts, one per question.']),
+  sf('evals', 'edge_case_evals.md', 9, 'Marcus Lee', '2026-10-02', ['1. Store with zero late orders returns 0 and says so.', '2. Closed stores are excluded from the answer.']),
+  sf('evals', 'store_level_evals_q3.pdf', 640, 'Gary Spark', '2026-09-30', ['Store-level checks for Q3.']),
+  sf('evals', 'recovery_sla_checks.md', 12, 'Priya Sethi', '2026-09-29', ['1. Answer names the store and the business date.']),
+  sf('evals', 'negative_cases.md', 7, 'Priya Sethi', '2026-09-26', ['1. Questions about other banners are declined.']),
+  sf('evals', 'regression_suite_v1.docx', 120, 'Gary Spark', '2026-09-24', ['Regression checks carried over from the first release.']),
+  sf('md', 'sidekick_context.md', 6, 'Gary Spark', '2026-09-30', ['Answer late order questions with the store number and the business date.'])
+];
+const D1 = { id: 'd1', category: 'OTT', name: 'Late order recovery', source: 'Pulse', tables: ['ott_orders', 'ott_oss_Entitys'].map(t => ({ name: t, fields: fieldsFor(t, true) })), files: D1_FILES, status: 'draft', step: 2, updatedAt: D('2026-10-05') };
+const SEED_ALL = [...SEED, D1];
+const ENTITY_DESC = {
+  'On-time tilling': 'Tracks orders tilled before stage-by time',
+  'Stage-by compliance': 'Tracks stage-by compliance by store',
+  'Tilling exceptions': 'Monitors late and missed tilling',
+  'Late order recovery': 'Follows late orders through recovery',
+  'Store COE score': 'Overall store COE performance',
+  'Pick rate by store': 'Items picked per labor hour, by store',
+  'Substitution acceptance': 'How often customers accept substitutions',
+  'Flash item availability': 'Which items can be flashed to customers',
+  'Out-of-stock alerts': 'Items flagged out of stock during picking',
+  'Handoff wait time': 'Customer wait time at handoff',
+  'Curbside arrivals': 'Customer arrivals for curbside pickup'
+};
+const STATUS = {
+  published: { label: 'Active', bg: '#EAF5F0', border: '#97D0B9', fg: '#04633C' },
+  pending: { label: 'Pending approval', bg: '#FDF3D9', border: '#F8B775', fg: '#906700' },
+  changes: { label: 'Changes requested', bg: '#FDECEC', border: '#F0A3A3', fg: '#B00000' },
+  draft: { label: 'Draft', bg: '#F1F0EE', border: '#C2C1C0', fg: '#4B4B49' }
+};
+const fmtDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const ACCEPT = ['pdf', 'doc', 'docx', 'md', 'rtf'];
+const MAX_BYTES = 10 * 1024 * 1024;
+const FILE_CATS = [
+  { key: 'prompts', title: 'Prompt Templates', desc: 'Prompts Sidekick can run for this entity.', accept: ACCEPT },
+  { key: 'kb', title: 'KB Articles', desc: 'Reference articles that give Sidekick background.', accept: ACCEPT },
+  { key: 'thresholds', title: 'Thresholds', desc: 'Target values and limits used to judge results.', accept: ACCEPT },
+  { key: 'evals', title: 'Evals', desc: 'Questions and expected answers used to test Sidekick.', accept: ACCEPT },
+  { key: 'md', title: 'MD Files', desc: 'Markdown files with extra instructions and context.', accept: ['md'] }
+];
+const CAT_BY_KEY = FILE_CATS.reduce((a, c) => { a[c.key] = c; return a; }, {});
+const EXT_STYLE = { pdf: { bg: '#FDECEC', fg: '#B00000' }, doc: { bg: '#EBF3F9', fg: '#004488' }, docx: { bg: '#EBF3F9', fg: '#004488' }, md: { bg: '#EAF5F0', fg: '#04633C' }, rtf: { bg: '#F1F0EE', fg: '#4B4B49' } };
+const extOf = (n) => (n.split('.').pop() || '').toLowerCase();
+const ICO = {"file":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%205h17l9%209v29H12z%20M29%205v9h9%22%20stroke%3D%22%23000%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E","checkmark_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M43.7362%207.42789C44.6045%208.11062%2044.7549%209.36799%2044.0722%2010.2363L19.6972%2041.2363C19.3513%2041.6763%2018.8368%2041.9511%2018.2788%2041.9942C17.7207%2042.0372%2017.1702%2041.8444%2016.7609%2041.4627L2.13591%2027.8227C1.32813%2027.0693%201.28403%2025.8038%202.0374%2024.996C2.79077%2024.1882%204.05633%2024.1441%204.86411%2024.8975L17.8978%2037.0533L40.9278%207.76388C41.6105%206.89558%2042.8679%206.74515%2043.7362%207.42789Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","info_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%205.5C13.7827%205.5%205.5%2013.7827%205.5%2024C5.5%2034.2173%2013.7827%2042.5%2024%2042.5C34.2173%2042.5%2042.5%2034.2173%2042.5%2024C42.5%2013.7827%2034.2173%205.5%2024%205.5ZM2.5%2024C2.5%2012.1259%2012.1259%202.5%2024%202.5C35.8741%202.5%2045.5%2012.1259%2045.5%2024C45.5%2035.8741%2035.8741%2045.5%2024%2045.5C12.1259%2045.5%202.5%2035.8741%202.5%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2012.5C24.8284%2012.5%2025.5%2013.1716%2025.5%2014V15.6C25.5%2016.4284%2024.8284%2017.1%2024%2017.1C23.1716%2017.1%2022.5%2016.4284%2022.5%2015.6V14C22.5%2013.1716%2023.1716%2012.5%2024%2012.5ZM24%2019.9C24.8284%2019.9%2025.5%2020.5716%2025.5%2021.4V34.4C25.5%2035.2284%2024.8284%2035.9%2024%2035.9C23.1716%2035.9%2022.5%2035.2284%2022.5%2034.4V21.4C22.5%2020.5716%2023.1716%2019.9%2024%2019.9Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","show_password_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","download_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E","trash_outlined_16":"data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M19.5944%2017.0854C20.4228%2017.0854%2021.0944%2017.757%2021.0944%2018.5854V35.1193C21.0944%2035.9477%2020.4228%2036.6193%2019.5944%2036.6193C18.766%2036.6193%2018.0944%2035.9477%2018.0944%2035.1193V18.5854C18.0944%2017.757%2018.766%2017.0854%2019.5944%2017.0854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M30.1573%2018.5854C30.1573%2017.757%2029.4857%2017.0854%2028.6573%2017.0854C27.8289%2017.0854%2027.1573%2017.757%2027.1573%2018.5854V35.1193C27.1573%2035.9477%2027.8289%2036.6193%2028.6573%2036.6193C29.4857%2036.6193%2030.1573%2035.9477%2030.1573%2035.1193V18.5854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.75%207.125V10.125H6C5.17157%2010.125%204.5%2010.7966%204.5%2011.625C4.5%2012.4534%205.17157%2013.125%206%2013.125H9V38.625C9%2041.3174%2011.1826%2043.5%2013.875%2043.5H34.125C36.8174%2043.5%2039%2041.3174%2039%2038.625V13.125H42C42.8284%2013.125%2043.5%2012.4534%2043.5%2011.625C43.5%2010.7966%2042.8284%2010.125%2042%2010.125H32.25V7.125C32.25%205.67525%2031.0747%204.5%2029.625%204.5H18.375C16.9253%204.5%2015.75%205.67525%2015.75%207.125ZM29.25%2010.125V7.5H18.75V10.125H29.25ZM36%2013.125H12V38.625C12%2039.6605%2012.8395%2040.5%2013.875%2040.5H34.125C35.1605%2040.5%2036%2039.6605%2036%2038.625V13.125Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","close_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M41.4142%2038.5856C42.1953%2039.3666%2042.1953%2040.6329%2041.4142%2041.414C40.6332%2042.195%2039.3668%2042.195%2038.5858%2041.414L24.0001%2026.8283L9.41421%2041.4142C8.63316%2042.1952%207.36684%2042.1952%206.58579%2041.4142C5.80474%2040.6331%205.80474%2039.3668%206.58579%2038.5857L21.1717%2023.9999L6.58602%209.41421C5.80497%208.63317%205.80497%207.36683%206.58602%206.58579C7.36707%205.80474%208.6334%205.80474%209.41444%206.58579L24.0001%2021.1714L38.5856%206.58597C39.3666%205.80492%2040.6329%205.80492%2041.414%206.58597C42.195%207.36702%2042.195%208.63335%2041.414%209.4144L26.8285%2023.9999L41.4142%2038.5856Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","chevron_down_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M37.4142%2018.5858C36.6332%2017.8047%2035.3668%2017.8047%2034.5858%2018.5858L24%2029.1716L13.4142%2018.5858C12.6332%2017.8047%2011.3668%2017.8047%2010.5858%2018.5858C9.80474%2019.3668%209.80474%2020.6332%2010.5858%2021.4142L22.5858%2033.4142C23.3668%2034.1953%2024.6332%2034.1953%2025.4142%2033.4142L37.4142%2021.4142C38.1953%2020.6332%2038.1953%2019.3668%2037.4142%2018.5858Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","share_ios_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M9%2021.4998C8.17157%2021.4998%207.5%2022.1714%207.5%2022.9998V40.9998C7.5%2041.8282%208.17157%2042.4998%209%2042.4998H39C39.8284%2042.4998%2040.5%2041.8282%2040.5%2040.9998V22.9998C40.5%2022.1714%2039.8284%2021.4998%2039%2021.4998H29.25V18.4998H39C41.4853%2018.4998%2043.5%2020.5145%2043.5%2022.9998V40.9998C43.5%2043.4851%2041.4853%2045.4998%2039%2045.4998H9C6.51472%2045.4998%204.5%2043.4851%204.5%2040.9998V22.9998C4.5%2020.5145%206.51472%2018.4998%209%2018.4998H18.75V21.4998H9Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M25.1532%201.88992C24.8703%201.59527%2024.4795%201.42871%2024.0711%201.42871C23.6626%201.42871%2023.2718%201.59527%2022.989%201.88992L16.0623%209.10537C15.4886%209.70299%2015.508%2010.6525%2016.1056%2011.2262C16.7032%2011.8%2017.6528%2011.7806%2018.2265%2011.1829L22.5%206.73126V29.2499C22.5%2030.0783%2023.1716%2030.7499%2024%2030.7499C24.8284%2030.7499%2025.5%2030.0783%2025.5%2029.2499V6.5832L29.9157%2011.1829C30.4894%2011.7806%2031.4389%2011.8%2032.0365%2011.2262C32.6342%2010.6525%2032.6536%209.70299%2032.0798%209.10537L25.1532%201.88992Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E"};
+const icoStyle = (name, size, extra) => ({ display: 'block', flexShrink: 0, width: size, height: size, background: 'currentColor', mask: 'url(' + ICO[name] + ') center / contain no-repeat', WebkitMask: 'url(' + ICO[name] + ') center / contain no-repeat', ...extra });
+const listNames = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+const emptyDraft = () => ({ category: '', entity: '', source: '', tables: [], files: [] });
+const cloneEntity = (e) => JSON.parse(JSON.stringify({ category: e.category, entity: e.name, source: e.source, tables: e.tables, comment: e.comment || '', commentBy: e.commentBy || '' }));
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+const fieldCount = (tables) => tables.reduce((a, t) => a + t.fields.length, 0);
+const sizeText = (b) => b >= 1024 * 1024 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+const ago = (ts) => { const m = Math.floor((Date.now() - ts) / 60000); if (m < 1) return 'Just now'; if (m < 60) return m + ' min ago'; const h = Math.floor(m / 60); return h + (h === 1 ? ' hour ago' : ' hours ago'); };
+
+class Component extends DCLogic {
+  state = {
+    user: 'priya', screen: 'home', navOpen: false,
+    entities: SEED_ALL, notifications: [],
+    search: '', fCat: '', fStatus: '', fSrc: '', draftAt: 0, expanded: {},
+    draft: null, step: 1, editId: null, editDraft: null, editOriginal: '', reviewId: null,
+    bellOpen: false, userOpen: false,
+    toast: null, preview: null,
+    changes: null, submitting: false, approving: false,
+    tableDragOver: false, fileDragOver: false, dragging: null, uploadError: '',
+    collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, removing: null, uploadErrors: {},
+    ...this.navPatch(this.startKey())
+  };
+  headerRef = React.createRef();
+  fileInputRef = React.createRef();
+
+  componentDidMount() {
+    this._doc = (e) => {
+      if (!this.state.bellOpen && !this.state.userOpen) return;
+      const pop = e.target.closest && e.target.closest('[data-pop]');
+      if (!pop) this.setState({ bellOpen: false, userOpen: false });
+      else if (pop.dataset.pop === 'bell' && this.state.userOpen) this.setState({ userOpen: false });
+      else if (pop.dataset.pop === 'user' && this.state.bellOpen) this.setState({ bellOpen: false });
+    };
+    this._key = (e) => {
+      if (e.key !== 'Escape') return;
+      if (this.state.removing) this.setState({ removing: null });
+      else if (this.state.preview) this.setState({ preview: null });
+      else if (this.state.changes) this.setState({ changes: null });
+      else if (this.state.bellOpen || this.state.userOpen) this.setState({ bellOpen: false, userOpen: false });
+    };
+    document.addEventListener('mousedown', this._doc);
+    document.addEventListener('keydown', this._key);
+    this._tick = setInterval(() => this.forceUpdate(), 30000);
+    this.setState(this.navPatch(this.startKey()));
+  }
+  componentDidUpdate(prev) {
+    if (prev.startScreen !== this.props.startScreen || prev.sampleFiles !== this.props.sampleFiles) this.setState(this.navPatch(this.startKey()));
+  }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this._doc);
+    document.removeEventListener('keydown', this._key);
+    clearInterval(this._tick); clearTimeout(this._toastT); Object.values(this._up || {}).forEach(clearInterval);
+  }
+
+  go(screen, extra) {
+    const s = this.state; const d = s.draft;
+    let saved = null;
+    if (s.screen === 'wizard' && screen !== 'wizard' && d && d.category && d.entity) {
+      const id = s.draftId || ('d' + Date.now());
+      saved = { id, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now() };
+    }
+    this.setState(st => ({
+      screen, bellOpen: false, userOpen: false, uploadError: '',
+      ...(st.screen === 'wizard' && screen !== 'wizard' ? { draft: null, draftId: null, step: 1 } : {}),
+      ...(saved ? { entities: [saved, ...st.entities.filter(e => e.id !== saved.id)] } : {}),
+      ...(extra || {})
+    }));
+    if (saved) this.toast('Draft saved to Entities.', 'info');
+    window.scrollTo(0, 0);
+  }
+  toast(message, tone, actions) {
+    clearTimeout(this._toastT);
+    this.setState({ toast: { message, tone: tone || 'positive', actions: actions || [] } });
+    this._toastT = setTimeout(() => this.setState({ toast: null }), actions && actions.length ? 8000 : 5000);
+  }
+  me() { return USERS[this.state.user]; }
+
+  formKey() { return this.state.screen === 'edit' ? 'editDraft' : 'draft'; }
+  form() { return this.state[this.formKey()] || emptyDraft(); }
+  patchForm(p) { const k = this.formKey(); this.setState(s => ({ [k]: { ...(s[k] || emptyDraft()), ...p } })); }
+  addTable(name) {
+    const f = this.form();
+    if (!name || f.tables.some(t => t.name === name) || !(SOURCES[f.source] || []).includes(name)) return;
+    this.patchForm({ tables: [...f.tables, { name, fields: fieldsFor(name, false) }] });
+  }
+  removeTable(name) { this.patchForm({ tables: this.form().tables.filter(t => t.name !== name) }); }
+
+  startKey() { return { 'Prompts & evals': 'prompts', 'Review & submit': 'review', 'Home': 'home' }[this.props && this.props.startScreen] || 'prompts'; }
+  navPatch(name) {
+    const base = { bellOpen: false, userOpen: false, preview: null, removing: null, collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, uploadErrors: {} };
+    if (name === 'home') return { ...base, screen: 'home', draft: null, draftId: null, step: 1 };
+    const e = D1; const empty = !(this.props && this.props.sampleFiles === true);
+    return { ...base, uploadErrors: empty ? {} : { kb: [{ id: 'ue1', name: 'vendor_exceptions.xlsx', msg: 'Unsupported file type. Use .pdf, .doc, .docx, .md or .rtf.' }] }, screen: 'wizard', draftId: 'd1', step: name === 'review' ? 3 : 2, draft: { category: e.category, entity: e.name, source: e.source, tables: e.tables, files: empty ? [] : D1_FILES.map(x => ({ ...x })) } };
+  }
+  toggleCat(key) { this.setState(s => ({ collapsed: { ...s.collapsed, [key]: !s.collapsed[key] } })); }
+  goCat(key) {
+    this.setState(s => ({ step: 2, collapsed: { ...s.collapsed, [key]: false } }), () => setTimeout(() => {
+      const el = document.getElementById('cat-' + key);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 128, behavior: 'smooth' });
+    }, 60));
+  }
+  addFiles(catKey, list) {
+    const cat = CAT_BY_KEY[catKey]; const me = this.me();
+    const picked = Array.from(list || []); if (!cat || !picked.length) return;
+    const taken = new Set(((this.state.draft && this.state.draft.files) || []).filter(f => f.cat === catKey).map(f => f.name.toLowerCase()));
+    const recs = []; const errs = [];
+    picked.forEach(file => {
+      const ext = extOf(file.name); let msg = '';
+      if (!cat.accept.includes(ext)) msg = cat.accept.length === 1 ? 'Only .' + cat.accept[0] + ' files can be added to ' + cat.title + '.' : 'Unsupported file type. Use ' + cat.accept.map(e => '.' + e).join(', ') + '.';
+      else if (file.size > MAX_BYTES) msg = 'File is larger than 10 MB.';
+      else if (taken.has(file.name.toLowerCase())) msg = 'A file with this name is already in ' + cat.title + '.';
+      if (msg) { errs.push({ id: 'ue' + Math.random().toString(36).slice(2), name: file.name, msg }); return; }
+      taken.add(file.name.toLowerCase());
+      const rec = { id: 'f' + Math.random().toString(36).slice(2), name: file.name, size: file.size, ext, cat: catKey, status: 'uploading', progress: 0, by: me.name, at: Date.now(), url: URL.createObjectURL(file) };
+      if (ext === 'md') file.text().then(t => this.updateFile(rec.id, { content: t }));
+      recs.push(rec);
+    });
+    this.setState(s => ({
+      draft: { ...s.draft, files: [...recs, ...s.draft.files] },
+      uploadErrors: { ...s.uploadErrors, [catKey]: errs },
+      collapsed: { ...s.collapsed, [catKey]: false }, showAll: { ...s.showAll, [catKey]: false }
+    }));
+    recs.forEach(r => this.startUpload(r));
+  }
+  dismissError(catKey, id) { this.setState(s => ({ uploadErrors: { ...s.uploadErrors, [catKey]: (s.uploadErrors[catKey] || []).filter(x => x.id !== id) } })); }
+  startUpload(rec) {
+    this._up = this._up || {}; this._ups = this._ups || []; let p = 0;
+    this._up[rec.id] = setInterval(() => {
+      p = Math.min(100, p + 8 + Math.random() * 12);
+      if (p < 100) { this.updateFile(rec.id, { progress: Math.round(p) }); return; }
+      clearInterval(this._up[rec.id]); delete this._up[rec.id];
+      this.updateFile(rec.id, { status: 'done', progress: 100, fresh: true });
+      setTimeout(() => this.updateFile(rec.id, { fresh: false }), 4000);
+      this._ups.push({ name: rec.name, cat: CAT_BY_KEY[rec.cat].title });
+      this.flushUploads();
+    }, 240);
+  }
+  flushUploads() {
+    if (Object.keys(this._up || {}).length || !(this._ups || []).length) return;
+    const u = this._ups; this._ups = [];
+    const cats = [...new Set(u.map(x => x.cat))];
+    this.toast(u.length === 1 ? 'Uploaded ' + u[0].name + ' to ' + u[0].cat + '.' : 'Uploaded ' + u.length + ' files' + (cats.length === 1 ? ' to ' + cats[0] : '') + '.');
+  }
+  dropFile(id) { this.setState(s => s.draft ? ({ draft: { ...s.draft, files: s.draft.files.filter(x => x.id !== id) } }) : null); }
+  cancelUpload(id) { clearInterval((this._up || {})[id]); if (this._up) delete this._up[id]; this.dropFile(id); this.flushUploads(); }
+  confirmRemove() {
+    const r = this.state.removing; if (!r) return;
+    this.dropFile(r.id); this.setState({ removing: null });
+    this.toast('Removed ' + r.name + ' from ' + CAT_BY_KEY[r.cat].title + '.', 'info');
+  }
+  updateFile(id, p) { this.setState(s => s.draft ? ({ draft: { ...s.draft, files: s.draft.files.map(f => f.id === id ? { ...f, ...p } : f) } }) : null); }
+  download(f) {
+    const a = document.createElement('a');
+    a.href = f.url || URL.createObjectURL(new Blob([f.content || ''], { type: 'text/markdown' }));
+    a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+  }
+  fileRow(f, i) {
+    const done = f.status === 'done'; const fresh = done && !!f.fresh;
+    return {
+      name: f.name, tileStyle: icoStyle('file', 24, { color: '#6E6E6D' }),
+      isDone: done, isUploading: !done, showSub: fresh,
+      sizeText: sizeText(f.size || 0), dateText: fmtDate(f.at || Date.now()), by: f.by || '—',
+      progress: f.progress || 0, progressText: (f.progress || 0) + '%', progressLabel: 'Uploading ' + f.name,
+      previewLabel: 'Preview ' + f.name, downloadLabel: 'Download ' + f.name, removeLabel: 'Remove ' + f.name, cancelLabel: 'Cancel upload of ' + f.name,
+      preview: () => this.setState({ preview: f }), download: () => this.download(f),
+      remove: () => this.setState({ removing: { id: f.id, name: f.name, cat: f.cat } }),
+      cancel: () => this.cancelUpload(f.id),
+      rowStyle: { display: 'grid', gridTemplateColumns: 'minmax(160px, 1fr) 72px 176px 104px', columnGap: 16, alignItems: 'center', minHeight: 64, padding: '12px 16px', borderRadius: 8, background: fresh ? '#FAF9F8' : '#FFFFFF', transition: 'background 400ms ease' }
+    };
+  }
+  sumFile(f, j) {
+    return {
+      name: f.name, tileStyle: icoStyle('file', 24, { color: '#6E6E6D' }),
+      metaText: sizeText(f.size || 0) + ' · Uploaded ' + fmtDate(f.at || Date.now()) + ' by ' + (f.by || '—'),
+      previewLabel: 'Preview ' + f.name, downloadLabel: 'Download ' + f.name,
+      preview: () => this.setState({ preview: f }), download: () => this.download(f),
+      rowStyle: { display: 'flex', alignItems: 'center', gap: 16, minHeight: 56, padding: '8px 0', borderTop: j ? '1px solid #F1F0EE' : 'none' }
+    };
+  }
+
+  step1Missing(f) {
+    if (!f.category || !f.entity || !f.source) return 'Select a category, entity and source to continue.';
+    if (!f.tables.length) return 'Add at least one table to continue.';
+    if (f.tables.some(t => t.fields.some(x => !(x.desc || '').trim()))) return 'Add a description for every field to continue.';
+    if (!fieldCount(f.tables)) return 'Add at least one field to continue.';
+    return '';
+  }
+  step2Missing(f) {
+    if (f.files.some(x => x.status === 'uploading')) return 'Hang on, still uploading…';
+    if (!f.files.some(x => x.status === 'done')) return 'Upload at least one file to continue.';
+    return '';
+  }
+
+  notify(entity, verb) {
+    const n = { id: 'n' + Date.now(), entityId: entity.id, by: this.me().name, verb, entity: entity.name, category: entity.category, at: Date.now(), read: false };
+    this.setState(s => ({ notifications: [n, ...s.notifications.filter(x => x.entityId !== entity.id)] }));
+  }
+  submit() {
+    const d = this.state.draft;
+    this.setState({ submitting: true });
+    setTimeout(() => {
+      const ent = { id: 'e' + Date.now(), category: d.category, name: d.entity, source: d.source, tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'pending', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'submitted' };
+      this.setState(s => ({ entities: [ent, ...s.entities.filter(e => e.id !== s.draftId)], draft: null, draftId: null, step: 1, submitting: false, screen: 'success' }));
+      this.notify(ent, 'submitted');
+      window.scrollTo(0, 0);
+    }, 900);
+  }
+  saveEdit() {
+    const d = this.state.editDraft; const id = this.state.editId;
+    let saved;
+    this.setState(s => ({ entities: s.entities.map(e => { if (e.id !== id) return e; saved = { ...e, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated' }; return saved; }) }), () => {
+      this.notify(saved, 'updated');
+      this.toast('Changes to ' + saved.name + ' sent for approval.');
+    });
+    this.go('dashboard', { editDraft: null, editId: null });
+  }
+  decide(approved, comment) {
+    const id = this.state.reviewId;
+    const ent = this.state.entities.find(e => e.id === id);
+    this.setState(s => ({
+      entities: s.entities.map(e => e.id !== id ? e : approved ? { ...e, status: 'published', comment: '', commentBy: '', updatedAt: Date.now() } : { ...e, status: 'changes', comment, commentBy: this.me().name, updatedAt: Date.now() }),
+      notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n),
+      changes: null, approving: false
+    }));
+    this.go('dashboard', { reviewId: null });
+    this.toast(approved ? ent.name + ' is approved and live in Sidekick.' : 'Changes requested on ' + ent.name + '.');
+  }
+  openReview(id) {
+    this.setState(s => ({ notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n) }));
+    this.go('review', { reviewId: id });
+  }
+
+  renderVals() {
+    const s = this.state; const me = this.me();
+    const scr = s.screen;
+    const isWizard = scr === 'wizard'; const isEdit = scr === 'edit'; const isReview = scr === 'review';
+    const f = this.form();
+    const isForm = (isWizard && s.step === 1) || isEdit;
+    const isFiles = isWizard && s.step === 2;
+    const isSummary = (isWizard && s.step === 3) || isReview;
+    const reviewEnt = isReview ? s.entities.find(e => e.id === s.reviewId) : null;
+
+    const unread = s.notifications.filter(n => !n.read).length;
+    const notifs = me.canApprove ? s.notifications : [];
+
+    const navDefs = [['Home', 'home', 'nav-home'], ['Entity dashboard', 'dashboard', 'nav-entitydash'], ['Trace tool', null, 'nav-trace'], ['Evaluation', null, 'nav-eval']];
+    const activeNav = scr === 'home' ? 0 : 1;
+    const navItems = navDefs.map(([label, target, iconKey], i) => {
+      const active = i === activeNav; const disabled = !target;
+      return {
+        label, current: active ? 'page' : undefined, disabled: disabled ? 'true' : undefined, hasChevron: false, iconStyle: { display: 'block', flexShrink: 0, width: 24, height: 24, background: 'url(assets/icons/fig/' + iconKey + '-' + (active ? 'blue' : 'grey') + '.svg) center / contain no-repeat' },
+        go: () => { if (target) this.go(target); },
+        miniStyle: { width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', borderRadius: 4, padding: 8, background: active ? '#EBF3F9' : 'transparent', color: '#1F1E1E', cursor: disabled ? 'default' : 'pointer' },
+        fullStyle: { display: 'flex', alignItems: 'center', gap: 16, width: '100%', height: 40, padding: '8px 16px 8px 8px', border: 'none', borderRadius: 4, background: active ? '#EBF3F9' : 'transparent', cursor: disabled ? 'default' : 'pointer', fontFamily: 'Poppins, sans-serif', fontSize: 16, lineHeight: '24px', fontWeight: active ? 600 : 400, color: active ? '#004488' : '#6E6E6D' }
+      };
+    });
+
+    const leaveFlow = (target) => {
+      this.go(target, isEdit ? { editDraft: null, editId: null } : {});
+    };
+    const crumbDefs = [['Home', 'home'], ['Entity dashboard', 'dashboard']];
+    if (isWizard) crumbDefs.push(['New entity']);
+    if (isEdit) crumbDefs.push(['Edit entity']);
+    if (isReview) crumbDefs.push(['Review submission']);
+    if (scr === 'success') crumbDefs.push(['Submitted for review']);
+    const crumbs = crumbDefs.map(([label, target], i) => {
+      const last = i === crumbDefs.length - 1 || (scr === 'dashboard' && target === 'dashboard');
+      return { label, showSep: i > 0, isLink: !last, isCurrent: last, go: () => leaveFlow(target) };
+    }).slice(0, scr === 'dashboard' ? 2 : undefined);
+
+    // Dashboard
+    const q = s.search.trim().toLowerCase();
+    const all = s.entities;
+    const filtered = all.filter(e => {
+      if (s.fCat && e.category !== s.fCat) return false;
+      if (s.fStatus && e.status !== s.fStatus) return false;
+      if (s.fSrc && e.source !== s.fSrc) return false;
+      if (!q) return true;
+      const hay = [e.name, ENTITY_DESC[e.name] || '', e.category, e.source, ...e.tables.map(t => t.name), ...e.tables.flatMap(t => t.fields.map(x => x.name + ' ' + x.desc))].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+    const allCats = CATEGORIES.filter(c => all.some(e => e.category === c)).length;
+    const density = this.props.density ?? 'comfortable';
+    const compact = density === 'compact';
+    const grouping = this.props.grouping ?? 'category';
+    const rawGroups = grouping === 'none'
+      ? (filtered.length ? [{ name: 'All entities', list: [...filtered].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)) }] : [])
+      : CATEGORIES.map(c => ({ name: c, list: filtered.filter(e => e.category === c) })).filter(g => g.list.length);
+    const groups = rawGroups.map(g => ({
+      name: g.name, countText: plural(g.list.length, 'entity').replace('entitys', 'entities'), tableLabel: g.name + ' entities',
+      rows: g.list.map((e, i) => {
+        const open = !!s.expanded[e.id];
+        const pending = e.status === 'pending'; const isDraft = e.status === 'draft';
+        const st = STATUS[e.status] || STATUS.published;
+        const stop = (fn) => (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(ev); };
+        return {
+          name: e.name, desc: ENTITY_DESC[e.name] || '', showDesc: !compact && !!ENTITY_DESC[e.name], source: grouping === 'none' ? e.category + ' · ' + e.source : e.source, open, tables: e.tables,
+          hasTables: e.tables.length > 0, noTables: e.tables.length === 0,
+          tableCount: String(e.tables.length), fieldCount: String(fieldCount(e.tables)),
+          updated: fmtDate(e.updatedAt || Date.now()),
+          tagText: st.label,
+          tagButton: pending && me.canApprove,
+          tagStatic: !(pending && me.canApprove),
+          tagStyle: { display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 32, maxWidth: '100%', padding: '4px 16px', borderRadius: 4, fontSize: 14, lineHeight: '20px', fontWeight: 500, background: st.bg, border: '1px solid ' + st.border, color: st.fg },
+          dotStyle: { width: 8, height: 8, borderRadius: '50%', background: st.fg, flexShrink: 0 },
+          reviewLabel: 'Pending approval — review ' + e.name,
+          comment: e.status === 'changes' ? e.comment : '', commentBy: e.commentBy || '',
+          editText: 'Edit',
+          editLabel: 'Edit ' + e.name,
+          toggleLabel: e.name + (open ? ', collapse details' : ', expand details'),
+          toggle: stop(() => this.setState(x => ({ expanded: { ...x.expanded, [e.id]: !x.expanded[e.id] } }))),
+          edit: stop(() => { if (isDraft) this.go('wizard', { draft: { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] }, draftId: e.id, step: e.step || 1 }); else this.go('edit', { editId: e.id, editDraft: cloneEntity(e), editOriginal: JSON.stringify(cloneEntity(e)) }); }),
+          openReview: stop(() => this.openReview(e.id)),
+          chevLabel: (open ? 'Collapse ' : 'Expand ') + e.name,
+          chevronStyle: { display: 'block', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' },
+          wrapStyle: { borderTop: i > 0 ? '1px solid #F1F0EE' : 'none' },
+          headStyle: { display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr) 56px 56px minmax(136px, 1.25fr) minmax(0, 1fr) 112px', columnGap: 16, alignItems: 'center', minHeight: compact ? 48 : 72, padding: compact ? '8px 24px' : '16px 24px', background: open ? '#EBF3F9' : '#FFFFFF', cursor: 'pointer' }
+        };
+      })
+    }));
+
+    // Form
+    const existingNames = s.entities.filter(e => !(isEdit && e.id === s.editId)).map(e => e.name);
+    const entityOpts = (ENTITY_OPTIONS[f.category] || []).map(n => ({ label: n, value: n, disabled: existingNames.includes(n), meta: existingNames.includes(n) ? 'Already added' : '' }));
+    const srcTables = SOURCES[f.source] || [];
+    const addedNames = f.tables.map(t => t.name);
+    const dropActive = s.tableDragOver || f.tables.length > 0;
+
+    // Steps
+    const d = s.draft || emptyDraft();
+    const m1 = this.step1Missing(d); const m2 = this.step2Missing(d);
+    const reachable = [true, !m1, !m1 && !m2];
+    const stepLabels = ['Data & schema', 'Prompts & evals', 'Review & submit'];
+    const steps = stepLabels.map((label, i) => {
+      const n = i + 1; const done = n < s.step; const cur = n === s.step;
+      return {
+        label, num: String(n), done, showNum: !done, hasLine: i > 0,
+        locked: !reachable[i] || cur, ariaCurrent: cur ? 'step' : undefined,
+        aria: label + (done ? ', completed' : cur ? ', current step' : ''),
+        go: () => { if (reachable[i]) this.setState({ step: n, uploadError: '' }); },
+        liStyle: { display: 'flex', alignItems: 'center', flex: i > 0 ? 1 : '0 0 auto' },
+        lineStyle: { flex: 1, height: 2, borderRadius: 100, margin: '0 8px', background: n <= s.step ? '#004488' : '#C2C1C0' },
+        circleStyle: { position: 'relative', width: 24, height: 24, flexShrink: 0, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, border: 'none', background: done ? '#004488' : '#FFFFFF', boxShadow: done ? 'none' : 'inset 0 0 0 2px ' + (cur ? '#004488' : '#C2C1C0'), color: cur ? '#004488' : '#A3A2A2', cursor: reachable[i] && !cur ? 'pointer' : 'default' }
+      };
+    });
+
+    // Summary
+    let sumSrc = null;
+    if (isWizard && s.step === 3) sumSrc = { name: d.entity, category: d.category, tables: d.tables, files: d.files };
+    if (reviewEnt) sumSrc = reviewEnt;
+    const sum = sumSrc ? { name: sumSrc.name, category: sumSrc.category, tables: sumSrc.tables, tablesText: plural(sumSrc.tables.length, 'table'), fieldsText: plural(fieldCount(sumSrc.tables), 'field') } : { name: '', category: '', tables: [], tablesText: '', fieldsText: '' };
+    const sumFilesArr = sumSrc ? sumSrc.files || [] : [];
+
+    const byNew = (a, b) => (b.at || 0) - (a.at || 0);
+    const dfiles = d.files || []; const LIMIT = 5;
+    const plain = { fontSize: 14, lineHeight: '20px', color: '#4B4B49', whiteSpace: 'nowrap' };
+    const cats = FILE_CATS.map(c => {
+      const list = dfiles.filter(f => f.cat === c.key).sort(byNew);
+      const nDone = list.filter(f => f.status === 'done').length;
+      const open = !s.collapsed[c.key]; const all = !!s.showAll[c.key]; const drag = s.dragCat === c.key; const has = list.length > 0;
+      const shown = all ? list : list.slice(0, LIMIT); const hidden = list.length - shown.length;
+      const errs = s.uploadErrors[c.key] || [];
+      return {
+        title: c.title, desc: c.desc, open, panelKey: 'cat-' + c.key, headId: 'cat-head-' + c.key, bodyId: 'cat-body-' + c.key, tableLabel: c.title + ' files',
+        toggle: () => this.toggleCat(c.key),
+        countText: nDone ? plural(nDone, 'file') : 'No files', countStyle: plain,
+        chevStyle: icoStyle('chevron_down_outlined_24', 24, { color: '#4B4B49', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' }),
+        panelStyle: { scrollMarginTop: 120 },
+        bodyStyle: { background: '#FFFFFF', borderRadius: 8, padding: 24, display: 'flex', flexDirection: 'column', gap: 16 },
+        dragOver: (e) => {
+          if (!e.dataTransfer || !Array.from(e.dataTransfer.types || []).includes('Files')) return;
+          e.preventDefault();
+          if (s.dragCat !== c.key || !open) this.setState(x => ({ dragCat: c.key, collapsed: { ...x.collapsed, [c.key]: false } }));
+        },
+        dragLeave: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) this.setState({ dragCat: null }); },
+        drop: (e) => { e.preventDefault(); this.setState({ dragCat: null }); this.addFiles(c.key, e.dataTransfer.files); },
+        hasFiles: has, files: shown.map((f, i) => this.fileRow(f, i)),
+        hasMore: list.length > LIMIT, moreLabel: all ? 'Show fewer files' : 'Show ' + hidden + ' more ' + (hidden === 1 ? 'file' : 'files'),
+        toggleMore: () => this.setState(x => ({ showAll: { ...x.showAll, [c.key]: !x.showAll[c.key] } })),
+        zoneStyle: { display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', padding: has ? '16px 24px' : 24, borderRadius: 10, background: drag ? '#EBF3F9' : '#FFFFFF', border: '1px dashed #6E6E6D' },
+        zoneIconWrap: has ? { display: 'none' } : { width: 40, height: 40, borderRadius: '50%', background: '#EBF3F9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#004488', flexShrink: 0 },
+        zoneIcon: icoStyle('share_ios_outlined_24', 24),
+        zoneTitle: drag ? 'Drop to upload to ' + c.title : has ? 'Drag and drop more files here' : 'Drag and drop files here',
+        zoneHint: (c.accept.length === 1 ? '.' + c.accept[0] + ' files only' : c.accept.map(e => '.' + e).join(', ')) + ' · up to 10 MB each',
+        browseLabel: 'Browse files for ' + c.title,
+        browse: () => { this._pickCat = c.key; const el = this.fileInputRef.current; if (el) { el.accept = c.accept.map(e => '.' + e).join(','); el.click(); } },
+        hasErrors: errs.length > 0,
+        errors: errs.map(er => ({ name: er.name, msg: er.msg, dismissLabel: 'Dismiss error for ' + er.name, dismiss: () => this.dismissError(c.key, er.id) })),
+        errIcon: icoStyle('info_outlined_24', 16, { marginTop: 2 }), closeIcon: icoStyle('close_outlined_24', 16)
+      };
+    });
+    const nDoneAll = dfiles.filter(f => f.status === 'done').length;
+    const nCovered = FILE_CATS.filter(c => dfiles.some(f => f.cat === c.key && f.status === 'done')).length;
+    const nUp = dfiles.filter(f => f.status === 'uploading').length;
+    const filesStatus = nDoneAll ? plural(nDoneAll, 'file') + ' in ' + nCovered + ' of ' + FILE_CATS.length + ' categories' + (nUp ? ' · uploading ' + nUp : '') : (nUp ? 'Uploading…' : '');
+
+    const sumDone = sumFilesArr.filter(x => !x.status || x.status === 'done'); const SLIM = 3;
+    const sumCats = FILE_CATS.map((c, i) => {
+      const list = sumDone.filter(f => f.cat === c.key).sort(byNew); const has = list.length > 0;
+      const exp = !!s.sumExpanded[c.key]; const shown = exp ? list : list.slice(0, SLIM); const hidden = list.length - SLIM;
+      return {
+        title: c.title, hasFiles: has, noFiles: !has, listLabel: c.title + ' files',
+        countText: has ? plural(list.length, 'file') : 'No files', pillStyle: plain,
+        rowStyle: { display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start', padding: '16px 0', borderTop: i ? '1px solid #F1F0EE' : 'none' },
+        files: shown.map((f, j) => this.sumFile(f, j)),
+        hasMore: list.length > SLIM, moreLabel: exp ? 'Show fewer files' : 'Show ' + hidden + ' more ' + (hidden === 1 ? 'file' : 'files'),
+        toggleMore: () => this.setState(x => ({ sumExpanded: { ...x.sumExpanded, [c.key]: !x.sumExpanded[c.key] } })),
+        canAdd: isWizard, addLabel: 'Add files to ' + c.title, add: () => this.goCat(c.key)
+      };
+    });
+    const sumMissingCats = FILE_CATS.filter((c, i) => !sumCats[i].hasFiles);
+    const sumCovered = FILE_CATS.length - sumMissingCats.length;
+    let sumMissingLead = ''; let sumMissingRest = '';
+    if (sumMissingCats.length === FILE_CATS.length) { sumMissingLead = 'No files added.'; sumMissingRest = isWizard ? 'Add at least one file before you submit.' : 'The submitter did not add any files.'; }
+    else if (sumMissingCats.length) { sumMissingLead = listNames(sumMissingCats.map(c => c.title)) + (sumMissingCats.length === 1 ? ' has' : ' have') + ' no files.'; sumMissingRest = isWizard ? 'You can submit without ' + (sumMissingCats.length === 1 ? 'it' : 'them') + ', or add files first.' : ''; }
+
+    let reviewNote = '';
+    if (reviewEnt) {
+      if (reviewEnt.status !== 'pending') reviewNote = 'This submission was already reviewed.';
+      else if (!me.canApprove) reviewNote = 'You don\'t have approval rights. Only approvers can approve or request changes.';
+    }
+    const showDecision = !!reviewEnt && reviewEnt.status === 'pending' && me.canApprove;
+
+    let footerHint = '';
+    if (isWizard && s.step === 1) footerHint = m1;
+    if (isWizard && s.step === 2) footerHint = m2;
+    if (isEdit) footerHint = this.step1Missing({ ...f, files: [] });
+    const editDirty = isEdit && JSON.stringify(f) !== s.editOriginal;
+
+    let flowTitle = 'New Entity'; let flowSubtitle = ''; let flowLabel = 'New entity — ' + stepLabels[s.step - 1];
+    if (isEdit) { flowTitle = 'Edit Entity'; flowLabel = 'Edit entity'; }
+    if (isReview) { flowTitle = 'Review submission'; flowLabel = 'Review submission'; flowSubtitle = reviewEnt ? (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt) : ''; }
+
+    const ch = s.changes;
+    const pf = s.preview;
+    const pfExt = pf ? (pf.ext || (pf.name.split('.').pop() || '').toLowerCase()) : '';
+    const firstName = me.first;
+
+    return {
+      headerRef: this.headerRef, fileInputRef: this.fileInputRef,
+      user: me,
+      userButtonLabel: me.name + ', switch user',
+      bellOpen: s.bellOpen, userOpen: s.userOpen,
+      showDot: me.canApprove && unread > 0,
+      bellLabel: me.canApprove && unread ? 'Notifications, ' + unread + ' unread' : 'Notifications',
+      toggleBell: () => this.setState(st => ({ bellOpen: !st.bellOpen, userOpen: false })),
+      toggleUser: () => this.setState(st => ({ userOpen: !st.userOpen, bellOpen: false })),
+      hasNotifs: notifs.length > 0, noNotifs: notifs.length === 0,
+      emptyNotifText: me.canApprove ? 'You\'re all caught up.' : 'No notifications yet.',
+      notifs: notifs.map(n => ({
+        by: n.by, verb: n.verb, entity: n.entity,
+        meta: n.category + ' · ' + ago(n.at),
+        dotStyle: { width: 8, height: 8, marginTop: 8, borderRadius: '50%', flexShrink: 0, background: n.read ? 'transparent' : '#B00000' },
+        open: () => this.openReview(n.entityId)
+      })),
+      userOptions: Object.values(USERS).map(u => ({ name: u.name, initials: u.initials, role: u.role, current: u.id === s.user, pick: () => this.setState({ user: u.id, userOpen: false }) })),
+
+      navCollapsed: !s.navOpen, navExpanded: s.navOpen, navItems, crumbs,
+      modalLarge: { 'aria-label': pf ? pf.name : 'File preview', style: { width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 } },
+      modalMedium: { 'aria-label': 'Request changes', style: { boxSizing: 'border-box', paddingLeft: 8, paddingRight: 8, width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 } },
+      navStyle: { alignSelf: 'stretch', width: s.navOpen ? 320 : 88, flexShrink: 0, padding: '32px 24px', background: '#FFFFFF', boxSizing: 'border-box' },
+      toggleNav: () => this.setState(st => ({ navOpen: !st.navOpen })),
+      goHome: () => this.go('home'),
+      goDashboard: () => this.go('dashboard'),
+
+      isHome: scr === 'home', isDash: scr === 'dashboard', isSuccess: scr === 'success',
+      isFlow: isWizard || isEdit || isReview, isWizard, isEdit, isForm, isFiles, isSummary,
+      greeting: 'Good morning, ' + firstName + '!',
+
+      search: s.search,
+      onSearch: (e) => this.setState({ search: e.target.value }),
+      fCat: s.fCat, fStatus: s.fStatus, fSrc: s.fSrc,
+      showQueue: (this.props.approvalQueue ?? false) && me.canApprove && s.entities.filter(e => e.status === 'pending').length > 0,
+      queueTitle: plural(s.entities.filter(e => e.status === 'pending').length, 'submission') + ' waiting on your approval',
+      queue: s.entities.filter(e => e.status === 'pending').map(e => ({ name: e.name, meta: e.category + ' · ' + (e.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + e.submittedBy + ' · ' + ago(e.submittedAt), label: 'Review ' + e.name, open: () => this.openReview(e.id) })),
+      manageMeta: plural(all.length, 'entity').replace('entitys', 'entities') + ' · organized across ' + plural(allCats, 'category').replace('categorys', 'categories'),
+      createLabel: 'Add new entity',
+      createBody: 'Define an entity, connect its source tables, and configure the fields Sidekick can use.',
+      statusFilterOpts: [{ label: 'All statuses', value: '' }, ...Object.keys(STATUS).map(k => ({ label: STATUS[k].label, value: k }))],
+      setFStatus: (v) => this.setState({ fStatus: v }),
+      catFilterOpts: [{ label: 'All categories', value: '' }, ...CATEGORIES.map(c => ({ label: c, value: c }))],
+      srcFilterOpts: [{ label: 'All sources', value: '' }, ...Object.keys(SOURCES).map(c => ({ label: c, value: c }))],
+      setFCat: (v) => this.setState({ fCat: v }), setFSrc: (v) => this.setState({ fSrc: v }),
+      clearFilters: () => this.setState({ search: '', fCat: '', fStatus: '', fSrc: '' }),
+      groups, hasResults: groups.length > 0, noResults: groups.length === 0,
+      startNew: () => this.go('wizard', { draft: emptyDraft(), draftId: null, step: 1 }),
+      startFresh: () => this.go('wizard', { draft: emptyDraft(), step: 1 }),
+
+      flowTitle, flowSubtitle, flowLabel, steps,
+      form: { category: f.category, entity: f.entity, source: f.source, comment: isEdit ? f.comment : '', commentBy: f.commentBy || '' },
+      categoryOpts: CATEGORIES.map(c => ({ label: c, value: c })),
+      categoryDisabled: isEdit,
+      entityOpts, entityDisabled: !f.category,
+      entityPlaceholder: 'Select entity',
+      sourceOpts: Object.keys(SOURCES).map(c => ({ label: c, value: c })),
+      setCategory: (v) => { if (v !== f.category) this.patchForm({ category: v, entity: '' }); },
+      setEntity: (v) => this.patchForm({ entity: v }),
+      setSource: (v) => { if (v !== f.source) this.patchForm({ source: v, tables: [] }); },
+      noSource: !f.source, hasSource: !!f.source,
+      sourceTables: srcTables.map(name => {
+        const added = addedNames.includes(name); const dragging = s.dragging === name;
+        return {
+          name, added: added ? 'true' : undefined, draggable: !added,
+          aria: added ? name + ', already added' : 'Add ' + name + ' to tables',
+          add: () => { if (!added) this.addTable(name); },
+          dragStart: (e) => { e.dataTransfer.setData('text/plain', name); e.dataTransfer.effectAllowed = 'copy'; this.setState({ dragging: name }); },
+          dragEnd: () => this.setState({ dragging: null, tableDragOver: false }),
+          style: { display: 'flex', alignItems: 'center', gap: 8, height: 40, padding: '0 16px', borderRadius: 8, background: '#FFFFFF', border: dragging ? '1px solid #004488' : '1px solid transparent', boxShadow: dragging ? 'inset 4px 0 0 #004488' : 'none', cursor: added ? 'default' : 'grab', opacity: added ? 0.5 : 1, width: '100%' }
+        };
+      }),
+      formTables: f.tables.map(t => ({ name: t.name, removeLabel: 'Remove ' + t.name, remove: () => this.removeTable(t.name) })),
+      formTablesRaw: f.tables,
+      hasFormTables: f.tables.length > 0, noFormTables: f.tables.length === 0,
+      dropStyle: { display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16, minHeight: 72, padding: 16, borderRadius: 10, background: s.tableDragOver ? '#EBF3F9' : '#FAF9F8', border: '1px dashed #6E6E6D', justifyContent: f.tables.length ? 'flex-start' : 'center' },
+      dropHintStyle: { fontSize: 12, lineHeight: '16px', color: '#6E6E6D', padding: f.tables.length ? '0 16px' : 0 },
+      onTableDragOver: (e) => { e.preventDefault(); if (!s.tableDragOver) this.setState({ tableDragOver: true }); },
+      onTableDragLeave: () => this.setState({ tableDragOver: false }),
+      onTableDrop: (e) => { e.preventDefault(); const n = e.dataTransfer.getData('text/plain'); this.setState({ tableDragOver: false, dragging: null }); this.addTable(n); },
+      onSchemaChange: (tables, info) => {
+        this.patchForm({ tables });
+        if (info && info.type === 'delete') this.toast('Removed ' + info.field + '.', 'info', [{ label: 'Undo', onClick: () => { this.patchForm({ tables: info.prev }); this.setState({ toast: null }); } }]);
+      },
+
+      cats, filesStatus,
+      onFilePicked: (e) => { this.addFiles(this._pickCat, e.target.files); e.target.value = ''; },
+      removeOpen: !!s.removing, removeName: s.removing ? s.removing.name : '', removeCat: s.removing ? CAT_BY_KEY[s.removing.cat].title : '',
+      cancelRemove: () => this.setState({ removing: null }), confirmRemove: () => this.confirmRemove(),
+      modalRemove: { 'aria-label': 'Remove file', style: { boxSizing: 'border-box', paddingLeft: 8, paddingRight: 8, width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 } },
+
+      summaryHeading: isReview ? 'Review & approve' : 'Review & submit',
+      reviewNote, showEditLinks: isWizard,
+      goStep1: () => this.setState({ step: 1 }), goStep2: () => this.setState({ step: 2 }),
+      sum, sumCats, sumMissing: sumMissingCats.length > 0, sumMissingLead, sumMissingRest, addMissing: () => this.goCat(sumMissingCats[0] ? sumMissingCats[0].key : FILE_CATS[0].key),
+      sumTotalText: plural(sumDone.length, 'file') + ' uploaded', sumCoverText: sumCovered === FILE_CATS.length ? 'All ' + FILE_CATS.length + ' categories have files' : sumCovered + ' of ' + FILE_CATS.length + ' categories have files',
+      sumCoverStyle: plain, sumIcon: icoStyle('info_outlined_24', 20, { color: '#4B4B49' }), sumFileIcon: icoStyle('file', 24, { color: '#6E6E6D' }),
+
+      footerHint,
+      nextDisabled: s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2)),
+      nextLabel: s.step === 3 ? (s.submitting ? 'Submitting…' : 'Submit') : 'Next',
+      onNext: () => { if (s.step < 3) { this.setState({ step: s.step + 1, uploadError: '' }); window.scrollTo(0, 0); } else this.submit(); },
+      backToDashboard: () => {
+        this.go('dashboard', isEdit ? { editDraft: null, editId: null } : {});
+      },
+      saveDisabled: !editDirty || !!footerHint,
+      saveEdit: () => this.saveEdit(),
+      showDecision,
+      approving: s.approving, approveLabel: s.approving ? 'Approving…' : 'Approve',
+      approve: () => { this.setState({ approving: true }); setTimeout(() => this.decide(true), 700); },
+      openChanges: () => this.setState({ changes: { text: '', error: false } }),
+
+      changesOpen: !!ch,
+      changesEntity: reviewEnt ? reviewEnt.name : '',
+      changesSubmitter: reviewEnt ? reviewEnt.submittedBy.split(' ')[0] : '',
+      changesText: ch ? ch.text : '',
+      changesInvalid: ch && ch.error ? 'true' : undefined,
+      onChangesText: (e) => this.setState({ changes: { text: e.target.value, error: false } }),
+      changesHelp: ch && ch.error ? 'Add a comment so the submitter knows what to fix.' : 'Required',
+      changesHelpStyle: { fontSize: 12, lineHeight: '16px', color: ch && ch.error ? '#B00000' : '#6E6E6D' },
+      changesStyle: { width: '100%', padding: 16, borderRadius: 10, border: ch && ch.error ? '1.5px solid #B00000' : '1px solid #7D7C7C', fontFamily: "'Nunito Sans', sans-serif", fontSize: 14, lineHeight: '24px', color: '#1F1E1E', resize: 'vertical', boxSizing: 'border-box' },
+      closeChanges: () => this.setState({ changes: null }),
+      sendChanges: () => { const t = (ch && ch.text || '').trim(); if (!t) { this.setState({ changes: { text: ch ? ch.text : '', error: true } }); return; } this.decide(false, t); },
+
+      previewOpen: !!pf, previewTitle: pf ? pf.name : '',
+      previewPdf: !!(pf && pfExt === 'pdf' && pf.url), previewUrl: pf && pf.url ? pf.url : '',
+      previewText: pf && !(pfExt === 'pdf' && pf.url) ? (pf.content != null ? pf.content : pfExt === 'md' ? 'Loading preview…' : '') : '',
+      previewNone: pf && !(pfExt === 'pdf' && pf.url) && pf.content == null && pfExt !== 'md' ? "Preview isn't available for ." + pfExt + ' files. Download the file to view it.' : '',
+      previewMeta: pf && pf.cat ? CAT_BY_KEY[pf.cat].title + ' · ' + sizeText(pf.size || 0) + ' · Uploaded ' + fmtDate(pf.at || Date.now()) + ' by ' + (pf.by || '—') : '',
+      closePreview: () => this.setState({ preview: null }),
+      previewDownload: () => pf && this.download(pf),
+
+      toastOpen: !!s.toast,
+      toastTone: s.toast ? s.toast.tone : 'positive',
+      toastMessage: s.toast ? s.toast.message : '',
+      toastActions: s.toast ? s.toast.actions : [],
+      dismissToast: () => this.setState({ toast: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

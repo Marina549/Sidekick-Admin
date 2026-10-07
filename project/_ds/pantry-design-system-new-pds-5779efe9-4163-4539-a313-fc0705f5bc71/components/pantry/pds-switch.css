@@ -1,0 +1,24 @@
+/* PDS Switch — ported from _switch-pds.scss.
+   Markup: <label class="pds-switch"><input type="checkbox" role="switch">
+             <span class="pds-switch-container"><span class="pds-switch-toggle"><span class="pds-switch-slider"></span></span>
+             <span class="pds-switch-text-label">Label</span></span></label> */
+.pds-switch{display:inline-flex;cursor:pointer;user-select:none}
+.pds-switch input[role="switch"]{appearance:none;-webkit-appearance:none;position:absolute;opacity:0;width:0;height:0;margin:0}
+.pds-switch-container{display:inline-flex;align-items:center;gap:var(--pds-global-space-200)}
+.pds-switch-toggle{position:relative;display:inline-block;flex:none;box-sizing:border-box;border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-medium);width:var(--pds-global-size-width-900);height:var(--pds-global-size-height-500);border-radius:var(--pds-global-border-radius-1000)}
+.pds-switch-slider{position:absolute;top:var(--pds-global-space-50);left:var(--pds-global-space-50);display:inline-block;border-radius:var(--pds-global-border-radius-1000);height:var(--pds-global-size-width-300);width:var(--pds-global-size-height-300);background:var(--pds-theme-color-outline-neutral-medium);transition:transform var(--pds-global-animation-duration-250) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y))}
+.pds-switch-text-label{color:var(--pds-theme-color-foreground-neutral-high);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-200);font-weight:600}
+.pds-switch input[role="switch"]:focus-visible:not(:disabled)~.pds-switch-container{box-shadow:none;border-radius:var(--pds-global-border-radius-100);outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-switch input[role="switch"]:checked~.pds-switch-container>.pds-switch-toggle{background-color:var(--pds-theme-color-background-baseline-inverse);border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-switch input[role="switch"]:checked~.pds-switch-container>.pds-switch-toggle>.pds-switch-slider{transform:translateX(var(--pds-global-space-500));background:var(--pds-theme-color-foreground-on-primary)}
+.pds-switch input[role="switch"]:checked:disabled~.pds-switch-container>.pds-switch-toggle{background-color:var(--pds-theme-color-outline-disabled)}
+.pds-switch input[role="switch"]:checked:disabled~.pds-switch-container>.pds-switch-toggle>.pds-switch-slider{background:var(--pds-theme-color-foreground-on-primary)}
+.pds-switch input[role="switch"]:checked:disabled~.pds-switch-container>.pds-switch-text-label,.pds-switch input[role="switch"]:disabled~.pds-switch-container>.pds-switch-text-label{color:var(--pds-theme-color-foreground-disabled)}
+.pds-switch input[role="switch"]:disabled~.pds-switch-container>.pds-switch-toggle{border-color:var(--pds-theme-color-outline-disabled)}
+.pds-switch input[role="switch"]:disabled~.pds-switch-container>.pds-switch-toggle>.pds-switch-slider{background:var(--pds-theme-color-foreground-disabled)}
+.pds-switch:hover>.pds-switch-container>.pds-switch-toggle{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-switch:active>.pds-switch-container>.pds-switch-toggle{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-switch:hover input:checked~.pds-switch-container>.pds-switch-toggle{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}
+.pds-switch:active input:checked~.pds-switch-container>.pds-switch-toggle{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff)}
+.pds-switch:hover input:disabled~.pds-switch-container>.pds-switch-toggle{cursor:default;background:var(--pds-theme-color-foreground-on-primary)}
+.pds-switch:hover input:checked:disabled~.pds-switch-container>.pds-switch-toggle{cursor:default;background:var(--pds-theme-color-foreground-disabled)}

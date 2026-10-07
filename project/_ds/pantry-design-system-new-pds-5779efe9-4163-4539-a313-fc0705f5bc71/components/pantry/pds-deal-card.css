@@ -1,0 +1,39 @@
+/* PDS Deal Card
+   Markup source : app/views/components/loyalty/coupon-item.html (grid coupon item)
+   Style source  : src/styles/themes/components/loyalty/_coupon-item.scss
+   Class names (coupon-item-tag, grid-coupon-*) kept verbatim. */
+.coupon-item-tag{display:block;padding:var(--pds-global-space-200);box-sizing:border-box}
+.grid-coupon-container{width:100%;box-sizing:border-box;min-height:232px;border:var(--pds-global-border-width-100) solid var(--pds-global-color-general-grey-30);border-radius:var(--pds-global-border-radius-200);background-color:var(--pds-theme-color-background-baseline);box-shadow:0 0 2px rgba(0,0,0,.5);position:relative;font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.grid-coupon-container *{box-sizing:border-box}
+.grid-coupon-heading-text-wrapper{padding-top:var(--pds-global-space-200)}
+.grid-coupon-heading-text{width:100%;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:var(--pds-global-font-size-200);font-weight:700;line-height:var(--pds-global-font-line-height-50);color:var(--pds-theme-color-foreground-neutral-high)}
+.grid-coupon-heading-text .just-for-you-16px{width:32px;height:32px;margin-left:var(--pds-global-space-400)}
+.grid-coupon-heading-offer-price{display:inline-block;width:50%;margin-left:var(--pds-global-space-200);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:var(--pds-global-font-size-200);font-weight:700;line-height:var(--pds-global-font-line-height-50);color:var(--pds-theme-color-foreground-neutral-high)}
+.grid-coupon-heading-offer-price.in-store-price{visibility:hidden;font-size:var(--pds-global-font-size-50);color:var(--pds-theme-color-foreground-neutral-medium);padding-left:43px}
+.grid-coupon-heading-offer-price.in-store-price.in-store-price-visible{visibility:visible}
+.grid-coupon-item-description{display:flex;justify-content:space-between;padding:0 var(--pds-global-space-300) var(--pds-global-space-600) var(--pds-global-space-400)}
+.grid-coupon-text{width:68%}
+.grid-coupon-description-text{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding-right:var(--pds-global-space-100);padding-bottom:var(--pds-global-space-100);font-size:var(--pds-global-font-size-100);font-weight:700;line-height:var(--pds-global-font-line-height-50)}
+.grid-coupon-description-text-title{display:block;overflow:hidden;font-weight:700;font-size:var(--pds-global-font-size-200);line-height:var(--pds-global-font-line-height-50)}
+.grid-coupon-description-text-details-wrapper{font-size:var(--pds-global-font-size-50)}
+.grid-coupon-description-text-details{font-size:var(--pds-global-font-size-50);line-height:var(--pds-global-font-line-height-50);font-weight:400;color:var(--pds-theme-color-foreground-neutral-medium)}
+.grid-coupon-details-link{display:inline-block;margin-top:var(--pds-global-space-50);color:var(--pds-theme-color-foreground-neutral-high);text-decoration:underline;font-weight:700;line-height:var(--pds-global-font-line-height-50);font-size:var(--pds-global-font-size-50);cursor:pointer}
+.grid-coupon-details-link:hover{color:var(--pds-theme-color-background-primary)}
+.grid-coupon-details-link:active{color:var(--pds-theme-color-background-primary);text-decoration:none}
+.grid-coupon-description-image-wrapper{margin-left:var(--pds-global-space-50)}
+.grid-coupon-description-image{display:block;margin:0 auto}
+.grid-coupon-description-image img{width:85px;height:auto;object-fit:contain}
+.grid-coupon-details{padding:0 var(--pds-global-space-400) var(--pds-global-space-400)}
+.grid-coupon-clip-button-wrapper{width:60%}
+.grid-coupon-btn{width:100%;height:40px;display:flex;align-items:center;justify-content:center;padding:0;background-color:var(--pds-theme-color-background-primary);color:var(--pds-theme-color-foreground-on-primary);font-weight:700;font-size:var(--pds-global-font-size-200);line-height:var(--pds-global-font-line-height-100);border:var(--pds-global-border-width-100) solid var(--pds-theme-color-background-primary);border-radius:var(--pds-global-border-radius-1000);cursor:pointer;transition:background-color .35s}
+.grid-coupon-btn:hover{background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-hover) * 100%),var(--pds-theme-color-background-primary));border-color:currentColor}
+.grid-coupon-btn:focus,.grid-coupon-btn:active{background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-pressed) * 100%),var(--pds-theme-color-background-primary))}
+.grid-coupon-clip-button__clipped{position:absolute;bottom:var(--pds-global-space-600);left:var(--pds-global-space-400)}
+.coupon-clipped-container{display:flex;align-items:center;gap:var(--pds-global-space-100);font-size:var(--pds-global-font-size-200);line-height:var(--pds-global-font-line-height-50);font-weight:700;color:var(--pds-theme-color-foreground-neutral-medium)}
+.svg-icon-coupon-carousel-tick-mark{flex:0 0 auto}
+.grid-coupon-exp-date{position:absolute;right:var(--pds-global-space-400);bottom:var(--pds-global-space-600);display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.grid-coupon-details-expiration,.grid-coupon-details-expiration-date{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:var(--pds-global-font-size-50);font-weight:400;line-height:var(--pds-global-font-line-height-50);color:var(--pds-theme-color-foreground-neutral-medium)}
+@media (max-width:767px){
+.grid-coupon-exp-date{bottom:var(--pds-global-space-700)}
+.grid-coupon-clip-button__clipped{bottom:var(--pds-global-space-700)}
+}

@@ -1,0 +1,27 @@
+/* PDS Coupon — offer tile with clip action.
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+.pds-coupon{padding-left:var(--pds-global-space-100);padding-top:var(--pds-global-space-100);padding-bottom:var(--pds-global-space-100);border-radius:var(--pds-global-border-radius-1000);border:var(--pds-global-border-width-100) dashed var(--pds-theme-color-outline-neutral-high);width:fit-content;cursor:pointer;background-color:var(--pds-theme-color-background-baseline);transition:background-color var(--pds-global-animation-duration-250) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y))}
+.pds-coupon:focus-visible{outline:var(--pds-global-border-width-300) solid var(--pds-global-color-general-grey-70);outline-offset:var(--pds-global-border-width-300)}
+.pds-coupon:hover{background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-coupon:active{background-color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-coupon-card{padding-left:var(--pds-global-space-200);padding-right:var(--pds-global-space-200);border-radius:var(--pds-global-border-radius-200);border:none;background-color:var(--pds-global-color-general-sunshine-50);min-height:var(--pds-global-size-height-min-h-600);text-decoration:underline;display:flex;align-items:center;cursor:default}
+.pds-coupon-card:hover,.pds-coupon-card:active{background-color:var(--pds-global-color-general-sunshine-50)}
+.pds-coupon-card:has(.pds-coupon-card__clip-btn[data-initially-disabled]){background-color:var(--pds-theme-color-background-disabled);color:var(--pds-theme-color-foreground-neutral-high-inverse)}
+.pds-coupon-card:has(.pds-coupon-card__clip-btn[data-initially-disabled]) .pds-coupon-card__label{color:var(--pds-theme-color-foreground-neutral-high-inverse)}
+.pds-coupon-card__label:focus-visible{outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high);outline-offset:var(--pds-global-border-width-300);border-radius:var(--pds-global-border-radius-100)}
+.pds-coupon .pds-clip-btn,.pds-coupon .pds-clip-btn-size--small,.pds-coupon .pds-clip-btn-size--large{pointer-events:none}
+.pds-coupon-card .pds-coupon-card__clip-btn{pointer-events:auto;cursor:pointer}
+.pds-coupon-card .pds-coupon-card__clip-btn:disabled{cursor:not-allowed;pointer-events:none;background-color:var(--pds-theme-color-background-baseline) !important}
+.pds-coupon:hover .pds-clip-btn-sunshine{background-color:color-mix(in srgb,var(--pds-global-color-general-sunshine-70) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff);transform:scale(1.1)}
+.pds-coupon:active .pds-clip-btn-sunshine{background-color:color-mix(in srgb,var(--pds-global-color-general-sunshine-70) calc(var(--pds-theme-opacity-pressed) * 100%),#fff);transform:none}
+.pds-coupon--small{padding-right:var(--pds-global-space-300);height:var(--pds-global-size-height-600);gap:var(--pds-global-space-100)}
+.pds-coupon--medium{padding-right:var(--pds-global-space-400);height:var(--pds-global-size-height-800);gap:var(--pds-global-space-200)}
+.pds-coupon--disabled,.pds-coupon:disabled{cursor:not-allowed;pointer-events:none;border-color:var(--pds-theme-color-outline-disabled)}
+.pds-coupon--disabled,.pds-coupon:disabled .pds-clip-btn-size--small,.pds-coupon--disabled,.pds-coupon:disabled .pds-clip-btn-size--large{border-color:var(--pds-theme-color-outline-disabled)}
+.pds-coupon--disabled,.pds-coupon:disabled .pds-clip-btn-sunshine{background-color:var(--pds-theme-color-background-disabled)}
+.pds-coupon--disabled .text-xs-sb,.pds-coupon--disabled .text-s-sb{color:var(--pds-theme-color-foreground-disabled)}
+.pds-coupon--clipped,.pds-coupon--clipped:disabled{background-color:var(--pds-theme-color-background-sunken);border-color:var(--pds-theme-color-outline-neutral-low);border-style:solid}
+.pds-coupon--pending,.pds-coupon--pending:disabled{cursor:not-allowed;pointer-events:none;background-color:var(--pds-theme-color-background-warning);border-color:var(--pds-theme-color-outline-warning)}
+.pds-coupon--pending .text-xs-sb,.pds-coupon--pending .text-s-sb{color:var(--pds-theme-color-foreground-warning)}
+.pds-coupon--pending .pds-clip-btn,.pds-coupon--pending .pds-clip-btn-size--small,.pds-coupon--pending .pds-clip-btn-size--large{border-color:transparent!important;background-color:transparent!important}
+.pds-coupon--pending .pds-clip-btn__icon,.pds-coupon--pending .pds-clip-btn-neutral__icon,.pds-coupon--pending .pds-clip-btn-sunshine__icon{background-color:var(--pds-theme-color-foreground-warning)!important}

@@ -1,0 +1,19 @@
+/* PDS Message Bar — inline status banner (info / warning / positive / error / neutral).
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+.pds-message-bar{padding-top:var(--pds-global-space-200);padding-right:var(--pds-global-space-200);padding-bottom:var(--pds-global-space-300)}
+.pds-message-bar__separator{width:1px;background-color:var(--pds-global-color-general-grey-50)}
+.pds-message-bar__body{width:85%}
+.pds-message-bar__body-center{width:100%;text-align:center}
+.pds-message-bar__body-full-width{width:100%}
+.pds-message-bar__close{top:calc(-1 * var(--pds-global-space-100));position:relative}
+.pds-message-bar__card{width:100%;min-width:var(--pds-global-size-width-min-w-1700);border-radius:var(--pds-global-border-radius-200);padding-left:var(--pds-global-space-300)}
+.pds-message-bar__accent{width:100%;padding-left:var(--pds-global-space-400)}
+.pds-message-bar__accent--warning{border-top:var(--pds-global-border-width-250) solid var(--pds-global-color-general-yellow-50)}
+.pds-message-bar__accent--info{border-top:var(--pds-global-border-width-250) solid var(--pds-global-color-general-blue-40)}
+.pds-message-bar__accent--positive{border-top:var(--pds-global-border-width-250) solid var(--pds-global-color-general-green-40)}
+.pds-message-bar__accent--error{border-top:var(--pds-global-border-width-250) solid var(--pds-global-color-general-red-40)}
+.pds-message-bar--info{background-color:var(--pds-theme-color-background-info)}
+.pds-message-bar--warning{background-color:var(--pds-theme-color-background-warning)}
+.pds-message-bar--positive{background-color:var(--pds-theme-color-background-positive)}
+.pds-message-bar--error{background-color:var(--pds-theme-color-background-error)}
+.pds-message-bar--neutral{background-color:var(--pds-theme-color-background-neutral-low)}

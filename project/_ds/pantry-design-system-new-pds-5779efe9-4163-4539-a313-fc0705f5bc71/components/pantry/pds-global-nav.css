@@ -1,0 +1,47 @@
+/* PDS Global Nav
+   Markup source : app/views/components/navigation-engine/global-nav.html ("Global nav initial state")
+   Style source  : src/styles/themes/components/{primary-bar,secondary-bar,tertiary-bar}/*.scss
+   This is the desktop layout only — the source view's hamburger drawer, mega-menu flyouts and
+   scrolled/mobile states are not ported (out of scope for a design-system specimen). Class names
+   (p_nav, s_nav, t_nav, search__*, icon-container…) are kept verbatim from the source. */
+.p_nav{max-width:1376px;margin:0 auto;background:var(--pds-global-color-general-grey-10,#faf9f8);display:flex;padding-top:var(--pds-global-space-200);height:36px;gap:0}
+.p_nav__link{padding:0 var(--pds-global-space-200) var(--pds-global-space-200) var(--pds-global-space-200);color:var(--pds-theme-color-foreground-neutral-high);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-200);font-weight:400;text-decoration:none}
+.p_nav__link:hover{opacity:.7;font-weight:700;text-decoration:none}
+.p_nav__link--active{font-weight:700;border-bottom:2px solid var(--pds-theme-color-foreground-neutral-high)}
+.s_nav{display:flex;align-items:center;gap:var(--pds-global-space-400);height:72px;padding:0;max-width:1376px;margin:0 auto;background:var(--pds-theme-color-background-baseline)}
+.s_nav--scrolled{height:64px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.s_nav__hamburger_menu{display:none}
+.s_nav__logo{display:flex;align-items:center}
+.s_nav__logo img{height:24px;display:block}
+.s_nav_fulfillment{display:flex;flex-direction:column;justify-content:center;font-size:var(--pds-global-font-size-200);color:var(--pds-global-color-general-grey-90);font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.s_nav_fulfillment_address{display:flex;align-items:center;gap:var(--pds-global-space-100)}
+.s_nav_fulfillment_address-text{font-weight:500;line-height:130%;font-family:var(--pds-global-font-family-poppins),sans-serif;display:flex;align-items:center;gap:2px;color:var(--pds-theme-color-foreground-neutral-high)}
+.s_nav_fulfillment_links{font-size:var(--pds-global-font-size-100);font-weight:600;line-height:145%}
+.s_nav_fulfillment_link{color:var(--pds-theme-color-foreground-neutral-high);text-decoration:underline}
+.s_nav_fulfillment_link:hover{opacity:.7;text-decoration:none}
+.search{max-width:800px;flex:1 0 0;position:relative}
+.search__bar{height:48px;padding:0 var(--pds-global-space-100) 0 var(--pds-global-space-400);border-radius:var(--pds-global-border-radius-1000);border:1px solid var(--pds-theme-color-outline-neutral-low);background:var(--pds-theme-color-background-baseline);display:flex;align-items:center;justify-content:space-between}
+.search__bar:focus-within{outline:var(--pds-global-color-general-grey-70,#6e6e6d) auto 1px}
+.search__bar__input{flex:1 0 0;outline:none;border:none;background:transparent;color:var(--pds-global-color-general-grey-90);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-300);font-weight:400;line-height:145%}
+.search__bar__btn{padding:8px;border-radius:999px;background:transparent;border:none;position:relative;display:inline-flex;cursor:pointer}
+.search__bar__btn:hover{background-color:rgba(31,30,30,.2)}
+.search__bar__icon-search,.search__bar__icon-close{width:24px;height:24px;display:block;background-repeat:no-repeat;background-position:center;background-size:contain}
+.icon-container{display:flex;align-items:center;justify-content:center;gap:var(--pds-global-space-100)}
+.s_bar__account_link,.s_bar__cart_link{display:inline-flex;justify-content:center;align-items:center;gap:6px;color:var(--pds-theme-color-foreground-neutral-high);text-decoration:none;padding:8px;border-radius:999px;position:relative}
+.s_bar__account_link:hover,.s_bar__cart_link:hover{background:var(--pds-global-color-general-grey-20,#f0eeed)}
+.s_bar__account_text{font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:14px;font-weight:600}
+.icon-container img{width:24px;height:24px;display:block}
+.s_badge-icon{position:absolute;top:2px;right:2px;background:var(--pds-theme-color-background-primary,#004488);border-radius:999px;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center}
+.s_badge-text{color:#fff;font-size:9px;font-weight:700;line-height:1;padding:0 3px}
+.t_nav{display:flex;height:34px;align-items:center;gap:12px;background:var(--pds-theme-color-background-baseline);justify-content:space-between;max-width:1376px;margin:0 auto;border-top:1px solid var(--pds-theme-color-outline-neutral-low)}
+.t_nav__categories_wrapper{display:flex;align-items:center;flex:1 0 0}
+.t_nav__categories{align-items:center;list-style:none;display:flex;margin:0;padding:0}
+.t_nav__categories_item{padding:8px 12px;color:var(--pds-global-color-general-grey-90);font-family:var(--pds-global-font-family-poppins),sans-serif;font-size:14px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer}
+.t_nav__categories_item:hover{border-bottom:2px solid var(--pds-global-color-general-grey-90)}
+.t_nav__categories_divider{width:2px;height:18px;background:var(--pds-global-color-general-grey-20,#f0eeed);margin-right:12px}
+.t_nav__campaign{color:var(--pds-global-color-general-grey-90);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:14px;cursor:pointer;white-space:nowrap}
+.t_nav__toolbox_wrapper{display:flex}
+.t_nav__toolbox{align-items:center;list-style:none;display:flex;justify-content:flex-end;margin:0;padding:0}
+.t_nav__toolbox_item{padding-left:12px;color:var(--pds-global-color-general-grey-90);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:14px;white-space:nowrap;cursor:pointer}
+.t_nav__toolbox_item:hover{text-decoration:underline;opacity:.8}
+.t_nav__toolbox_item a.weekly-ad{color:var(--pds-theme-color-foreground-primary,var(--pds-theme-color-background-primary));font-weight:700;text-decoration:none}

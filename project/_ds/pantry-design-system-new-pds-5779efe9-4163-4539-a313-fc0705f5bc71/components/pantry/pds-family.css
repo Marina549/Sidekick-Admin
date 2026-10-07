@@ -1,0 +1,20 @@
+/* PDS Family Members — ported from custom-components/me-dashboard-family-pds.html
+   (pantry-components, custom-components/ subfolder), styled from
+   _me-dashboard-family-pds.scss. Class names kept verbatim. Heading size steps down at
+   tablet/mobile via the same breakpoints as the source (1023px, 767px). */
+.pds-me-dashboard__family-section{padding:var(--pds-global-space-300) var(--pds-global-space-400);border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);border-radius:var(--pds-global-border-radius-200);font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-me-dashboard__family-title-container{display:flex;flex-direction:row;align-items:center;margin-bottom:var(--pds-global-space-300)}
+.pds-me-dashboard__family-title{margin:0;margin-right:var(--pds-global-space-100);font-size:var(--pds-global-font-size-600);font-weight:500;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-me-dashboard__family-view-all{margin-left:var(--pds-global-space-200);color:var(--pds-theme-color-background-primary);font-size:var(--pds-global-font-size-200);font-weight:700;text-decoration:underline}
+.pds-me-dashboard__family-avatars{display:flex;flex-direction:row;margin:var(--pds-global-space-100) 0}
+.pds-me-dashboard__avatar{display:flex;align-items:center;justify-content:center;width:var(--pds-global-size-width-600);height:var(--pds-global-size-height-600);flex-shrink:0;background-color:var(--pds-theme-color-background-neutral-low);border-radius:var(--pds-global-border-radius-1000);box-shadow:var(--pds-global-shadow-low-bottom);font-size:var(--pds-global-font-size-100);font-weight:700;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-me-dashboard__avatar+.pds-me-dashboard__avatar{margin-left:calc(-1 * var(--pds-global-space-50))}
+.pds-me-dashboard__avatar-blue{background-color:var(--pds-global-color-general-blue-20)}
+.pds-me-dashboard__avatar-purple{background-color:var(--pds-global-color-general-purple-20)}
+.pds-me-dashboard__avatar-red{background-color:var(--pds-global-color-general-red-20)}
+.pds-me-dashboard__avatar-orange{background-color:var(--pds-global-color-general-orange-20)}
+.pds-me-dashboard__avatar-yellow{background-color:var(--pds-global-color-general-yellow-20)}
+.pds-me-dashboard__avatar-green{background-color:var(--pds-global-color-general-green-20)}
+.pds-me-dashboard__info-msg{color:var(--pds-theme-color-foreground-neutral-medium);font-size:var(--pds-global-font-size-200)}
+@media (max-width:1023px){.pds-me-dashboard__family-title{font-size:var(--pds-global-font-size-500)}}
+@media (max-width:767px){.pds-me-dashboard__family-title{font-size:var(--pds-global-font-size-300)}}

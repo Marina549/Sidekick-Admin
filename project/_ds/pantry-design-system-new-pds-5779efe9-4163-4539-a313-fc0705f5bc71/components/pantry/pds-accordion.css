@@ -1,0 +1,4 @@
+/* PDS Accordion — ported from _accordion-pds.scss.
+   The header toggles which caret glyph is visible via aria-expanded. */
+.pds-accordion:hover{background:var(--pds-global-color-general-grey-20)}
+.pds-accordion__header[aria-expanded="true"] .svg-caret-expand-md,.pds-accordion__header[aria-expanded="false"] .svg-caret-collapse-md{display:none}

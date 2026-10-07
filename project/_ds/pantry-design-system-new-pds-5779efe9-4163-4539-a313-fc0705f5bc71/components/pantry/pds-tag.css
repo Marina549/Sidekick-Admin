@@ -1,0 +1,29 @@
+/* PDS Tag — ported from _tag-pds.scss.
+   Markup: <div class="pds-tag pds-tag-primary-colors--PRIMARY"><span class="text-s-sb">Label</span></div> */
+.pds-tag{display:inline-flex;align-items:center;height:auto;width:fit-content;border-radius:var(--pds-global-border-radius-100);padding:var(--pds-global-space-50) var(--pds-global-space-100);line-height:var(--pds-global-font-line-height-50)}
+.pds-tag__none{border-radius:var(--pds-global-border-radius-0)}
+.pds-tag-sizes--xsmall{padding:var(--pds-global-space-0) var(--pds-global-space-50);border-radius:var(--pds-global-border-radius-50)}
+.pds-tag-sizes--medium{padding:var(--pds-global-space-100) var(--pds-global-space-200);border-radius:var(--pds-global-border-radius-200)}
+.pds-tag--diagonal-corners{border-radius:var(--pds-global-border-radius-0) var(--pds-global-border-radius-200) var(--pds-global-border-radius-0) var(--pds-global-border-radius-200)}
+@media screen and (max-width:767px){.pds-tag--diagonal-corners{padding:var(--pds-global-space-50) var(--pds-global-space-100);border-radius:var(--pds-global-border-radius-0) var(--pds-global-border-radius-100) var(--pds-global-border-radius-0) var(--pds-global-border-radius-100)}.pds-tag--diagonal-corners .text-s{font-size:var(--pds-global-font-size-50)!important}.pds-tag--diagonal-corners .link-s,.pds-tag--diagonal-corners span[aria-hidden]{display:none}}
+
+.pds-tag-primary-colors--PRIMARY{background-color:var(--pds-theme-color-background-primary-low)}
+.pds-tag-primary-colors--blueberry{background-color:var(--pds-global-color-general-blue-20)}
+.pds-tag-primary-colors--raspberry{background-color:var(--pds-global-color-general-red-20)}
+.pds-tag-primary-colors--lime{background-color:var(--pds-global-color-general-green-20)}
+.pds-tag-primary-colors--banana{background-color:var(--pds-global-color-general-yellow-20)}
+.pds-tag-primary-colors--honey{background-color:var(--pds-global-color-general-orange-20)}
+.pds-tag-primary-colors--caramel{background-color:var(--pds-global-color-general-amber-20)}
+.pds-tag-primary-colors--sunshine{background-color:var(--pds-global-color-general-sunshine-20)}
+.pds-tag-primary-colors--limeInverse{background-color:var(--pds-global-color-general-green-50);color:var(--pds-theme-color-foreground-on-primary)}
+.pds-tag-primary-colors--neutral{background-color:var(--pds-global-color-general-grey-30)}
+.pds-tag-primary-colors--whiteTransparent{background-color:var(--pds-global-color-general-white-a90);color:var(--pds-theme-color-outline-neutral-high)}
+.pds-tag-primary-colors--blacktransparent{background-color:var(--pds-global-color-general-black-a70);color:var(--pds-theme-color-outline-neutral-high-inverse)}
+.pds-tag-primary-colors--plum{background-color:var(--pds-global-color-general-purple-20)}
+
+.pds-tag-interactive{text-decoration:underline;border:none}
+.pds-tag:focus-visible{box-shadow:none;outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-tag-icon-small{margin-right:var(--pds-global-space-50)}
+.pds-tag-icon-medium{margin-right:var(--pds-global-space-100)}
+.pds-tag-low-price{transform:translateY(var(--pds-global-space-50))}
+.pds-tag-low-price--redwood60{color:var(--pds-global-color-brand-redwood-60)}

@@ -1,0 +1,26 @@
+/* PDS Promo Banner — markup source: app/views/components/content/banner-carousel.html,
+   carousel-banner-unit-medium.html (flex-medium-fw, banner-unit-medium, banner-unit-hero).
+   Style source: _banner-carousel.scss, _carousel-banner-unit-medium.scss. */
+.pds-promo-banner{display:flex;min-height:220px;border-radius:var(--pds-global-border-radius-200);overflow:hidden;font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-promo-banner__plate{flex:1 1 55%;display:flex;flex-direction:column;justify-content:center;gap:var(--pds-global-space-300);padding:var(--pds-global-space-600)}
+.pds-promo-banner__heading{font-family:var(--pds-global-font-family-poppins),sans-serif;font-size:var(--pds-global-font-size-500);font-weight:500}
+.pds-promo-banner__desc-wrap{display:flex;flex-direction:column;gap:var(--pds-global-space-300)}
+.pds-promo-banner__desc{font-size:var(--pds-global-font-size-200);line-height:1.4}
+.pds-promo-banner__cta{font-size:var(--pds-global-font-size-200);font-weight:700;text-decoration:underline;align-self:flex-start}
+.pds-promo-banner__img-wrap{position:relative;flex:1 1 45%;min-width:0}
+.pds-promo-banner__img{display:block;width:100%;height:100%;object-fit:cover}
+.pds-promo-banner__tag{position:absolute;top:var(--pds-global-space-300);right:var(--pds-global-space-300)}
+
+.pds-promo-banner--hero{position:relative;border-radius:var(--pds-global-border-radius-200);overflow:hidden;min-height:420px}
+.pds-promo-banner--hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.pds-promo-banner--hero__plate{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--pds-global-space-300);max-width:420px;margin:auto 0 var(--pds-global-space-800) var(--pds-global-space-800);padding:var(--pds-global-space-500);border-radius:var(--pds-global-border-radius-200);background:color-mix(in srgb, var(--pds-global-color-general-white-a100) 88%, transparent)}
+.pds-promo-banner--hero__title{margin:0;font-family:var(--pds-global-font-family-poppins),sans-serif;font-size:var(--pds-global-font-size-700);font-weight:500;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-promo-banner--hero__desc{margin:0;font-size:var(--pds-global-font-size-200);color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-promo-banner--hero__cta{align-self:flex-start}
+.pds-promo-banner--hero__disclaimer{font-size:var(--pds-global-font-size-100);text-decoration:underline;color:var(--pds-theme-color-foreground-neutral-medium)}
+
+@media only screen and (max-width:767.98px){
+.pds-promo-banner{flex-direction:column;min-height:0}
+.pds-promo-banner__plate{padding:var(--pds-global-space-400)}
+.pds-promo-banner--hero__plate{margin:var(--pds-global-space-400);max-width:none}
+}

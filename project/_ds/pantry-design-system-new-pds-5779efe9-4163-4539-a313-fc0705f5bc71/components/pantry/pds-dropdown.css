@@ -1,0 +1,22 @@
+/* PDS Dropdown — ported from _pds-dropdown.scss. BEM block with --open / --pounds modifiers. */
+.pds-dropdown__wrapper{position:relative;display:inline-block}
+.pds-dropdown__panel{position:absolute;top:calc(100% + var(--pds-global-space-100));left:var(--pds-global-space-0);width:auto;display:flex;flex-direction:column;min-height:var(--pds-global-size-height-min-h-2100);max-height:var(--pds-global-size-height-max-h-2300);background:var(--pds-theme-color-background-baseline);border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);border-radius:var(--pds-global-border-radius-200);box-shadow:var(--pds-global-shadow-medium-bottom);overflow:hidden;z-index:999;opacity:var(--pds-global-opacity-0);transform:translateY(-8px) scaleY(0.96);transform-origin:top left;pointer-events:none;transition:opacity var(--pds-global-animation-duration-350) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y)),transform var(--pds-global-animation-duration-350) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y))}
+.pds-dropdown__panel--open{opacity:var(--pds-global-opacity-1000);transform:translateY(0) scaleY(1);pointer-events:auto}
+.pds-dropdown__panel--pounds{width:var(--pds-global-size-width-1900)}
+/* Switches from wrapper-relative (absolute) to viewport-relative (fixed) and caps height so the
+   list scrolls instead of overflowing. */
+.pds-dropdown__panel--fixed{position:fixed;max-height:min(var(--pds-global-size-height-max-h-2300),calc(100vh - var(--pds-global-space-400)));max-width:calc(100vw - var(--pds-global-space-400))}
+/* Applied when the panel opens above the trigger — flips the scale animation's origin. */
+.pds-dropdown__panel--flips-up{transform-origin:bottom left}
+.pds-dropdown__list{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:var(--pds-global-space-100) var(--pds-global-space-0);scrollbar-width:thin;scrollbar-color:var(--pds-global-color-general-grey-30) var(--pds-global-color-general-grey-10)}
+.pds-dropdown__list::-webkit-scrollbar{width:var(--pds-global-space-100)}
+.pds-dropdown__list::-webkit-scrollbar-track{background:var(--pds-global-color-general-grey-10);border-radius:var(--pds-global-border-radius-50)}
+.pds-dropdown__list::-webkit-scrollbar-thumb{background-color:var(--pds-global-color-general-grey-30);border-radius:var(--pds-global-border-radius-50)}
+.pds-dropdown__option{display:flex;align-items:center;justify-content:space-between;padding:var(--pds-global-space-200) var(--pds-global-space-400);cursor:pointer;border:none;border-bottom:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);background:transparent;width:100%;text-align:left;font-family:var(--pds-global-font-family-nunito-sans),sans-serif;transition:background var(--pds-global-animation-duration-100) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y))}
+.pds-dropdown__option:last-child{border-bottom:none}
+.pds-dropdown__option:hover{background:var(--pds-theme-color-background-neutral-low)}
+.pds-dropdown__option--pounds{justify-content:flex-start}
+.pds-dropdown__footer{padding:var(--pds-global-space-400);display:flex;flex-direction:column;align-items:center;justify-content:space-between;border-top:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low)}
+.pds-dropdown__footer-info{display:flex;flex-direction:column;gap:var(--pds-global-space-50);width:100%}
+.pds-dropdown__footer-info-row{display:flex;align-items:center;justify-content:space-between}
+.pds-dropdown__footer-info-row-total{color:var(--pds-theme-color-background-primary)}

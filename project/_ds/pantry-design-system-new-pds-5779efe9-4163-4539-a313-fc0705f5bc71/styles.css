@@ -1,0 +1,64 @@
+/* Pantry Design System (PDS) — Global CSS entry point
+   Import this single file to consume the full token set and the pds-* component classes.
+
+   Layer order matters: primitives, then themes, then the component classes that read them. */
+
+/* Foundations — generated from the Pantry design-token source (tokens/source/*.json) */
+@import './tokens/pds-global.css';
+@import './tokens/pds-themes.css';
+
+/* Auxiliary layers: @font-face declarations and the named role aliases */
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+
+/* PDS component classes — ported from the brand-guidelines SCSS, tokens used in the rules */
+@import './components/pantry/pds-typography.css';
+@import './components/pantry/pds-icons.css';
+@import './components/pantry/pds-animation-presets.css';
+@import './components/pantry/pds-animation-container.css';
+@import './components/pantry/pds-buttons.css';
+@import './components/pantry/pds-icon-buttons.css';
+@import './components/pantry/pds-clip-button.css';
+@import './components/pantry/pds-chips.css';
+@import './components/pantry/pds-tag.css';
+@import './components/pantry/pds-accent-tag.css';
+@import './components/pantry/pds-checkbox.css';
+@import './components/pantry/pds-radio.css';
+@import './components/pantry/pds-switch.css';
+@import './components/pantry/pds-input-field.css';
+@import './components/pantry/pds-quantity-stepper.css';
+@import './components/pantry/pds-dropdown.css';
+@import './components/pantry/pds-accordion.css';
+@import './components/pantry/pds-message-bar.css';
+@import './components/pantry/pds-toasts.css';
+@import './components/pantry/pds-modal.css';
+@import './components/pantry/pds-card.css';
+@import './components/pantry/pds-coupon.css';
+@import './components/pantry/pds-image-container.css';
+@import './components/pantry/pds-product-card.css';
+@import './components/pantry/pds-filter-panel.css';
+@import './components/pantry/pds-account-nav.css';
+@import './components/pantry/pds-family.css';
+@import './components/pantry/pds-profile.css';
+@import './components/pantry/pds-preferences.css';
+@import './components/pantry/pds-celebrations.css';
+@import './components/pantry/pds-header.css';
+@import './components/pantry/pds-loading.css';
+@import './components/pantry/pds-global-nav.css';
+@import './components/pantry/pds-deal-card.css';
+@import './components/pantry/pds-meals-recipes-card.css';
+@import './components/pantry/pds-carousel.css';
+@import './components/pantry/pds-promo-banner.css';
+@import './components/pantry/pds-bundle-card.css';
+
+/* Box model reset — the brand-guidelines pages load Bootstrap, which applies border-box
+   globally, and the pds-* SCSS math depends on it (e.g. the card grid's fixed width plus its
+   own padding has to equal its column). Declared here so consumers get the same baseline
+   rather than needing per-component overrides. */
+*,*::before,*::after{box-sizing:border-box}
+
+/* Link defaults so authored links never fall back to browser blue */
+a{color:var(--pds-theme-color-foreground-neutral-high);text-decoration:var(--pds-global-font-text-decoration-underline)}
+a:hover{color:color-mix(in srgb,var(--pds-theme-color-foreground-neutral-high) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}

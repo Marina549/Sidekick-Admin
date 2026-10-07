@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-buttons.css">
+  <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-typography.css">
+  <script src="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/_ds_bundle.js"></script>
+</helmet>
+<div role="table" aria-label="Schema annotation" style="{{ rootStyle }}">
+  <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); border-bottom: 1px solid #E5E4E3; box-sizing: border-box; background: #FFFFFF;">
+    <span role="columnheader" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">Field</span>
+    <span role="columnheader" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">Description</span>
+    <span></span>
+  </div>
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 32px 24px;">
+      <img src="assets/ill-no-tables.png" alt="" width="104" height="80" style="display: block; object-fit: contain;">
+      <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 20px; line-height: 30px; color: #6E6E6D;">{{ emptyTitle }}</span>
+      <span style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ emptyText }}</span>
+    </div>
+  </sc-if>
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+    <div role="rowgroup" aria-label="{{ g.name }}" style="{{ g.style }}">
+      <div role="row" style="display: flex; align-items: center; min-height: 40px; padding: 16px var(--st-px, 24px) 8px; box-sizing: border-box;">
+        <span role="cell" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">{{ g.name }}</span>
+      </div>
+      <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+        <div>
+          <sc-if value="{{ r.isView }}" hint-placeholder-val="{{ true }}">
+            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
+              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; padding-right: 16px;">{{ r.desc }}</span>
+              <div style="display: flex; justify-content: flex-end; align-items: center;">
+                <sc-if value="{{ editable }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; align-items: center;">
+                    <button type="button" aria-label="{{ r.editLabel }}" onClick="{{ r.onEdit }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #002D56;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><img src="assets/icons/c/edit_outlined_16-navy.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"></button>
+                    <button type="button" aria-label="{{ r.deleteLabel }}" onClick="{{ r.onDelete }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #002D56;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><img src="assets/icons/c/trash_outlined_16-navy.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"></button>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ r.isEmpty }}" hint-placeholder-val="{{ false }}">
+            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
+              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <div role="cell" style="padding-right: 16px;">
+                <button type="button" onClick="{{ r.onEdit }}" aria-label="{{ r.addLabel }}" style="display: flex; align-items: center; width: 100%; max-width: 656px; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1px solid #7D7C7C; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #6E6E6D; text-align: left; cursor: text;" style-hover="border-color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">Add description</button>
+              </div>
+              <div style="display: flex; justify-content: flex-end; align-items: center;">
+                <button type="button" aria-label="{{ r.deleteLabel }}" onClick="{{ r.onDelete }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #002D56;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><img src="assets/icons/c/trash_outlined_16-navy.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"></button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ r.isEditing }}" hint-placeholder-val="{{ false }}">
+            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr); align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
+              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; padding-top: 8px; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <div role="cell" style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; white-space: nowrap;">
+                <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">
+                  <input type="text" aria-label="{{ r.inputLabel }}" value="{{ draftText }}" onChange="{{ onDraftText }}" onKeyDown="{{ onKey }}" autoFocus="{{ true }}" disabled="{{ generating }}" placeholder="Add description" style="flex: 1; min-width: 160px; max-width: 656px; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1.5px solid #1F1E1E; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">
+                  <div style="display: flex; gap: 8px;">
+                    <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-m-sb" onClick="{{ cancelEdit }}" hint-size="88px,32px">Cancel</x-import>
+                    <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="small" className="text-m-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="80px,32px">Save</x-import>
+                  </div>
+                </div>
+                <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-m-sb" disabled="{{ generating }}" onClick="{{ generate }}" style="width: auto;" hint-size="160px,32px">{{ generateLabel }}</x-import>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <sc-if value="{{ g.isAdding }}" hint-placeholder-val="{{ false }}">
+        <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr); column-gap: 0; align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
+          <div role="cell" style="padding-right: 16px;">
+            <input type="text" aria-label="New field name" value="{{ draftName }}" onChange="{{ onDraftName }}" onKeyDown="{{ onKey }}" autoFocus="{{ true }}" placeholder="Field name" style="width: 100%; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1.5px solid #1F1E1E; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">
+            <sc-if value="{{ nameError }}" hint-placeholder-val="{{ false }}">
+              <span style="display: block; font-size: 12px; line-height: 16px; color: #B00000; padding-top: 8px;">{{ nameError }}</span>
+            </sc-if>
+          </div>
+          <div role="cell" style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; white-space: nowrap;">
+            <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">
+              <input type="text" aria-label="New field description" value="{{ draftText }}" onChange="{{ onDraftText }}" onKeyDown="{{ onKey }}" disabled="{{ generating }}" placeholder="Add description" style="flex: 1; min-width: 160px; max-width: 656px; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1.5px solid #1F1E1E; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">
+              <div style="display: flex; gap: 8px;">
+                <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-m-sb" onClick="{{ cancelEdit }}" hint-size="88px,32px">Cancel</x-import>
+                <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="small" className="text-m-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="80px,32px">Save</x-import>
+              </div>
+            </div>
+            <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-m-sb" disabled="{{ generateNewDisabled }}" onClick="{{ generate }}" style="width: auto;" hint-size="160px,32px">{{ generateLabel }}</x-import>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ editable }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
+          <button type="button" onClick="{{ g.onAdd }}" aria-label="{{ g.addLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 14px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+            <img src="assets/icons/c/plus_outlined_24-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;">
+            <span>Add field</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:480},&quot;tables&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{name:string,fields:Array&lt;{name:string,desc:string}&gt;}&gt;&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;emptyTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;No tables mapped yet&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;emptyText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(tables, info)=&gt;void&quot;}}">
+class Component extends DCLogic {
+  state = { edit: null, text: '', name: '', generating: false, nameError: '' };
+  static AI = {
+    on_time_flag: '1 when tilled before stage-by time',
+    coe_score: 'Composite center-of-excellence score for the store, 0–100',
+    updated_at: 'Timestamp the flash status was last refreshed',
+    avg_wait_min: 'Average customer wait at handoff, in minutes',
+    event_type: 'Order lifecycle event, e.g. picked, staged, handed off',
+    sub_accepted: '1 when the customer accepted the substitution',
+    session_minutes: 'Minutes from first scan to last scan in the session'
+  };
+  humanize(n) { const s = String(n).replace(/[_-]+/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); }
+  emit(tables, info) { this.props.onChange && this.props.onChange(tables, info); }
+  clone() { return (this.props.tables || []).map(t => ({ ...t, fields: t.fields.map(f => ({ ...f })) })); }
+  startEdit(t, f, text) { this.setState({ edit: { t, f }, text: text || '', name: '', generating: false, nameError: '' }); }
+  startAdd(t) { this.setState({ edit: { t, f: -1 }, text: '', name: '', generating: false, nameError: '' }); }
+  cancel = () => { clearTimeout(this._gen); this.setState({ edit: null, text: '', name: '', generating: false, nameError: '' }); };
+  save = () => {
+    const e = this.state.edit; if (!e) return;
+    const text = this.state.text.trim(); if (!text) return;
+    const tables = this.clone();
+    if (e.f === -1) {
+      const name = this.state.name.trim();
+      if (!name) { this.setState({ nameError: 'Give the field a name.' }); return; }
+      if (tables[e.t].fields.some(x => x.name === name)) { this.setState({ nameError: 'That field already exists in this table.' }); return; }
+      tables[e.t].fields.push({ name, desc: text });
+      this.emit(tables, { type: 'add', table: tables[e.t].name, field: name });
+    } else {
+      tables[e.t].fields[e.f].desc = text;
+      this.emit(tables, { type: 'edit' });
+    }
+    this.cancel();
+  };
+  generate = () => {
+    const e = this.state.edit; if (!e) return;
+    const tables = this.props.tables || [];
+    const name = e.f === -1 ? this.state.name.trim() : tables[e.t].fields[e.f].name;
+    if (!name) return;
+    this.setState({ generating: true });
+    this._gen = setTimeout(() => {
+      this.setState({ generating: false, text: Component.AI[name] || (this.humanize(name) + ' for this entity') });
+    }, 1200);
+  };
+  del(t, f) {
+    const prev = this.clone(); const tables = this.clone();
+    const removed = tables[t].fields.splice(f, 1)[0];
+    if (this.state.edit && this.state.edit.t === t) this.cancel();
+    this.emit(tables, { type: 'delete', field: removed.name, prev });
+  }
+  componentWillUnmount() { clearTimeout(this._gen); }
+  renderVals() {
+    const editable = !!this.props.editable;
+    const e = this.state.edit;
+    const tables = this.props.tables || [];
+    const groups = tables.map((t, ti) => ({
+      name: t.name,
+      style: { borderTop: ti > 0 ? '1px solid #E5E4E3' : 'none', marginTop: ti > 0 ? 8 : 0 },
+      isAdding: editable && !!e && e.t === ti && e.f === -1,
+      addLabel: 'Add field to ' + t.name,
+      onAdd: () => this.startAdd(ti),
+      rows: t.fields.map((f, fi) => {
+        const editing = editable && !!e && e.t === ti && e.f === fi;
+        const hasDesc = !!(f.desc && f.desc.trim());
+        return {
+          name: f.name, desc: f.desc,
+          isEditing: editing,
+          isEmpty: editable && !editing && !hasDesc,
+          isView: !editing && (hasDesc || !editable),
+          editLabel: 'Edit description for ' + f.name,
+          deleteLabel: 'Delete field ' + f.name,
+          addLabel: 'Add description for ' + f.name,
+          inputLabel: 'Description for ' + f.name,
+          onEdit: () => this.startEdit(ti, fi, f.desc),
+          onDelete: () => this.del(ti, fi)
+        };
+      })
+    }));
+    return {
+      rootStyle: { width: '100%', border: 'none', borderRadius: 0, overflow: 'hidden', background: '#FFFFFF', fontFamily: "'Nunito Sans', sans-serif", boxSizing: 'border-box', '--st-px': '24px' },
+      editable, groups,
+      isEmpty: tables.length === 0,
+      emptyTitle: this.props.emptyTitle ?? 'No tables mapped yet',
+      emptyText: this.props.emptyText ?? '',
+      draftText: this.state.text,
+      draftName: this.state.name,
+      nameError: this.state.nameError,
+      generating: this.state.generating,
+      generateLabel: this.state.generating ? 'Generating…' : 'Generate with AI',
+      generateNewDisabled: this.state.generating || !this.state.name.trim(),
+      saveDisabled: this.state.generating || !this.state.text.trim(),
+      onDraftText: (ev) => this.setState({ text: ev.target.value }),
+      onDraftName: (ev) => this.setState({ name: ev.target.value, nameError: '' }),
+      onKey: (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); this.save(); } if (ev.key === 'Escape') this.cancel(); },
+      cancelEdit: this.cancel,
+      saveEdit: this.save,
+      generate: this.generate
+    };
+  }
+}
+</script>
+</body>
+</html>

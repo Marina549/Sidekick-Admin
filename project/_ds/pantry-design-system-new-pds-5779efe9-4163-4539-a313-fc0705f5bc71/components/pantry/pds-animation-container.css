@@ -1,0 +1,50 @@
+/* PDS Animation Container — ported from _animation-container-pds.scss.
+   Holds an animated asset (dotLottie or <video>) with a required static fallback image,
+   an optional control slot, and Reduce-Motion / load-failure degradation. */
+.pds-animation-container{--pds-animation-container-aspect-ratio:1 / 1;/* @kind other */--pds-animation-container-radius:var(--pds-global-border-radius-300);/* @kind other */--pds-animation-container-inset:var(--pds-global-space-200);/* @kind other */position:relative;display:block;box-sizing:border-box;overflow:hidden;background-color:var(--pds-theme-color-background-baseline);border:none;padding:var(--pds-animation-container-inset);aspect-ratio:var(--pds-animation-container-aspect-ratio);border-radius:var(--pds-animation-container-radius)}
+/* The root also carries .pds-card-container, which sets its own padding/radius at equal
+   specificity (including an 8px mobile override). Qualifying on both keeps the inset and
+   radius modifiers authoritative regardless of import order or viewport. */
+.pds-animation-container.pds-card-container{padding:var(--pds-animation-container-inset);border-radius:var(--pds-animation-container-radius)}
+.pds-animation-container--ratio-square{--pds-animation-container-aspect-ratio:1 / 1;/* @kind other */}
+/* --ratio-custom carries no declaration: the consumer overrides
+   --pds-animation-container-aspect-ratio inline. */
+.pds-animation-container--radius-none{--pds-animation-container-radius:0;/* @kind other */}
+.pds-animation-container--radius-small{--pds-animation-container-radius:var(--pds-global-border-radius-200);/* @kind other */}
+.pds-animation-container--radius-medium{--pds-animation-container-radius:var(--pds-global-border-radius-300);/* @kind other */}
+.pds-animation-container--radius-large{--pds-animation-container-radius:var(--pds-global-border-radius-400);/* @kind other */}
+.pds-animation-container--outline{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low)}
+/* Side modifiers rely on --outline for style/colour; zero every side then restore the
+   requested one, so several compose when applied together. */
+.pds-animation-container--outline-top,.pds-animation-container--outline-right,.pds-animation-container--outline-bottom,.pds-animation-container--outline-left{border-width:0}
+.pds-animation-container--outline-top{border-top-width:var(--pds-global-border-width-100)}
+.pds-animation-container--outline-right{border-right-width:var(--pds-global-border-width-100)}
+.pds-animation-container--outline-bottom{border-bottom-width:var(--pds-global-border-width-100)}
+.pds-animation-container--outline-left{border-left-width:var(--pds-global-border-width-100)}
+.pds-animation-container--padding-small{--pds-animation-container-inset:var(--pds-global-space-200);/* @kind other */}
+.pds-animation-container--padding-medium{--pds-animation-container-inset:var(--pds-global-space-400);/* @kind other */}
+.pds-animation-container--padding-none{--pds-animation-container-inset:0;/* @kind other */}
+/* Nests inside the outer radius by the current inset, clamped so a large inset (or
+   --radius-none) never pushes the inner radius negative. */
+.pds-animation-container__media{position:relative;overflow:hidden;width:100%;height:100%;border-radius:max(calc(var(--pds-animation-container-radius) - var(--pds-animation-container-inset)),0px)}
+.pds-animation-container__animation,.pds-animation-container__fallback{display:block;width:100%;height:100%;object-fit:contain;transition:opacity var(--pds-global-animation-duration-150) cubic-bezier(var(--pds-global-animation-easing-standard-p1x),var(--pds-global-animation-easing-standard-p1y),var(--pds-global-animation-easing-standard-p2x),var(--pds-global-animation-easing-standard-p2y))}
+.pds-animation-container__fallback{position:absolute;inset:0;opacity:1}
+.pds-animation-container__animation{opacity:1}
+.pds-animation-container__slot{position:absolute;right:var(--pds-animation-container-inset);bottom:var(--pds-animation-container-inset);z-index:1;pointer-events:none}
+.pds-animation-container__slot>*{pointer-events:auto}
+.pds-animation-container__control[hidden]{display:none!important}
+/* The fallback is the presented content until the animation proves it can render (is-ready),
+   so a 404 or a player that never upgrades degrades to the image instead of an empty box.
+   is-fallback (load error / Reduce Motion) then wins over is-ready to bring it back. */
+.pds-animation-container.is-ready .pds-animation-container__fallback{opacity:0}
+.pds-animation-container.is-fallback .pds-animation-container__fallback{opacity:1}
+.pds-animation-container.is-fallback .pds-animation-container__animation{opacity:0}
+@media (prefers-reduced-motion: reduce){.pds-animation-container__fallback,.pds-animation-container__animation{transition:none}}
+
+/* pds_svg_play/pause/undo_outlined_24 — the control glyphs, generated from
+   src/static/pantry-icons/icons/ and defined locally (same pattern as the arrow glyphs in
+   pds-card.css) since pds-icons.css has no masks for them yet. */
+.pds_svg_play_outlined_24,.pds_svg_pause_outlined_24,.pds_svg_undo_outlined_24{display:inline-block;flex:none;width:24px;height:24px;mask-size:cover;-webkit-mask-size:cover;background-color:currentColor}
+.pds_svg_play_outlined_24{mask:url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8.64336%205.36173C8.41195%205.21932%208.12161%205.21321%207.88441%205.34576C7.64721%205.47831%207.50024%205.72878%207.50024%206.0005V18.0005C7.50024%2018.2722%207.64721%2018.5227%207.88441%2018.6552C8.12161%2018.7878%208.41195%2018.7817%208.64336%2018.6393L18.3934%2012.6393C18.6152%2012.5028%2018.7503%2012.261%2018.7503%2012.0005C18.7503%2011.74%2018.6152%2011.4982%2018.3934%2011.3617L8.64336%205.36173Z%22%20fill%3D%22%231F1E1E%22%2F%3E%3C%2Fsvg%3E") no-repeat 50% 50%}
+.pds_svg_pause_outlined_24{mask:url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M6%2018V6C6%205.17157%206.67157%204.5%207.5%204.5C8.32843%204.5%209%205.17157%209%206V18C9%2018.8284%208.32843%2019.5%207.5%2019.5C6.67157%2019.5%206%2018.8284%206%2018Z%22%20fill%3D%22%231F1E1E%22%2F%3E%3Cpath%20d%3D%22M15%2018V6C15%205.17157%2015.6716%204.5%2016.5%204.5C17.3284%204.5%2018%205.17157%2018%206V18C18%2018.8284%2017.3284%2019.5%2016.5%2019.5C15.6716%2019.5%2015%2018.8284%2015%2018Z%22%20fill%3D%22%231F1E1E%22%2F%3E%3C%2Fsvg%3E") no-repeat 50% 50%}
+.pds_svg_undo_outlined_24{mask:url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12.2828%201.67389C9.87397%201.81067%207.58711%202.77844%205.81185%204.4123C4.33064%205.77553%203.28205%207.5321%202.78028%209.46437L1.53321%206.78938C1.35819%206.41396%200.911971%206.2515%200.53655%206.42652C0.161128%206.60154%20-0.00132897%207.04776%200.17369%207.42318L2.38219%2012.1605C2.48227%2012.3751%202.67788%2012.5299%202.90982%2012.578C3.14175%2012.626%203.38275%2012.5617%203.55988%2012.4044L7.62879%208.79207C7.93855%208.51707%207.96673%208.04303%207.69173%207.73328C7.41673%207.42352%206.94269%207.39535%206.63293%207.67034L4.24571%209.78971C4.68048%208.15574%205.57271%206.67099%206.82764%205.516C8.34756%204.11715%2010.3055%203.28858%2012.3678%203.17147C14.4301%203.05437%2016.4693%203.65597%2018.1378%204.87377C19.8063%206.09158%2021.0009%207.85024%2021.5181%209.85009C22.0353%2011.85%2021.8431%2013.9673%2020.9742%2015.8413C20.1053%2017.7153%2018.6135%2019.2301%2016.7529%2020.1275C14.8924%2021.0249%2012.7783%2021.2494%2010.7707%2020.7628C8.76322%2020.2762%206.98652%2019.1086%205.74338%2017.4589C5.4941%2017.1281%205.02384%2017.062%204.69304%2017.3113C4.36223%2017.5606%204.29614%2018.0308%204.54542%2018.3616C5.99741%2020.2885%208.0726%2021.6523%2010.4174%2022.2206C12.7622%2022.789%2015.2315%2022.5267%2017.4046%2021.4785C19.5777%2020.4304%2021.3201%2018.6611%2022.335%2016.4723C23.3499%2014.2834%2023.5744%2011.8104%2022.9703%209.47452C22.3662%207.13869%2020.9709%205.08457%2019.0221%203.66217C17.0733%202.23978%2014.6916%201.5371%2012.2828%201.67389Z%22%20fill%3D%22%231F1E1E%22%2F%3E%3C%2Fsvg%3E") no-repeat 50% 50%}

@@ -1,0 +1,24 @@
+/* PDS Input Field — ported from _input-field-pds.scss.
+   Floating-label pattern: the input must carry a placeholder (rendered transparent) so
+   :placeholder-shown drives the label position.
+   Markup: <div class="pds-input-field"><div class="pds-input-field-group pds-input-field-form-control">
+             <input placeholder="Label"><label class="pds-input-field-group--label">Label</label></div></div> */
+:root{--input-padding-x:var(--pds-global-space-400);--input-padding-y:var(--pds-global-space-400)}
+.pds-input-field-textarea{height:var(--pds-global-size-height-1400)!important}
+.pds-input-field-form-control{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-medium);border-radius:var(--pds-global-border-radius-200)}
+.pds-input-field-form-control__error{border-color:var(--pds-theme-color-outline-error)}
+.pds-input-field-icon-btn:hover:not([disabled]){background-color:var(--pds-theme-color-background-baseline)}
+.pds-input-field-group{position:relative;margin-bottom:var(--pds-global-space-400)}
+.pds-input-field-group--label{position:absolute;top:var(--pds-global-space-0);left:var(--pds-global-space-0);display:block;padding:var(--input-padding-y) var(--input-padding-x);color:var(--pds-theme-color-foreground-neutral-low);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-300);border-radius:var(--pds-global-border-radius-200);transition:all .1s ease-in-out;pointer-events:none}
+.pds-input-field-group--label__error{color:var(--pds-theme-color-foreground-error)}
+.pds-input-field-group input,.pds-input-field-group textarea{width:100%;box-sizing:border-box;padding:var(--input-padding-y) var(--input-padding-x);height:var(--pds-global-size-height-1000);border:none;background:none;border-radius:var(--pds-global-border-radius-200);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-300);color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-input-field-group input:focus-visible:not(:disabled),.pds-input-field-group textarea:focus-visible:not(:disabled){box-shadow:none;outline:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-input-field-group input:not(:placeholder-shown),.pds-input-field-group textarea:not(:placeholder-shown){padding-top:calc(var(--input-padding-y) * 5 / 3);padding-bottom:calc(var(--input-padding-y) / 2)}
+.pds-input-field-group input:not(:placeholder-shown)~label,.pds-input-field-group textarea:not(:placeholder-shown)~label{padding-top:calc(var(--input-padding-y) / 2);padding-bottom:calc(var(--input-padding-y) / 3);font-size:var(--pds-global-font-size-100);color:var(--pds-theme-color-foreground-neutral-low)}
+.pds-input-field-group input::placeholder,.pds-input-field-group textarea::placeholder{color:transparent}
+.pds-input-field-leadingIcon{bottom:var(--pds-global-space-1000);position:relative}
+.pds-input-field-trailingIcon{bottom:var(--pds-global-space-1200);position:relative}
+.pds-input-field-error-group{position:absolute}
+.pds-input-field-error-message{color:var(--pds-theme-color-foreground-error);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-100)}
+.pds-input-field-counter{color:var(--pds-theme-color-foreground-neutral-low);font-family:var(--pds-global-font-family-nunito-sans),sans-serif;font-size:var(--pds-global-font-size-100)}
+input:focus-visible:not(:disabled):has(~ .pds-input-field-group--label__error),textarea:focus-visible:not(:disabled):has(~ .pds-input-field-group--label__error){outline:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-error);border-color:var(--pds-theme-color-outline-error)}

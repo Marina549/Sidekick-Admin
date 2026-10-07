@@ -1,0 +1,27 @@
+/* PDS Image Container — fixed aspect-ratio media frames.
+   Ported from the Pantry brand-guidelines SCSS; every value reads a design token. */
+.image-container-pds{background-color:var(--pds-theme-color-background-baseline);overflow:hidden}
+.image-container-pds-page-body{background-color:var(--pds-theme-color-background-neutral-low)}
+.image-container-pds-widescreen{aspect-ratio:16 / 9;width:var(--pds-global-size-width-max-w-2150)}
+.image-container-pds-square{aspect-ratio:1 / 1;width:var(--pds-global-size-width-max-w-1300)}
+.image-container-pds-square--border200{border-radius:var(--pds-global-border-radius-200)}
+.image-container-pds-square--border300{border-radius:var(--pds-global-border-radius-300)}
+.image-container-pds-fullscreen{aspect-ratio:4 / 3;width:var(--pds-global-size-width-max-w-2000)}
+.image-container-pds-rectangular{aspect-ratio:2 / 1;width:var(--pds-global-size-width-max-w-2000)}
+.image-container-pds-portrait{aspect-ratio:9 / 16;width:var(--pds-global-size-width-max-w-1600)}
+.image-container-pds-circular{aspect-ratio:1 / 1;width:var(--pds-global-size-width-max-w-1300);border-radius:var(--pds-global-border-radius-1000)}
+.image-container-pds-img{width:100%;height:100%;object-fit:cover;object-position:top}
+.image-container-pds-img:focus-visible{box-shadow:none;outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.image-container-pds-img--alignment__top-left{object-fit:none;object-position:top left}
+.image-container-pds-img--alignment__top-center{object-fit:none;object-position:top}
+.image-container-pds-img--alignment__top-right{object-fit:none;object-position:top right}
+.image-container-pds-img--alignment__center-left{object-fit:none;object-position:center left}
+.image-container-pds-img--alignment__center{object-fit:none;object-position:center}
+.image-container-pds-img--alignment__center-right{object-fit:none;object-position:center right}
+.image-container-pds-img--alignment__bottom-left{object-fit:none;object-position:bottom left}
+.image-container-pds-img--alignment__bottom{object-fit:none;object-position:bottom}
+.image-container-pds-img--alignment__bottom-right{object-fit:none;object-position:bottom right}
+.image-container-pds-size__xsmall{padding:var(--pds-global-space-100)}
+.image-container-pds-size__small{padding:var(--pds-global-space-200)}
+.image-container-pds-size__medium{padding:var(--pds-global-space-300)}
+.image-container-pds-size__large{padding:var(--pds-global-space-400)}

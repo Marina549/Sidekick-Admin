@@ -1,0 +1,24 @@
+/* PDS Filter panel — sourced from the "Search — Current State Screens" Figma file (Search
+   results page, left-hand "Filters" rail with collapsible groups). No equivalent view exists
+   under pantry-components/ or ecom/, so geometry and copy are read directly from that Figma file
+   and the reference Safeway search-results screenshot. Built on pds-checkbox and pds-accordion-
+   style disclosure; the "Clear"/"Clear all"/"Show more"/"Show less" links use
+   var(--pds-theme-color-background-primary) so they follow the active pds-theme-switcher theme. */
+.pds-filter-panel{display:flex;flex-direction:column;width:100%;max-width:280px;font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-filter-panel__header{display:flex;align-items:baseline;gap:var(--pds-global-space-200);padding-bottom:var(--pds-global-space-200)}
+.pds-filter-panel__title{margin:0;color:var(--pds-theme-color-foreground-neutral-high);font-size:var(--pds-global-font-size-300);font-weight:700}
+.pds-filter-panel__link{border:none;background:none;padding:0;font-family:inherit;font-size:var(--pds-global-font-size-100);font-weight:700;color:var(--pds-theme-color-background-primary);text-decoration:underline;cursor:pointer}
+.pds-filter-panel__link:hover{opacity:.7}
+.pds-filter-panel__standalone{display:flex;flex-direction:column;gap:var(--pds-global-space-200);padding-bottom:var(--pds-global-space-300);border-bottom:var(--pds-global-border-width-100) solid var(--pds-global-color-general-grey-20)}
+
+.pds-filter-group{border-bottom:var(--pds-global-border-width-100) solid var(--pds-global-color-general-grey-20)}
+.pds-filter-group__header{display:flex;align-items:center;justify-content:space-between;gap:var(--pds-global-space-200);width:100%;padding:var(--pds-global-space-300) 0;border:none;background:none;cursor:pointer;text-align:left}
+.pds-filter-group__heading{display:flex;align-items:baseline;gap:var(--pds-global-space-200);min-width:0}
+.pds-filter-group__title{color:var(--pds-theme-color-foreground-neutral-high);font-size:var(--pds-global-font-size-200);font-weight:700;white-space:nowrap}
+.pds-filter-group__toggle{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:20px;height:20px;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-filter-group__toggle svg{width:12px;height:12px;transition:transform .15s ease}
+.pds-filter-group__toggle[aria-expanded="false"] svg{transform:rotate(180deg)}
+.pds-filter-group__body[hidden]{display:none}
+.pds-filter-group__body{display:flex;flex-direction:column;gap:var(--pds-global-space-300);padding-bottom:var(--pds-global-space-300)}
+.pds-filter-group__option-count{color:var(--pds-theme-color-foreground-neutral-medium)}
+.pds-filter-group__show-more{align-self:flex-end}

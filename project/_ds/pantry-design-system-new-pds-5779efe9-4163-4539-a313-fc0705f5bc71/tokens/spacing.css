@@ -1,0 +1,62 @@
+/* PDS Spacing & Sizing Tokens */
+
+:root {
+  /* === SPACING SCALE (px) === */
+  --pds-space-0: 0px;
+  --pds-space-50: 2px;
+  --pds-space-100: 4px;
+  --pds-space-200: 8px;
+  --pds-space-300: 12px;
+  --pds-space-400: 16px;
+  --pds-space-500: 20px;
+  --pds-space-600: 24px;
+  --pds-space-700: 28px;
+  --pds-space-800: 32px;
+  --pds-space-900: 36px;
+  --pds-space-1000: 40px;
+  --pds-space-1100: 44px;
+  --pds-space-1200: 48px;
+  --pds-space-1300: 56px;
+  --pds-space-1400: 64px;
+  --pds-space-1500: 72px;
+  --pds-space-1600: 80px;
+  --pds-space-1700: 96px;
+  --pds-space-1800: 104px;
+  --pds-space-1900: 128px;
+  --pds-space-2000: 140px;
+  --pds-space-2100: 160px;
+
+  /* === BORDER RADIUS === */
+  --pds-radius-0: 0px;
+  --pds-radius-50: 2px;
+  --pds-radius-100: 4px;
+  --pds-radius-200: 8px;
+  --pds-radius-300: 16px;
+  --pds-radius-400: 20px;
+  --pds-radius-full: 999px;
+
+  /* === BORDER WIDTH === */
+  --pds-border-0: 0px;
+  --pds-border-80: 0.8px;
+  --pds-border-100: 1px;
+  --pds-border-150: 1.5px;
+
+  /* === COMPONENT SIZING === */
+  --pds-size-height-50: 16px;
+  --pds-size-height-100: 20px;
+  --pds-size-height-200: 24px;
+  --pds-size-height-300: 28px;
+  --pds-size-height-400: 32px;
+  --pds-size-height-500: 36px;
+  --pds-size-height-600: 40px;
+  --pds-size-height-700: 44px;
+  --pds-size-height-800: 48px;
+  --pds-size-height-900: 56px;
+  --pds-size-height-1000: 64px;
+
+  /* === GRID === */
+  --pds-grid-column: var(--pds-space-100);   /* 4px */
+  --pds-grid-gutter: var(--pds-space-200);   /* 8px */
+  --pds-grid-margin: var(--pds-space-400);   /* 16px */
+  --pds-max-width: 1440px;
+}

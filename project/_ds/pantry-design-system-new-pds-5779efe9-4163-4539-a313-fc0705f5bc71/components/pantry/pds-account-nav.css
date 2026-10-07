@@ -1,0 +1,28 @@
+/* PDS Account Nav — sourced from the "Account - Claude design test" Figma file
+   (Frame 61800, "My account" left rail on the Me Dash page). No equivalent view exists under
+   pantry-components/ or ecom/. Reuses pantry tokens throughout; the Wallet icon reuses the
+   existing pds-svg-card-icon. Bag/Gear/Home/Rewards/Leaf/Heart glyphs have no pantry-icon
+   equivalent yet, so they're defined locally here (same pattern as pds-product-card.css's
+   star/scissor icons) — swap to shared pds-icons.css classes if/when those glyphs are ported. */
+.pds-account-nav{display:flex;flex-direction:column;width:100%;max-width:308px;gap:var(--pds-global-space-400);font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-account-nav__title{margin:0;font-family:var(--pds-global-font-family-poppins),sans-serif;font-weight:500;font-size:18px;line-height:1.3;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-account-nav__section{display:flex;flex-direction:column;gap:var(--pds-global-space-400)}
+.pds-account-nav__section+.pds-account-nav__section{padding-top:var(--pds-global-space-400);border-top:var(--pds-global-border-width-100) solid var(--pds-global-color-general-grey-20)}
+.pds-account-nav__heading{display:flex;align-items:center;gap:var(--pds-global-space-200);width:100%;padding:0;border:none;background:none;font-family:inherit;text-align:left;cursor:pointer}
+.pds-account-nav__icon{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:24px;height:24px;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-account-nav__icon svg,.pds-account-nav__icon span{width:24px;height:24px}
+.pds-account-nav__heading-text{flex-grow:1;color:var(--pds-theme-color-foreground-neutral-high);font-size:var(--pds-global-font-size-200);font-weight:600}
+.pds-account-nav__items{display:flex;flex-direction:column;gap:var(--pds-global-space-300);padding-left:32px}
+.pds-account-nav__item{color:var(--pds-theme-color-foreground-neutral-medium);font-size:var(--pds-global-font-size-100);font-weight:600;text-decoration:none;background:none;border:none;padding:0;text-align:left;font-family:inherit;cursor:pointer}
+.pds-account-nav__item:hover{color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-account-nav__item--new{display:inline-flex;align-items:center;gap:var(--pds-global-space-100);color:var(--pds-theme-color-background-primary);text-decoration:underline}
+.pds-account-nav__item--new:hover{color:var(--pds-theme-color-background-primary-low)}
+
+/* --- local icon glyphs (no pantry equivalent yet) --- */
+.pds-svg-acct-bag,.pds-svg-acct-gear,.pds-svg-acct-home,.pds-svg-acct-rewards,.pds-svg-acct-leaf,.pds-svg-acct-heart{display:inline-block;width:24px;height:24px;background-color:currentColor;mask-repeat:no-repeat;mask-position:center;mask-size:20px}
+.pds-svg-acct-bag{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8h12l1 12H5z'/%3E%3Cpath d='M9 8V6a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E")}
+.pds-svg-acct-gear{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M12 2.5v3M12 18.5v3M4.4 6.4l2.1 2.1M17.5 15.5l2.1 2.1M2.5 12h3M18.5 12h3M4.4 17.6l2.1-2.1M17.5 8.5l2.1-2.1'/%3E%3C/svg%3E")}
+.pds-svg-acct-home{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 11 12 4l8.5 7'/%3E%3Cpath d='M5.5 9.5V20h13V9.5'/%3E%3C/svg%3E")}
+.pds-svg-acct-rewards{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Ccircle cx='12' cy='12' r='9.5' fill='none' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M12 6.5l1.6 3.3 3.6.5-2.6 2.6.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.6 3.6-.5z'/%3E%3C/svg%3E")}
+.pds-svg-acct-leaf{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 19c8 0 14-6 14-14-8 0-14 6-14 14z'/%3E%3Cpath d='M5 19c0-5 3-9 9-11'/%3E%3C/svg%3E")}
+.pds-svg-acct-heart{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20s-7.5-4.6-7.5-10A4.5 4.5 0 0 1 12 7.2 4.5 4.5 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z'/%3E%3C/svg%3E")}

@@ -1,0 +1,18 @@
+/* PDS Celebrations — markup from custom-components/me-dashboard-celebrations-pds.html
+   (pantry-components, custom-components/ subfolder), styled from
+   _me-dashboard-celebrations-pds.scss. Class names kept verbatim. Uses the shared Carousel
+   component per the project's repeating-card-row rule (the source's own hand-rolled
+   prev/next-button carousel is exactly what Carousel replaces). */
+.pds-me-dashboard__celebrations-card{position:relative;display:flex;flex-direction:row;gap:var(--pds-global-space-300);box-sizing:border-box;width:296px;min-height:180px;padding:var(--pds-global-space-300);cursor:default;background:var(--pds-theme-color-background-baseline);border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);border-radius:var(--pds-global-border-radius-200);font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-me-dashboard__card-image img{width:72px;height:72px;object-fit:contain;flex-shrink:0}
+.pds-me-dashboard__card-status{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--pds-global-space-100);margin-bottom:var(--pds-global-space-100)}
+.pds-me-dashboard__card-status .text-l-b--positive{margin:0}
+.pds-me-dashboard__celebrations-card .pds-icon-btn{flex-shrink:0;margin-top:calc(-1 * var(--pds-global-space-100));margin-right:calc(-1 * var(--pds-global-space-100))}
+.pds-me-dashboard__card-info{display:flex;flex-direction:column;gap:var(--pds-global-space-300);padding-bottom:var(--pds-global-space-600)}
+.pds-me-dashboard__card-delivery-details{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;color:var(--pds-theme-color-foreground-neutral-high)}
+@media (max-width:767px){.pds-me-dashboard__card-delivery-details.three-lines{-webkit-line-clamp:2;line-clamp:2}}
+.pds-me-dashboard__btn{position:absolute;bottom:var(--pds-global-space-300);left:var(--pds-global-space-300);right:var(--pds-global-space-300)}
+.pds-me-dashboard__clip-deal{display:flex;align-items:center;justify-content:space-between;gap:var(--pds-global-space-200)}
+.pds-me-dashboard__clip-deal-tag{display:flex;align-items:center;gap:var(--pds-global-space-100);height:32px;width:86px;padding:0 var(--pds-global-space-100) 0 0;border-radius:var(--pds-global-border-radius-1000);border:var(--pds-global-border-width-100) dashed var(--pds-theme-color-foreground-neutral-high);background:none;box-sizing:border-box}
+.pds-me-dashboard__clip-deal-tag .pds-clip-btn{background:var(--pds-global-color-general-sunshine-50);border:none}
+.pds-me-dashboard__clip-deal-tag--clipped{border-style:solid;border-color:var(--pds-theme-color-outline-positive)}

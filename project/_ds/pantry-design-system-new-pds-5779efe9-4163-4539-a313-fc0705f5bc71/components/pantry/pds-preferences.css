@@ -1,0 +1,29 @@
+/* PDS Preferences — markup from custom-components/me-dashboard-preferences-pds.html
+   (pantry-components, custom-components/ subfolder), styled from
+   _me-dashboard-preferences-pds.scss. Class names kept verbatim. The reminder-card row uses
+   Carousel per the project's repeating-card-row rule instead of the source's plain
+   mobile-carousel-track (a bare row wraps/stacks; Carousel scrolls). */
+.pds-me-dashboard__preferences-section{border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);border-radius:var(--pds-global-border-radius-200);padding:var(--pds-global-space-400) 0;font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-me-dashboard__preferences-title{margin:0;padding:0 var(--pds-global-space-300) var(--pds-global-space-200);font-size:var(--pds-global-font-size-600);font-weight:500;color:var(--pds-theme-color-foreground-neutral-high)}
+@media (max-width:767px){.pds-me-dashboard__preferences-title{font-size:var(--pds-global-font-size-500)}}
+.pds-me-dashboard__preferences-reminders{padding:0 var(--pds-global-space-300) var(--pds-global-space-300)}
+.pds-me-dashboard__zone-container{gap:var(--pds-global-space-400)}
+.pds-me-dashboard__mobile-carousel-track{display:flex;gap:var(--pds-global-space-300);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.pds-me-dashboard__mobile-carousel-track::-webkit-scrollbar{display:none}
+.pds-me-dashboard__preferences-carousel-item{position:relative;display:flex;flex-direction:row;gap:var(--pds-global-space-200);width:311px;flex-shrink:0;min-height:106px;box-sizing:border-box;padding:var(--pds-global-space-300);background-color:var(--pds-global-color-brand-sutro-10);border-radius:var(--pds-global-border-radius-200)}
+.pds-me-dashboard__preferences-carousel-item img{width:24px;height:24px;flex-shrink:0}
+.pds-me-dashboard__card-status{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--pds-global-space-200)}
+.pds-me-dashboard__card-status .text-m-b{margin:0;font-weight:700;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-me-dashboard__preferences-carousel-item .pds-icon-btn{flex-shrink:0}
+.pds-me-dashboard__card-info{padding-right:var(--pds-global-space-600);padding-bottom:var(--pds-global-space-500)}
+.pds-me-dashboard__card-delivery-time{color:var(--pds-theme-color-foreground-neutral-medium);font-size:var(--pds-global-font-size-200)}
+.pds-me-dashboard__card-delivery-time a{color:var(--pds-theme-color-background-primary);font-weight:500}
+.pds-me-dashboard__preferences-link{position:absolute;bottom:var(--pds-global-space-200);right:var(--pds-global-space-300);display:flex;align-items:center;gap:var(--pds-global-space-200)}
+.pds-me-dashboard__preferences-link a{color:var(--pds-theme-color-background-primary);font-weight:700;text-decoration:underline}
+.pds-me-dashboard__preferences-link .link-break{color:var(--pds-global-color-general-grey-50)}
+.pds-me-dashboard__preferences-card{margin:0 var(--pds-global-space-300) var(--pds-global-space-300);border:var(--pds-global-border-width-100) solid var(--pds-theme-color-outline-neutral-low);border-radius:var(--pds-global-border-radius-200);padding:var(--pds-global-space-300)}
+.pds-me-dashboard__preferences-card:last-child{margin-bottom:0}
+.pds-me-dashboard__preferences-card-heading{display:flex;align-items:center;gap:var(--pds-global-space-300);margin-bottom:var(--pds-global-space-100)}
+.pds-me-dashboard__preferences-card-heading h3{margin:0;font-size:var(--pds-global-font-size-300);font-weight:700;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-me-dashboard__preferences-card-heading a{color:var(--pds-theme-color-background-primary);font-weight:700;text-decoration:underline;font-size:var(--pds-global-font-size-200)}
+.pds-me-dashboard__preferences-card p{margin:0;font-size:var(--pds-global-font-size-200);color:var(--pds-theme-color-foreground-neutral-high)}

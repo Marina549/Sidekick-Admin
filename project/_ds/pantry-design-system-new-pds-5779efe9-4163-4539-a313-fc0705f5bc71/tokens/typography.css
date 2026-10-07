@@ -1,0 +1,170 @@
+/* PDS Typography Tokens */
+/* Nunito Sans — variable font (400–700), bundled locally */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/NunitoSans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/NunitoSans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Poppins — bundled locally (Regular/Medium/SemiBold/Bold) */
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palmer Lake Print Regular';
+  src: url('../assets/fonts/PalmerLakePrint-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palmer Lake Print';
+  src: url('../assets/fonts/PalmerLakePrint-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* === FONT FAMILIES === */
+  --pds-font-sans: 'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
+  --pds-font-display: 'Poppins', 'Nunito Sans', sans-serif;
+  --pds-font-script: 'Palmer Lake Print', cursive;
+
+  /* === FONT WEIGHTS === */
+  --pds-weight-regular: 400;
+  --pds-weight-medium: 500;
+  --pds-weight-semibold: 600;
+  --pds-weight-bold: 700;
+
+  /* === FONT SIZE SCALE === */
+  --pds-size-25: 8px;
+  --pds-size-50: 10px;
+  --pds-size-100: 12px;
+  --pds-size-200: 14px;
+  --pds-size-300: 16px;
+  --pds-size-400: 18px;
+  --pds-size-450: 20px;
+  --pds-size-500: 22px;
+  --pds-size-550: 24px;
+  --pds-size-600: 28px;
+  --pds-size-700: 32px;
+  --pds-size-800: 34px;
+  --pds-size-900: 36px;
+  --pds-size-1000: 40px;
+
+  /* === LINE HEIGHTS === */
+  --pds-lh-tight: 120%;   /* headlines */
+  --pds-lh-snug: 130%;    /* subheads */
+  --pds-lh-normal: 145%;  /* body */
+  --pds-lh-relaxed: 1.5em; /* universal body */
+
+  /* === TYPE ROLE ALIASES === */
+
+  /* Headings (Poppins Medium) */
+  --pds-heading-xl-size: var(--pds-size-900);   /* 36px */
+  --pds-heading-lg-size: var(--pds-size-700);   /* 32px */
+  --pds-heading-md-size: var(--pds-size-550);   /* 24px */
+  --pds-heading-sm-size: var(--pds-size-450);   /* 20px */
+  --pds-heading-xs-size: var(--pds-size-300);   /* 16px */
+  --pds-heading-xxs-size: var(--pds-size-200);  /* 14px */
+  --pds-heading-font: var(--pds-font-display);
+  --pds-heading-weight: var(--pds-weight-medium);
+  --pds-heading-lh: var(--pds-lh-tight);
+
+  /* Title (Poppins) — page-level */
+  --pds-title-xxl-size: 32px;
+  --pds-title-xl-size: var(--pds-size-600);    /* 28px */
+  --pds-title-lg-size: var(--pds-size-600);    /* 28px */
+  --pds-title-md-size: var(--pds-size-550);    /* 24px */
+  --pds-title-sm-size: var(--pds-size-450);    /* 20px */
+  --pds-title-xs-size: var(--pds-size-300);    /* 16px */
+  --pds-title-xxs-size: var(--pds-size-200);   /* 14px */
+  --pds-title-xxxs-size: var(--pds-size-100);  /* 12px */
+
+  /* Body (Nunito Sans) */
+  --pds-body-lg-size: var(--pds-size-300);     /* 16px */
+  --pds-body-md-size: var(--pds-size-200);     /* 14px */
+  --pds-body-sm-size: var(--pds-size-100);     /* 12px */
+  --pds-body-xs-size: var(--pds-size-50);      /* 10px */
+  --pds-body-font: var(--pds-font-sans);
+  --pds-body-weight: var(--pds-weight-regular);
+  --pds-body-lh: var(--pds-lh-relaxed);
+
+  /* Link */
+  --pds-link-lg-size: var(--pds-size-300);     /* 16px */
+  --pds-link-md-size: var(--pds-size-200);     /* 14px */
+  --pds-link-sm-size: var(--pds-size-100);     /* 12px */
+  --pds-link-xs-size: var(--pds-size-50);      /* 10px */
+  --pds-link-color: var(--pds-color-fg-primary);
+
+  /* Button labels */
+  --pds-btn-lg-size: var(--pds-size-300);      /* 16px */
+  --pds-btn-md-size: var(--pds-size-300);      /* 16px */
+  --pds-btn-sm-size: var(--pds-size-200);      /* 14px */
+  --pds-btn-xs-size: var(--pds-size-100);      /* 12px */
+
+  /* Price */
+  --pds-price-xl-size: var(--pds-size-600);    /* 28px */
+  --pds-price-lg-size: var(--pds-size-450);    /* 20px */
+  --pds-price-md-size: var(--pds-size-300);    /* 16px */
+  --pds-price-sm-size: var(--pds-size-200);    /* 14px */
+  --pds-price-xs-size: var(--pds-size-100);    /* 12px */
+  --pds-price-weight: var(--pds-weight-bold);
+
+  /* Navigation labels */
+  --pds-nav-size: var(--pds-size-200);         /* 14px */
+  --pds-nav-letter-spacing: 0.2px;
+  --pds-nav-transform: uppercase; /* @kind other */
+
+  /* Filters/pill labels */
+  --pds-filter-size: var(--pds-size-100);      /* 12px */
+  --pds-filter-letter-spacing: 0.025em;
+  --pds-filter-transform: uppercase; /* @kind other */
+}

@@ -1,0 +1,28 @@
+/* PDS Radio — ported from _radio-buttons-pds.scss.
+   Markup: <label class="pds-radio" for="id"><input type="radio" id="id" name="g">
+             <span class="pds-radio-bullet-container"><span class="pds-radio-bullet"></span></span>
+             <span class="pds-radio-label">Label</span></label> */
+.pds-radio{display:flex;align-items:center;gap:var(--pds-global-space-200);cursor:pointer;user-select:none;width:fit-content}
+.pds-radio input[type="radio"]{appearance:none;-webkit-appearance:none;position:absolute;opacity:0;width:0;height:0;margin:0}
+.pds-radio-bullet-container{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-medium);width:var(--pds-global-size-width-400);height:var(--pds-global-size-height-400);border-radius:var(--pds-global-border-radius-1000);background:var(--pds-theme-color-background-baseline);box-sizing:border-box}
+.pds-radio-bullet-container--error{border-color:var(--pds-theme-color-outline-error)}
+.pds-radio-bullet{position:absolute;border-radius:var(--pds-global-border-radius-1000);height:var(--pds-global-size-width-50);width:var(--pds-global-size-height-50);visibility:hidden}
+.pds-radio-label{color:var(--pds-theme-color-foreground-neutral-high);font-weight:600}
+.pds-radio-label--error{color:var(--pds-theme-color-foreground-error)}
+.pds-radio input[type="radio"]:checked~.pds-radio-bullet-container{background-color:var(--pds-theme-color-background-baseline-inverse);border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-radio input[type="radio"]:checked~.pds-radio-bullet-container>.pds-radio-bullet{visibility:visible;background-color:var(--pds-theme-color-background-baseline)}
+.pds-radio input[type="radio"]:checked~.pds-radio-bullet-container--error{background-color:var(--pds-theme-color-background-error-inverse);border-color:var(--pds-theme-color-outline-error)}
+.pds-radio input[type="radio"]:checked:disabled~.pds-radio-label,.pds-radio input[type="radio"]:disabled~.pds-radio-label{color:var(--pds-theme-color-foreground-disabled)}
+.pds-radio input[type="radio"]:disabled~.pds-radio-bullet-container{border-color:var(--pds-theme-color-outline-disabled)}
+.pds-radio input[type="radio"]:checked:disabled~.pds-radio-bullet-container{background-color:var(--pds-theme-color-background-disabled);border:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-disabled)}
+.pds-radio:hover input:not(:checked)~.pds-radio-bullet-container{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-radio:active input:not(:checked)~.pds-radio-bullet-container{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-radio:hover input:not(:checked)~.pds-radio-bullet-container--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc(var(--pds-theme-opacity-hover) * 100%),#fff)}
+.pds-radio:active input:not(:checked)~.pds-radio-bullet-container--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc(var(--pds-theme-opacity-pressed) * 100%),#fff)}
+.pds-radio:hover input:checked~.pds-radio-bullet-container{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}
+.pds-radio:active input:checked~.pds-radio-bullet-container{background-color:color-mix(in srgb,var(--pds-theme-color-background-baseline-inverse) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff)}
+.pds-radio:hover input:checked~.pds-radio-bullet-container--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc((1 - var(--pds-theme-opacity-hover)) * 100%),#fff)}
+.pds-radio:active input:checked~.pds-radio-bullet-container--error{background-color:color-mix(in srgb,var(--pds-theme-color-background-error-inverse) calc((1 - var(--pds-theme-opacity-pressed)) * 100%),#fff)}
+.pds-radio:hover input:not(:checked):disabled~.pds-radio-bullet-container{background-color:var(--pds-theme-color-background-baseline)}
+.pds-radio:has(input[type="radio"]:focus-visible){box-shadow:none;border-radius:var(--pds-global-border-radius-100);outline:var(--pds-global-border-width-300) solid var(--pds-theme-color-outline-neutral-high)}
+.pds-radio:has(input[type="radio"]:disabled){cursor:default}

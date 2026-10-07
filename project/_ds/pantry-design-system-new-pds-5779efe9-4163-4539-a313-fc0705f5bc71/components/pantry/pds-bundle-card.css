@@ -1,0 +1,22 @@
+/* PDS Bundle Card — markup/style source: app/views/components/content/bundles-carousel.html,
+   _meals-bundles-carousel.scss (meals-bundles-carousel). backgroundColor/bugBackgroundColor
+   are authored per-instance (inline style), matching the source macro. */
+.pds-bundle-card{position:relative;display:flex;flex-direction:column;width:276px;border-radius:var(--pds-global-border-radius-200);overflow:hidden;font-family:var(--pds-global-font-family-nunito-sans),sans-serif}
+.pds-bundle-card__image{height:56px}
+.pds-bundle-card__sponsored{position:absolute;top:0;left:0;width:74px;height:22px;display:flex;align-items:center;justify-content:center;background:var(--pds-global-color-general-grey-30);border-radius:0 0 var(--pds-global-border-radius-100) 0;font-size:var(--pds-global-font-size-100);color:var(--pds-global-color-general-grey-90)}
+.pds-bundle-card__products{position:relative;display:flex;justify-content:space-evenly;gap:var(--pds-global-space-200);margin-top:-20px;padding:0 var(--pds-global-space-400)}
+.pds-bundle-card__product{display:flex;align-items:center;justify-content:center;background:var(--pds-theme-color-background-baseline);border-radius:var(--pds-global-border-radius-200)}
+.pds-bundle-card__product img{display:block;object-fit:contain}
+.pds-bundle-card--2 .pds-bundle-card__product{width:104px;height:104px}
+.pds-bundle-card--2 .pds-bundle-card__product img{width:96px;height:96px}
+.pds-bundle-card--3 .pds-bundle-card__product{width:76px;height:104px}
+.pds-bundle-card--3 .pds-bundle-card__product img{width:76px;height:76px}
+.pds-bundle-card--4 .pds-bundle-card__product{width:118px;height:48px}
+.pds-bundle-card--4 .pds-bundle-card__product img{width:48px;height:48px}
+.pds-bundle-card__text-plate{position:relative;display:flex}
+.pds-bundle-card__text{flex:1;padding:var(--pds-global-space-300) var(--pds-global-space-400) var(--pds-global-space-500)}
+.pds-bundle-card__title{margin:0 0 var(--pds-global-space-100);max-width:171px;font-family:var(--pds-global-font-family-poppins),sans-serif;font-size:var(--pds-global-font-size-400);font-weight:500;line-height:1.3;color:var(--pds-theme-color-foreground-neutral-high)}
+.pds-bundle-card__subtitle{display:-webkit-box;max-width:171px;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:var(--pds-global-font-size-200);color:var(--pds-theme-color-foreground-neutral-medium)}
+.pds-bundle-card__price-bug{position:absolute;right:-8px;bottom:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:97px;height:97px;border-radius:50%;transform:rotate(3deg);text-align:center}
+.pds-bundle-card__price-bug__amount{font-family:var(--pds-global-font-family-poppins),sans-serif;font-size:var(--pds-global-font-size-900);font-weight:700;letter-spacing:-.04em;color:var(--pds-global-color-general-grey-90)}
+.pds-bundle-card__price-bug__label{font-size:var(--pds-global-font-size-100);font-weight:700;color:var(--pds-global-color-general-grey-90)}

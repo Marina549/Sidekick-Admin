@@ -1,0 +1,13 @@
+.meals-card{position:relative;width:204px;display:block;box-shadow:0 2px 4px rgba(56,51,46,.16);border-radius:12px;padding-bottom:6px;background:var(--pds-theme-color-background-baseline);text-decoration:none}
+.meals-card__image{width:204px;height:204px;border-radius:10px 10px 0 0;display:block;object-fit:cover}
+.meals-card__content{padding:var(--pds-global-space-300) var(--pds-global-space-300) var(--pds-global-space-50) var(--pds-global-space-300);font-family:var(--pds-body-font);font-size:var(--pds-body-md-size);font-weight:var(--pds-weight-semibold);line-height:18px;color:var(--pds-theme-color-foreground-neutral-high)}
+.meals-card__title-clamp{min-height:68px;text-overflow:ellipsis;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.meals-card__price{display:block;padding:6px var(--pds-global-space-300) var(--pds-global-space-50) var(--pds-global-space-300);font-family:var(--pds-body-font);font-size:var(--pds-price-xs-size)}
+.meals-card__price-new{color:var(--pds-theme-color-background-primary);padding-right:var(--pds-global-space-100);font-weight:var(--pds-price-weight)}
+.meals-card__price-old{text-decoration:line-through;padding-left:var(--pds-global-space-100);color:var(--pds-global-color-general-grey-70)}
+.meals-card__servings{border-radius:var(--pds-global-border-radius-100) 0 0 var(--pds-global-border-radius-100);padding:1px var(--pds-global-space-100);position:absolute;top:13px;right:0;background-color:var(--pds-global-color-general-grey-10);font-family:var(--pds-body-font);font-size:var(--pds-body-xs-size);font-weight:var(--pds-weight-semibold);color:var(--pds-theme-color-foreground-neutral-high)}
+.meals-card__calories-info{display:flex;align-items:center;color:var(--pds-theme-color-foreground-neutral-medium);padding:var(--pds-global-space-100) var(--pds-global-space-300) var(--pds-global-space-200) var(--pds-global-space-300);font-family:var(--pds-body-font);font-size:var(--pds-price-xs-size)}
+.meals-card__calories-info .bullet:before{content:" \2022";padding-left:var(--pds-global-space-100);padding-right:var(--pds-global-space-100)}
+.meals-card__calories-info .bullet.hidden-bullet:before{content:" ";padding:0}
+.meals-card__sponsored{width:67px;height:20px;display:flex;margin:var(--pds-global-space-200)}
+.meals-card__sponsored-label{padding:1px var(--pds-global-space-100);border-radius:var(--pds-global-border-radius-100);background:var(--pds-global-color-general-grey-30);font-family:var(--pds-body-font);font-size:var(--pds-title-xxxs-size);font-weight:var(--pds-weight-bold);line-height:var(--pds-lh-tight);color:var(--pds-global-color-general-grey-80);text-align:center;height:20px}
