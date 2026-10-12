@@ -6,6 +6,7 @@ import { useAdmin } from '../store';
 import { DataSchemaForm } from './flow/DataSchemaForm';
 import { PromptsEvals } from './flow/PromptsEvals';
 import { Summary } from './flow/Summary';
+import { asset } from '../asset';
 
 /** New entity (3-step wizard), Edit entity and Review submission share this layout. */
 export function Flow() {
@@ -52,7 +53,7 @@ export function Flow() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div className="sk-title-row">
               <h1 className="sk-h1">{title}</h1>
-              <img src="/assets/ill-entity-dashboard.png" alt="" width={144} height={76} className="sk-title-ill" />
+              <img src={asset('assets/ill-entity-dashboard.png')} alt="" width={144} height={76} className="sk-title-ill" />
             </div>
             {subtitle && <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 16, lineHeight: '24px', color: '#4B4B49' }}>{subtitle}</p>}
           </div>

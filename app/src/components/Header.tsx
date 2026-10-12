@@ -1,6 +1,7 @@
 import { USERS, ago } from '../data';
 import { useAdmin } from '../store';
 import { ImgIcon } from './Icon';
+import { asset } from '../asset';
 
 export function Header() {
   const { s, me, now, set, go, openReview } = useAdmin();
@@ -12,7 +13,7 @@ export function Header() {
   return (
     <header className="sk-header">
       <button type="button" className="sk-header__logo" onClick={() => go('home')} aria-label="SideKick Admin home">
-        <img src="/assets/sidekick-logo-full.svg" alt="" width={181} height={32} style={{ display: 'block' }} />
+        <img src={asset('assets/sidekick-logo-full.svg')} alt="" width={181} height={32} style={{ display: 'block' }} />
       </button>
       <div className="sk-header__tools">
         <div className="sk-pop" data-pop="bell">

@@ -1,5 +1,6 @@
 import type { Screen } from '../store';
 import { useAdmin } from '../store';
+import { asset } from '../asset';
 
 // Trace tool and Evaluation don't exist yet, so they have no target.
 const NAV: { label: string; target: Screen | null; icon: string }[] = [
@@ -34,7 +35,7 @@ export function SideNav() {
               aria-current={active ? 'page' : undefined}
               aria-disabled={it.target ? undefined : true}
             >
-              <span aria-hidden="true" style={{ display: 'block', flexShrink: 0, width: 24, height: 24, background: `url(/assets/icons/fig/${it.icon}-${active ? 'blue' : 'grey'}.svg) center / contain no-repeat` }} />
+              <span aria-hidden="true" style={{ display: 'block', flexShrink: 0, width: 24, height: 24, background: `url(${asset('assets/icons/fig/')}${it.icon}-${active ? 'blue' : 'grey'}.svg) center / contain no-repeat` }} />
               {open && <span style={{ flex: 1, textAlign: 'left', whiteSpace: 'nowrap' }}>{it.label}</span>}
             </button>
           );
@@ -46,7 +47,7 @@ export function SideNav() {
           aria-label={open ? undefined : 'Expand navigation'}
           title={open ? undefined : 'Expand navigation'}
         >
-          <img src={`/assets/icons/fig/nav-arrow-${open ? 'left' : 'right'}.svg`} alt="" aria-hidden="true" width={24} height={24} style={{ display: 'block', flexShrink: 0 }} />
+          <img src={asset(`assets/icons/fig/nav-arrow-${open ? 'left' : 'right'}.svg`)} alt="" aria-hidden="true" width={24} height={24} style={{ display: 'block', flexShrink: 0 }} />
           {open && <span>Collapse navigation</span>}
         </button>
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { AI_DESCRIPTIONS, cloneTables, type Table } from '../data';
 import { ImgIcon } from './Icon';
 import { Button } from './pds';
+import { asset } from '../asset';
 
 export type SchemaChange =
   | { type: 'add'; table: string; field: string }
@@ -89,7 +90,7 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
       </div>
       {tables.length === 0 && (
         <div className="sk-schema__empty">
-          <img src="/assets/ill-no-tables.png" alt="" width={104} height={80} style={{ display: 'block', objectFit: 'contain' }} />
+          <img src={asset('assets/ill-no-tables.png')} alt="" width={104} height={80} style={{ display: 'block', objectFit: 'contain' }} />
           <span className="sk-schema__empty-title">{emptyTitle}</span>
           <span style={{ fontSize: 14, lineHeight: '20px', color: '#4B4B49' }}>{emptyText}</span>
         </div>

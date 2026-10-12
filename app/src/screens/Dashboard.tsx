@@ -6,6 +6,7 @@ import { SchemaTable } from '../components/SchemaTable';
 import { Select } from '../components/Select';
 import { CATEGORIES, ENTITY_DESC, SOURCES, STATUS, fieldCount, fmtDate, type Entity, type EntityStatus } from '../data';
 import { useAdmin } from '../store';
+import { asset } from '../asset';
 
 const STATUS_FILTERS = [{ label: 'All statuses', value: '' }, ...(Object.keys(STATUS) as EntityStatus[]).map(k => ({ label: STATUS[k].label, value: k }))];
 const CATEGORY_FILTERS = [{ label: 'All categories', value: '' }, ...CATEGORIES.map(c => ({ label: c, value: c }))];
@@ -30,7 +31,7 @@ export function Dashboard() {
         <Breadcrumbs />
         <div className="sk-title-row">
           <h1 className="sk-h1">Entity dashboard</h1>
-          <img src="/assets/ill-entity-dashboard.png" alt="" width={144} height={76} className="sk-title-ill" />
+          <img src={asset('assets/ill-entity-dashboard.png')} alt="" width={144} height={76} className="sk-title-ill" />
         </div>
       </div>
 
