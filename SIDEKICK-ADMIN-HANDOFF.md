@@ -6,7 +6,7 @@ Read this file first. It describes a working React implementation of the **Sidek
 
 Sidekick Admin is an internal tool for managing the "entities" Sidekick can answer questions about. An entity is a category, a data source, its tables and field descriptions, and supporting files (prompts, KB articles, thresholds, evals, Markdown context). New entities and edits go through an approval workflow.
 
-- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_3.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
+- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_5.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
 - **Implementation:** `app/`, which is React 19, Vite 8 and TypeScript 5.9. There's no backend: state lives in memory and uploads are simulated.
 
 ## Run it
@@ -18,7 +18,7 @@ npm run dev      # http://localhost:5173
 npm run build    # tsc -b && vite build; must pass with no errors
 ```
 
-The app opens on an **empty Entity dashboard**, as in the design, or on whatever was saved last time: entities, notifications, the signed-in user and categories persist in the browser's `localStorage` (key `sidekick-admin-state-v1`) and sync across open tabs. An open wizard is not saved; leaving it saves a draft as usual. Uploaded files keep their text content but not their original binary.
+The app opens on **Home**, as in the design. The Entity dashboard starts empty, or shows whatever was saved last time: entities, notifications, the signed-in user and categories persist in the browser's `localStorage` (key `sidekick-admin-state-v1`) and sync across open tabs. An open wizard is not saved; leaving it saves a draft as usual. Uploaded files keep their text content but not their original binary.
 
 Add `?sample` to the URL (e.g. `http://localhost:5173/?sample`) to **replace** the saved data with example entities and the "Late order recovery" draft; the parameter is then removed from the address bar so a reload keeps your changes. To start completely fresh, clear the site's storage in the browser.
 

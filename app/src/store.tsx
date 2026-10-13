@@ -94,7 +94,7 @@ function writeStore(s: State) {
 }
 
 /**
- * The design opens on an empty Entity dashboard, or on what was saved last time.
+ * The design opens on Home, with an empty dashboard or whatever was saved last time.
  * ?sample replaces that with example entities; the parameter is then dropped so a reload keeps your changes.
  */
 function startingData(): Saved {
@@ -109,7 +109,7 @@ function startingData(): Saved {
 }
 
 const initialState: State = {
-  user: 'priya', screen: 'dashboard', navOpen: false,
+  user: 'priya', screen: 'home', navOpen: false,
   entities: [], notifications: [],
   search: '', fCat: '', fStatus: '', fSrc: '', expanded: {},
   categories: [...CATEGORIES], newCat: null, deleting: null,

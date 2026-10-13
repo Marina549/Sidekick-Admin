@@ -1063,7 +1063,7 @@
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;grouping&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;category&quot;,&quot;none&quot;],&quot;default&quot;:&quot;category&quot;,&quot;tsType&quot;:&quot;'category'|'none'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;approvalQueue&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Approval&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Entity dashboard&quot;,&quot;Prompts &amp; evals&quot;,&quot;Review &amp; submit&quot;,&quot;Home&quot;],&quot;default&quot;:&quot;Entity dashboard&quot;,&quot;tsType&quot;:&quot;'Entity dashboard'|'Prompts &amp; evals'|'Review &amp; submit'|'Home'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;emptyDashboard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;sampleFiles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;grouping&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;category&quot;,&quot;none&quot;],&quot;default&quot;:&quot;category&quot;,&quot;tsType&quot;:&quot;'category'|'none'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;approvalQueue&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Approval&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Entity dashboard&quot;,&quot;Prompts &amp; evals&quot;,&quot;Review &amp; submit&quot;,&quot;Home&quot;],&quot;default&quot;:&quot;Home&quot;,&quot;tsType&quot;:&quot;'Entity dashboard'|'Prompts &amp; evals'|'Review &amp; submit'|'Home'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;emptyDashboard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;sampleFiles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
 const USERS = {
   priya: { id: 'priya', name: 'Priya Sethi', first: 'Priya', initials: 'PS', canApprove: false, role: 'Can submit' },
   gary: { id: 'gary', name: 'Gary Spark', first: 'Gary', initials: 'GS', canApprove: true, role: 'Can submit and approve' }
@@ -1197,7 +1197,7 @@ class Component extends DCLogic {
     collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, removing: null, uploadErrors: {},
     categories: [...CATEGORIES], newCat: null, deleting: null,
     previewEditable: false, editing: false, editText: '', discardAsk: null,
-    ...this.navPatch(this.startKey())
+    ...this.navPatch('home')
   };
   headerRef = React.createRef();
   fileInputRef = React.createRef();
@@ -1243,7 +1243,7 @@ class Component extends DCLogic {
     this._tick = setInterval(() => this.forceUpdate(), 30000);
     this._empSeen = !!this.emptyDash(); this._mountedAt = Date.now();
     const saved = this._saved || readStore();
-    this.setState({ ...this.navPatch(this.startKey()), ...(saved || (this.emptyDash() ? { entities: [] } : { entities: SEED_ALL })) });
+    this.setState({ ...this.navPatch('home'), ...(saved || (this.emptyDash() ? { entities: [] } : { entities: SEED_ALL })) });
     this._storage = (e) => { if (e.key !== STORE_KEY) return; const o = readStore(); if (o) { this._pk = [o.entities, o.notifications || this.state.notifications, o.user || this.state.user, o.categories || this.state.categories]; this.setState(o); } };
     window.addEventListener('storage', this._storage);
   }
@@ -1317,7 +1317,7 @@ class Component extends DCLogic {
   }
   removeTable(name) { this.patchForm({ tables: this.form().tables.filter(t => t.name !== name) }); }
 
-  startKey() { return { 'Entity dashboard': 'dashboard', 'Prompts & evals': 'prompts', 'Review & submit': 'review', 'Home': 'home' }[this.props && this.props.startScreen] || 'dashboard'; }
+  startKey() { return { 'Entity dashboard': 'dashboard', 'Prompts & evals': 'prompts', 'Review & submit': 'review', 'Home': 'home' }[this.props && this.props.startScreen] || 'home'; }
   emptyDash() { return (this.props && this.props.emptyDashboard) ?? true; }
   navPatch(name) {
     const base = { bellOpen: false, userOpen: false, preview: null, removing: null, collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, uploadErrors: {} };
