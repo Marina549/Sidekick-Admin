@@ -2,7 +2,7 @@
 // and resets on reload.
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  CAT_BY_KEY, SEED_ENTITIES, SOURCES, USERS, emptyDraft, extOf, fieldsFor, toEditDraft, uid, MAX_BYTES,
+  CATEGORIES, CAT_BY_KEY, SEED_ENTITIES, SOURCES, TEXT_EXT, USERS, draftKey, emptyDraft, extOf, fieldsFor, toEditDraft, uid, MAX_BYTES,
   type Draft, type EditDraft, type Entity, type FileCatKey, type FileRec, type Notification, type Step, type UserId,
 } from './data';
 import type { ToastAction, ToastTone } from './components/pds';
@@ -22,9 +22,14 @@ export interface State {
   fStatus: string;
   fSrc: string;
   expanded: Record<string, boolean>;
+  categories: string[];
+  newCat: { text: string; error: string } | null;
+  deleting: { id: string; name: string } | null;
   // new entity wizard
   draft: Draft | null;
   draftId: string | null;
+  /** draftKey() of the draft when it was opened; "Save as draft" shows once it differs. */
+  draftBase: string;
   step: Step;
   submitting: boolean;
   // edit entity
@@ -42,21 +47,34 @@ export interface State {
   uploadErrors: Partial<Record<FileCatKey, UploadError[]>>;
   removing: { id: string; name: string; cat: FileCatKey } | null;
   preview: FileRec | null;
+  /** Preview opened from the wizard, where text files can be edited in place. */
+  previewEditable: boolean;
+  editing: boolean;
+  editText: string;
+  /** Unsaved file edits: ask before closing the preview or cancelling the edit. */
+  discardAsk: 'close' | 'cancel' | null;
+  fileMenu: string | null;
   // chrome
+  drawerOpen: boolean;
   bellOpen: boolean;
   userOpen: boolean;
   toast: { message: string; tone: ToastTone; actions: ToastAction[] } | null;
 }
 
+// The design opens on an empty Entity dashboard. Add ?sample to the URL to start with example entities.
+const withSamples = typeof location !== 'undefined' && new URLSearchParams(location.search).has('sample');
+
 const initialState: State = {
-  user: 'priya', screen: 'home', navOpen: false,
-  entities: SEED_ENTITIES, notifications: [],
+  user: 'priya', screen: 'dashboard', navOpen: false,
+  entities: withSamples ? SEED_ENTITIES : [], notifications: [],
   search: '', fCat: '', fStatus: '', fSrc: '', expanded: {},
-  draft: null, draftId: null, step: 1, submitting: false,
+  categories: [...CATEGORIES], newCat: null, deleting: null,
+  draft: null, draftId: null, draftBase: '', step: 1, submitting: false,
   editId: null, editDraft: null, editOriginal: '',
   reviewId: null, approving: false, changes: null,
   collapsed: {}, showAll: {}, sumExpanded: {}, uploadErrors: {}, removing: null, preview: null,
-  bellOpen: false, userOpen: false, toast: null,
+  previewEditable: false, editing: false, editText: '', discardAsk: null, fileMenu: null,
+  drawerOpen: false, bellOpen: false, userOpen: false, toast: null,
 };
 
 type Patch = Partial<State> | ((s: State) => Partial<State> | null);
@@ -81,20 +99,25 @@ function useAdminStore() {
     timers.current.toast = window.setTimeout(() => set({ toast: null }), actions.length ? 8000 : 5000);
   };
 
-  /** Navigate. Leaving the wizard keeps the work as a Draft row once a category and entity are picked. */
-  const go = (screen: Screen, extra: Partial<State> = {}) => {
+  /**
+   * Navigate. Leaving the wizard keeps the work as a Draft row once a category and entity are picked,
+   * unless `noSave` (the draft was just saved or deleted explicitly).
+   */
+  const go = (screen: Screen, extra: Partial<State> = {}, { noSave = false } = {}) => {
     const s = ref.current;
     const d = s.draft;
     const leavingWizard = s.screen === 'wizard' && screen !== 'wizard';
     let saved: Entity | null = null;
-    if (leavingWizard && d && d.category && d.entity) {
+    if (!noSave && leavingWizard && d && d.category && d.entity) {
       saved = {
         id: s.draftId || 'd' + Date.now(), category: d.category, name: d.entity, source: d.source || '—',
         tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now(),
       };
     }
+    if (s.screen !== screen) extra = { preview: null, editing: false, discardAsk: null, ...extra };
+    if (screen === 'wizard' && extra.draft) extra = { ...extra, draftBase: draftKey(extra.draft) };
     set(st => ({
-      screen, bellOpen: false, userOpen: false,
+      screen, bellOpen: false, userOpen: false, drawerOpen: false, fileMenu: null,
       ...(leavingWizard ? { draft: null, draftId: null, step: 1 as Step } : {}),
       ...(saved ? { entities: [saved, ...st.entities.filter(e => e.id !== saved!.id)] } : {}),
       ...extra,
@@ -156,13 +179,13 @@ function useAdminStore() {
     for (const file of picked) {
       const ext = extOf(file.name);
       let msg = '';
-      if (!cat.accept.includes(ext)) msg = cat.accept.length === 1 ? 'Only .' + cat.accept[0] + ' files can be added to ' + cat.title + '.' : 'Unsupported file type. Use ' + cat.accept.map(e => '.' + e).join(', ') + '.';
+      if (!cat.accept.includes(ext)) msg = cat.accept.length === 1 ? 'Only .' + cat.accept[0] + ' files can be added to ' + cat.title + '.' : 'Only .txt and .md files are supported.';
       else if (file.size > MAX_BYTES) msg = 'File is larger than 10 MB.';
       else if (taken.has(file.name.toLowerCase())) msg = 'A file with this name is already in ' + cat.title + '.';
       if (msg) { errs.push({ id: uid('ue'), name: file.name, msg }); continue; }
       taken.add(file.name.toLowerCase());
       const rec: FileRec = { id: uid('f'), name: file.name, size: file.size, ext, cat: catKey, status: 'uploading', progress: 0, by: me.name, at: Date.now(), url: URL.createObjectURL(file) };
-      if (ext === 'md') file.text().then(t => updateFile(rec.id, { content: t }));
+      if (TEXT_EXT.includes(ext)) file.text().then(t => updateFile(rec.id, { content: t }));
       recs.push(rec);
     }
     set(s => ({
@@ -191,11 +214,72 @@ function useAdminStore() {
 
   const download = (f: FileRec) => {
     const a = document.createElement('a');
-    a.href = f.url || URL.createObjectURL(new Blob([f.content || ''], { type: 'text/markdown' }));
+    a.href = f.url || URL.createObjectURL(new Blob([f.content || ''], { type: f.ext === 'md' ? 'text/markdown' : 'text/plain' }));
     a.download = f.name;
     document.body.appendChild(a);
     a.click();
     a.remove();
+  };
+
+  // ---- file preview & in-place editing ----
+  const openPreview = (f: FileRec, editable: boolean) => set({ preview: f, previewEditable: editable, editing: false, editText: '', discardAsk: null });
+  /** The previewed file as it is now in the draft (it may have been edited since the preview opened). */
+  const liveFile = (st = ref.current) => (st.preview && st.draft?.files.find(x => x.id === st.preview!.id)) || st.preview;
+  const editDirty = (st = ref.current) => { const f = liveFile(st); return !!(st.editing && f && st.editText !== (f.content || '')); };
+  const tryClosePreview = () => { if (editDirty()) set({ discardAsk: 'close' }); else set({ preview: null, editing: false, editText: '' }); };
+  const cancelEditFile = () => { if (editDirty()) set({ discardAsk: 'cancel' }); else set({ editing: false, editText: '' }); };
+  const confirmDiscard = () => set(st => ({ discardAsk: null, editing: false, editText: '', ...(st.discardAsk === 'close' ? { preview: null } : {}) }));
+  const saveEditFile = () => {
+    const f = liveFile();
+    if (!f || !editDirty()) return;
+    const text = ref.current.editText;
+    const patch: Partial<FileRec> = { content: text, size: new Blob([text]).size, editedAt: Date.now(), editedBy: me.name, url: undefined };
+    updateFile(f.id, patch);
+    set({ preview: { ...f, ...patch }, editing: false, editText: '' });
+    toast('Saved changes to ' + f.name + '.');
+  };
+
+  // ---- drafts, delete, categories ----
+  const saveDraft = () => {
+    const s = ref.current;
+    const d = s.draft;
+    if (!d) return;
+    const id = s.draftId || 'd' + Date.now();
+    const prev = s.entities.find(e => e.id === id);
+    const rec: Entity = {
+      ...(prev || {}), id, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables,
+      files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now(),
+    };
+    set(st => ({ entities: [rec, ...st.entities.filter(e => e.id !== id)] }));
+    go('dashboard', {}, { noSave: true });
+    toast('Saved ' + (rec.name || 'Untitled entity') + ' as a draft.');
+  };
+
+  const askDelete = () => {
+    const s = ref.current;
+    const id = s.screen === 'edit' ? s.editId : s.draftId;
+    const e = s.entities.find(x => x.id === id);
+    if (e) set({ deleting: { id: e.id, name: e.name || 'Untitled entity' } });
+  };
+  const confirmDelete = () => {
+    const del = ref.current.deleting;
+    if (!del) return;
+    set(s => ({ entities: s.entities.filter(e => e.id !== del.id), notifications: s.notifications.filter(n => n.entityId !== del.id), deleting: null }));
+    go('dashboard', { editDraft: null, editId: null, draft: null, draftId: null, step: 1 }, { noSave: true });
+    toast('Deleted ' + del.name + '.');
+  };
+
+  /** "Create new category" from the Category dropdown: adds it to the list and selects it. */
+  const createCat = () => {
+    const nc = ref.current.newCat;
+    if (!nc) return;
+    const name = nc.text.trim().replace(/\s+/g, ' ');
+    if (!name) { set({ newCat: { ...nc, error: 'Enter a category name.' } }); return; }
+    const dup = ref.current.categories.find(c => c.toLowerCase() === name.toLowerCase());
+    if (dup) { set({ newCat: { ...nc, error: 'A category named “' + dup + '” already exists.' } }); return; }
+    set(s => ({ categories: [...s.categories, name], newCat: null }));
+    patchForm(ref.current.screen === 'edit' ? { category: name } : { category: name, entity: '' });
+    toast('Created category ' + name + '.');
   };
 
   /** From Review & submit: jump back to Prompts & evals with a category open and in view. */
@@ -235,7 +319,7 @@ function useAdminStore() {
     const orig = s.entities.find(e => e.id === s.editId);
     if (!d || !orig) return;
     const saved: Entity = {
-      ...orig, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '',
+      ...orig, category: d.category, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '',
       submittedBy: me.name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated',
     };
     set(st => ({ entities: st.entities.map(e => e.id === saved.id ? saved : e) }));
@@ -250,7 +334,7 @@ function useAdminStore() {
     if (!ent) return;
     set(s => ({
       entities: s.entities.map(e => e.id !== id ? e : approved
-        ? { ...e, status: 'published', comment: '', commentBy: '', updatedAt: Date.now() }
+        ? { ...e, status: 'published', comment: '', commentBy: '', approvedBy: me.name, approvedAt: Date.now(), updatedAt: Date.now() }
         : { ...e, status: 'changes', comment, commentBy: me.name, updatedAt: Date.now() }),
       notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n),
       changes: null, approving: false,
@@ -291,27 +375,38 @@ function useAdminStore() {
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
       const s = ref.current;
-      if (!s.bellOpen && !s.userOpen) return;
       const pop = (e.target as Element).closest?.('[data-pop]') as HTMLElement | null;
-      if (!pop) set({ bellOpen: false, userOpen: false });
-      else if (pop.dataset.pop === 'bell' && s.userOpen) set({ userOpen: false });
-      else if (pop.dataset.pop === 'user' && s.bellOpen) set({ bellOpen: false });
+      const kind = pop?.dataset.pop || '';
+      if (s.fileMenu && kind !== 'filemenu') set({ fileMenu: null });
+      if (!s.bellOpen && !s.userOpen) return;
+      if (kind !== 'bell' && kind !== 'user') set({ bellOpen: false, userOpen: false });
+      else if (kind === 'bell' && s.userOpen) set({ userOpen: false });
+      else if (kind === 'user' && s.bellOpen) set({ bellOpen: false });
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       const s = ref.current;
-      if (s.removing) set({ removing: null });
-      else if (s.preview) set({ preview: null });
+      if (s.drawerOpen) { set({ drawerOpen: false }); return; }
+      if (s.fileMenu) { set({ fileMenu: null }); return; }
+      if (s.discardAsk) set({ discardAsk: null });
+      else if (s.newCat) set({ newCat: null });
+      else if (s.deleting) set({ deleting: null });
+      else if (s.removing) set({ removing: null });
+      else if (s.preview) tryClosePreview();
       else if (s.changes) set({ changes: null });
       else if (s.bellOpen || s.userOpen) set({ bellOpen: false, userOpen: false });
     };
+    // The drawer is the < 1024px navigation; close it if the window grows past that.
+    const onResize = () => { if (ref.current.drawerOpen && window.innerWidth >= 1024) set({ drawerOpen: false }); };
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
     const tick = window.setInterval(() => setNow(Date.now()), 30000);
     const t = timers.current;
     return () => {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
       clearInterval(tick);
       clearTimeout(t.toast);
       Object.values(t.uploads).forEach(clearInterval);
@@ -324,6 +419,8 @@ function useAdminStore() {
     addFiles, cancelUpload, confirmRemove, download, goCat,
     dismissError: (cat: FileCatKey, id: string) => set(s => ({ uploadErrors: { ...s.uploadErrors, [cat]: (s.uploadErrors[cat] || []).filter(x => x.id !== id) } })),
     submit, saveEdit, decide, approve, openReview, editEntity, startNew,
+    openPreview, liveFile, editDirty, tryClosePreview, cancelEditFile, confirmDiscard, saveEditFile,
+    saveDraft, askDelete, confirmDelete, createCat,
   };
 }
 

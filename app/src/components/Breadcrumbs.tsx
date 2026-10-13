@@ -20,12 +20,18 @@ export function Breadcrumbs({ style }: { style?: CSSProperties }) {
 
   return (
     <nav aria-label="Breadcrumb" className="sk-crumbs" style={style}>
-      <ol>
+      <ol data-r="crumbs">
         {crumbs.map((c, i) => (
           <li key={c.label}>
-            {i > 0 && <span aria-hidden="true" className="sk-crumbs__sep" />}
+            {i > 0 && <span aria-hidden="true" className="sk-crumbs__sep" data-r="crumb-sep" />}
             {c.target
-              ? <button type="button" className="sk-crumbs__link" onClick={() => leave(c.target!)}>{c.label}</button>
+              ? (
+                <button type="button" className="sk-crumbs__link" data-r="crumb-link" onClick={() => leave(c.target!)}>
+                  {/* Phones show only the parent page, with a back chevron. */}
+                  <span data-r="crumb-back" className="pds-svg-chevron-left-small" aria-hidden="true" style={{ width: 24, height: 24, flexShrink: 0, background: 'currentColor' }} />
+                  {c.label}
+                </button>
+              )
               : <span aria-current="page" className="sk-crumbs__current">{c.label}</span>}
           </li>
         ))}

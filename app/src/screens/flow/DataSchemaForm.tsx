@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { ImgIcon } from '../../components/Icon';
 import { SchemaTable } from '../../components/SchemaTable';
 import { Select } from '../../components/Select';
-import { CATEGORIES, ENTITY_OPTIONS, SOURCES, emptyDraft } from '../../data';
+import { ALL_ENTITY_NAMES, ENTITY_OPTIONS, SOURCES, emptyDraft } from '../../data';
 import { useAdmin } from '../../store';
 
-const CATEGORY_OPTS = CATEGORIES.map(c => ({ label: c, value: c }));
 const SOURCE_OPTS = Object.keys(SOURCES).map(c => ({ label: c, value: c }));
 
 /** Data & schema step of the wizard; also the whole Edit entity form. */
@@ -21,12 +20,15 @@ export function DataSchemaForm() {
   // Each entity can only be added once; the one being edited/drafted stays selectable.
   const selfId = isEdit ? s.editId : s.draftId;
   const taken = s.entities.filter(e => e.id !== selfId).map(e => e.name);
-  const entityOpts = (ENTITY_OPTIONS[f.category] || []).map(n => ({ label: n, value: n, disabled: taken.includes(n), meta: taken.includes(n) ? 'Already added' : '' }));
+  // A new category has no predefined entities yet, so it offers the full list.
+  const baseEntities = ENTITY_OPTIONS[f.category] || ALL_ENTITY_NAMES;
+  const entityNames = f.entity && !baseEntities.includes(f.entity) ? [...baseEntities, f.entity] : baseEntities;
+  const entityOpts = entityNames.map(n => ({ label: n, value: n, disabled: taken.includes(n), meta: taken.includes(n) ? 'Already added' : '' }));
   const srcTables = SOURCES[f.source] || [];
   const added = f.tables.map(t => t.name);
 
   return (
-    <div className="sk-panel" style={{ gap: 32 }}>
+    <div className="sk-panel" data-r="card" style={{ gap: 32 }}>
       <h2 className="sk-h2">Data &amp; schema</h2>
       {review?.comment && (
         <div role="note" className="sk-note sk-note--error">
@@ -34,13 +36,14 @@ export function DataSchemaForm() {
           <span><strong>{review.commentBy} requested changes:</strong> {review.comment}</span>
         </div>
       )}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, alignItems: 'flex-start' }}>
-        <div style={{ flex: '1 1 560px', display: 'flex', flexDirection: 'column', gap: 24, minWidth: 0 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '24px 32px' }}>
+      <div data-r="form-cols" style={{ display: 'flex', flexWrap: 'wrap', gap: 32, alignItems: 'flex-start' }}>
+        <div data-r="form-main" style={{ flex: '1 1 560px', display: 'flex', flexDirection: 'column', gap: 24, minWidth: 0 }}>
+          <div data-r="f-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '24px 32px' }}>
             <div className="sk-field">
               <label htmlFor="sel-category" className="sk-label">Category</label>
-              <Select id="sel-category" value={f.category} placeholder="Select Category" options={CATEGORY_OPTS} disabled={isEdit} ariaLabel="Category"
-                onChange={v => { if (v !== f.category) patchForm({ category: v, entity: '' }); }} />
+              <Select id="sel-category" value={f.category} placeholder="Select Category" options={s.categories.map(c => ({ label: c, value: c }))} ariaLabel="Category"
+                actionLabel="Create new category" onAction={() => set({ newCat: { text: '', error: '' } })}
+                onChange={v => { if (v !== f.category) patchForm(isEdit ? { category: v } : { category: v, entity: '' }); }} />
             </div>
             <div className="sk-field">
               <label htmlFor="sel-entity" className="sk-label">Entity</label>
@@ -54,7 +57,7 @@ export function DataSchemaForm() {
             </div>
           </div>
 
-          <div className="sk-field">
+          <div className="sk-field" data-r="f-tables">
             <span id="tables-label" className="sk-label">Tables</span>
             <div
               role="list"
@@ -74,11 +77,14 @@ export function DataSchemaForm() {
                   </button>
                 </div>
               ))}
-              <span style={{ fontSize: 12, lineHeight: '16px', color: '#6E6E6D', padding: f.tables.length ? '0 16px' : 0 }}>Drag tables from the panel on the right</span>
+              <span style={{ fontSize: 12, lineHeight: '16px', color: '#6E6E6D', padding: f.tables.length ? '0 16px' : 0 }}>
+                <span data-r="hint-side">Drag tables from the panel on the right</span>
+                <span data-r="hint-stack">Select a table under Data sources to add it</span>
+              </span>
             </div>
           </div>
 
-          <div className="sk-field">
+          <div className="sk-field" data-r="f-schema">
             <span className="sk-label">Schema annotation</span>
             <SchemaTable
               tables={f.tables}
@@ -95,7 +101,7 @@ export function DataSchemaForm() {
           </div>
         </div>
 
-        <aside aria-label="Data sources" className="sk-sources">
+        <aside aria-label="Data sources" className="sk-sources" data-r="f-aside">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, fontSize: 14, lineHeight: '24px', color: '#262524' }}>Data sources</span>
             {!f.source && <span style={{ fontSize: 14, lineHeight: '20px', color: '#4B4B49' }}>No data sources selected</span>}

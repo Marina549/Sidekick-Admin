@@ -31,19 +31,157 @@
     a { color: #004488; }
     a:hover { color: #002D56; }
     .pds-btn[class*="pds-btn-size__"] { padding-top: 3px; }
+    .pds-toasts { padding: 16px !important; color: #FFFFFF; }
+    .pds-toasts [class*="pds-svg-"] { flex-shrink: 0; }
+    .pds-toasts > div:first-child { gap: 16px !important; align-items: center; }
+    .pds-toasts__body { width: auto !important; flex: 1; min-width: 0; }
+    .pds-toasts__body p { line-height: 24px; }
+    .pds-toasts__close { top: 0 !important; width: 32px !important; height: 32px !important; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .pds-toasts__footer { padding-top: 16px !important; gap: 8px !important; }
     button[aria-controls]:focus-visible { outline: 2px solid #004488; outline-offset: 4px; }
+    body { overflow-x: clip; }
+    [data-r="hamburger"], [data-r="step-mobile"], [data-r="file-more"], [data-r="hint-stack"], [data-r="crumb-back"] { display: none !important; }
+    [data-r="drawer-item"] { height: 48px !important; }
+    @media (max-width: 1199px) {
+      [data-r="ent-hrow"], [data-r="ent-row"] { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(136px, 1.25fr) minmax(0, 1fr) 112px !important; }
+      [data-r="col-tables"], [data-r="col-fields"] { display: none !important; }
+      [data-r="form-cols"] { gap: 24px !important; }
+      [data-r="form-main"] { display: contents !important; }
+      [data-r="form-cols"] > *, [data-r="form-main"] > * { flex: 1 1 100% !important; min-width: 0; }
+      [data-r="f-grid"] { order: 1; }
+      [data-r="f-tables"] { order: 2; }
+      [data-r="f-aside"] { order: 3; min-height: 0 !important; padding: 24px !important; gap: 16px !important; }
+      [data-r="f-schema"] { order: 4; }
+      [data-r="hint-side"] { display: none !important; }
+      [data-r="hint-stack"] { display: inline !important; }
+    }
+    @media (min-width: 1200px) and (max-width: 1439px) {
+      [data-nav="open"] [data-r="ent-hrow"], [data-nav="open"] [data-r="ent-row"] { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(136px, 1.25fr) minmax(0, 1fr) 112px !important; }
+      [data-nav="open"] [data-r="col-tables"], [data-nav="open"] [data-r="col-fields"] { display: none !important; }
+      [data-nav="open"] [data-r="form-cols"] { gap: 24px !important; }
+      [data-nav="open"] [data-r="form-main"] { display: contents !important; }
+      [data-nav="open"] [data-r="form-cols"] > *, [data-nav="open"] [data-r="form-main"] > * { flex: 1 1 100% !important; min-width: 0; }
+      [data-nav="open"] [data-r="f-grid"] { order: 1; }
+      [data-nav="open"] [data-r="f-tables"] { order: 2; }
+      [data-nav="open"] [data-r="f-aside"] { order: 3; min-height: 0 !important; padding: 24px !important; gap: 16px !important; }
+      [data-nav="open"] [data-r="f-schema"] { order: 4; }
+      [data-nav="open"] [data-r="hint-side"] { display: none !important; }
+      [data-nav="open"] [data-r="hint-stack"] { display: inline !important; }
+    }
+    @media (max-width: 1023px) {
+      [data-r="hamburger"] { display: flex !important; }
+      [data-r="sidenav"] { display: none !important; }
+      [data-r="header"] { gap: 16px !important; }
+      [data-r="page"] { padding: 32px 24px 48px !important; }
+      [data-r="flow-body"] { padding: 32px 24px !important; gap: 32px !important; }
+      [data-r="card"] { padding: 24px !important; }
+      [data-r="filters"] { flex-wrap: wrap !important; }
+      [data-r="filters"] > input { flex: 1 1 100%; }
+      [data-r="filters"] > :not(input) { flex: 1 1 140px !important; width: auto !important; min-width: 0; }
+      [data-r="footer"] { padding: 16px 24px !important; }
+      .pds-modal-dialog { width: calc(100% - 48px) !important; }
+    }
+    @media (min-width: 1024px) { [data-r="drawer"] { display: none !important; } }
+    @media (max-width: 767px) {
+      [data-r="header"] { height: 64px !important; padding: 0 16px !important; gap: 8px !important; }
+      [data-r="logo"] { width: 128px !important; height: auto !important; }
+      [data-r="hdr-actions"] { gap: 8px !important; }
+      [data-r="hdr-sep"], [data-r="user-name"] { display: none !important; }
+      [data-r="pop"] { position: fixed !important; top: 72px !important; left: 16px !important; right: 16px !important; width: auto !important; }
+      [data-r="page"] { padding: 24px 16px 40px !important; gap: 24px !important; }
+      [data-r="flow-body"] { padding: 24px 16px !important; gap: 24px !important; }
+      main h1 { font-size: 24px !important; line-height: 36px !important; }
+      [data-r="page-ill"] { width: 64px !important; height: 44px !important; }
+      [data-r="crumbs"] li { display: none !important; }
+      [data-r="crumbs"] li:nth-last-child(2) { display: flex !important; }
+      [data-r="crumbs"] li:nth-last-child(2) [data-r="crumb-sep"] { display: none !important; }
+      [data-r="crumbs"] li:nth-last-child(2) [data-r="crumb-link"] { display: flex !important; align-items: center; gap: 4px; min-height: 44px; text-decoration: none !important; }
+      [data-r="crumbs"] li:nth-last-child(2) [data-r="crumb-back"] { display: block !important; }
+      [data-r="home-card"] { width: 100% !important; flex-direction: row !important; align-items: center !important; gap: 16px !important; padding: 16px !important; text-align: left !important; }
+      [data-r="home-card"] > :first-child { width: auto !important; padding: 0 !important; flex-shrink: 0; }
+      [data-r="home-card"] img { width: 72px !important; height: 72px !important; }
+      [data-r="home-card"] > :last-child { padding: 0 !important; flex: 1; min-width: 0; }
+      [data-r="card"], [data-r="queue"] { padding: 16px !important; }
+      [data-r="ent-head"] { flex-wrap: wrap !important; padding-bottom: 8px !important; gap: 16px !important; }
+      [data-r="ent-head"] > :not(h2) { width: 100% !important; }
+      [data-r="ent-head"] .pds-btn, [data-r="fbtn"] .pds-btn, [data-r="success-btns"] .pds-btn, [data-r="modal-actions"] .pds-btn, [data-r="zone-btn"] .pds-btn { width: 100%; }
+      [data-r="ent-hrow"] { display: none !important; }
+      [data-r="ent-row"] { display: flex !important; flex-wrap: wrap; align-items: center !important; gap: 4px 16px !important; padding: 16px !important; }
+      [data-r="c-name"] { order: 1; flex: 1 1 0; }
+      [data-r="c-act"] { order: 2; }
+      [data-r="c-act"] > button:last-child { width: 40px !important; height: 40px !important; }
+      [data-r="c-status"] { order: 3; flex: 1 1 100%; padding: 4px 0; }
+      [data-r="c-src"] { order: 4; }
+      [data-r="ent-row"] [data-r="col-tables"] { order: 5; display: inline !important; }
+      [data-r="ent-row"] [data-r="col-fields"] { order: 6; display: inline !important; }
+      [data-r="c-upd"] { order: 7; }
+      [data-r="c-src"], [data-r="ent-row"] [data-r="col-tables"], [data-r="ent-row"] [data-r="col-fields"], [data-r="c-upd"] { font-size: 12px !important; line-height: 16px !important; color: #4B4B49 !important; }
+      [data-r="c-src"]::before { content: "Source: "; }
+      [data-r="ent-row"] [data-r="col-tables"]::before { content: "Tables: "; }
+      [data-r="ent-row"] [data-r="col-fields"]::before { content: "Fields: "; }
+      [data-r="c-upd"]::before { content: "Updated "; }
+      [data-r="ent-detail"] { padding: 16px !important; }
+      [data-r="stepper"] { padding-bottom: 0 !important; }
+      [data-r="step-label"] { display: none !important; }
+      [data-r="step-mobile"] { display: block !important; }
+      [data-r="f-grid"] { grid-template-columns: minmax(0, 1fr) !important; gap: 16px !important; }
+      [data-r="f-aside"] { padding: 16px !important; }
+      [data-r="cat-body"] { padding: 16px !important; }
+      [data-r="file-hrow"] { display: none !important; }
+      [data-r="file-row"] { display: flex !important; flex-wrap: wrap; align-items: center !important; column-gap: 8px !important; row-gap: 0 !important; padding: 8px 0 8px 8px !important; }
+      [data-r="fc-name"] { order: 1; flex: 1 1 calc(100% - 56px); min-width: 0; }
+      [data-r="fc-act"] { order: 2; }
+      [data-r="fc-size"], [data-r="fc-prog"] { order: 3; padding-left: 40px; }
+      [data-r="fc-prog"] { flex: 1 1 100%; }
+      [data-r="fc-size"] { font-size: 12px !important; line-height: 16px !important; }
+      [data-r="fc-date"] { order: 4; flex: 1 1 160px; min-width: 0; flex-direction: row !important; flex-wrap: wrap; gap: 0 8px; }
+      [data-r="fc-date"]::before { content: "·"; font-size: 12px; line-height: 16px; color: #4B4B49; }
+      [data-r="fc-date"] > span { font-size: 12px !important; line-height: 16px !important; color: #4B4B49 !important; }
+      [data-r="file-icons"] { display: none !important; }
+      [data-r="file-more"] { display: block !important; }
+      [data-r="zone-btn"] { width: 100% !important; }
+      [data-r="sum-head"] { gap: 4px 24px !important; padding: 16px !important; }
+      [data-r="sum-inner"] { padding: 16px !important; }
+      [data-r="sum-list"] { padding: 0 16px 8px !important; }
+      [data-r="sum-cat"] { flex: 1 1 100% !important; flex-direction: row !important; align-items: center !important; justify-content: space-between; }
+      [data-r="sum-act"] > button { width: 40px !important; height: 40px !important; }
+      [data-r="footer"] { padding: 16px !important; gap: 8px 16px !important; justify-content: center !important; }
+      [data-r="footer-right"], [data-r="footer-grp"] { display: contents !important; }
+      [data-r="fbtn"] { order: 1; flex: 1 1 calc(50% - 8px); min-width: 0 !important; }
+      [data-r="fbtn"] > *, [data-r="success-btns"] > div > *, [data-r="modal-actions"] > div > * { flex: 1 1 auto; min-width: 0; }
+      [data-r="fdraft"] { order: 3; }
+      [data-r="footer-left"] { order: 4; min-height: 0 !important; }
+      [data-r="footer-left"]:empty { display: none; }
+      [data-r="success-ill"] { width: 112px !important; height: 112px !important; }
+      [data-r="success-sub"] { font-size: 16px !important; line-height: 24px !important; }
+      [data-r="success-btns"] { flex-direction: column-reverse !important; align-self: stretch; padding-top: 16px !important; }
+      [data-r="success-btns"] > div { width: 100%; min-width: 0 !important; }
+      .pds-modal { align-items: flex-end !important; }
+      .pds-modal-dialog { width: 100% !important; max-height: 90vh !important; border-radius: 16px 16px 0 0 !important; padding-left: 0 !important; padding-right: 0 !important; padding-bottom: calc(24px + env(safe-area-inset-bottom)) !important; }
+      .pds-modal-body--small, .pds-modal-body--large { padding-left: 16px !important; padding-right: 16px !important; }
+      [data-r="modal-actions"] { flex-direction: column-reverse !important; gap: 8px !important; }
+      [data-r="modal-actions"] > div { width: 100%; min-width: 0 !important; }
+      [data-r="modal-scroll"] { height: 50vh !important; max-height: 50vh !important; }
+      [data-r="modal-body"] { height: auto !important; }
+      [data-r="toast"] { left: 16px !important; right: 16px !important; bottom: 16px !important; width: auto !important; max-width: none !important; }
+    }
     @keyframes sk-spin { to { transform: rotate(360deg); } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
   </style>
 </helmet>
-<div data-theme="sutro" style="min-height: 100vh; display: flex; flex-direction: column; background: #FAF9F8; font-family: 'Nunito Sans', sans-serif; color: #1F1E1E;">
+<div data-theme="sutro" data-nav="{{ navAttr }}" style="min-height: 100vh; display: flex; flex-direction: column; background: #FAF9F8; font-family: 'Nunito Sans', sans-serif; color: #1F1E1E;">
 
-  <header ref="{{ headerRef }}" style="position: sticky; top: 0; z-index: 30; height: 88px; flex-shrink: 0; display: flex; align-items: center; gap: 32px; padding: 0 32px; background: #FFFFFF; padding-left: 27px; padding-right: 27px">
+  <header ref="{{ headerRef }}" data-r="header" style="position: sticky; top: 0; z-index: 30; height: 88px; flex-shrink: 0; display: flex; align-items: center; gap: 32px; padding: 0 32px; background: #FFFFFF; padding-left: 27px; padding-right: 27px">
+    <button type="button" data-r="hamburger" onClick="{{ openDrawer }}" aria-label="Open navigation" aria-expanded="{{ drawerOpen }}" style="width: 44px; height: 44px; margin-left: -8px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: none; background: transparent; border-radius: 8px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
+      <span aria-hidden="true" style="display: block; width: 20px; height: 2px; border-radius: 1px; background: #1F1E1E;"></span>
+      <span aria-hidden="true" style="display: block; width: 20px; height: 2px; border-radius: 1px; background: #1F1E1E;"></span>
+      <span aria-hidden="true" style="display: block; width: 20px; height: 2px; border-radius: 1px; background: #1F1E1E;"></span>
+    </button>
     <button type="button" onClick="{{ goHome }}" aria-label="SideKick Admin home" style="display: flex; align-items: center; gap: 0; border: none; background: transparent; padding: 0; cursor: pointer; font-size: 14px" style-focus="outline: 2px solid #004488; outline-offset: 4px; border-radius: 4px;">
-      <img src="assets/sidekick-logo-full.svg" alt="" width="181" height="32" style="display: block;">
+      <img src="assets/sidekick-logo-full.svg" data-r="logo" alt="" width="181" height="32" style="display: block;">
     </button>
     <div style="flex: 1;"></div>
-    <div style="display: flex; align-items: center; gap: 32px;">
+    <div data-r="hdr-actions" style="display: flex; align-items: center; gap: 32px;">
       <div data-pop="bell" style="position: relative;">
         <button type="button" onClick="{{ toggleBell }}" aria-label="{{ bellLabel }}" aria-haspopup="true" aria-expanded="{{ bellOpen }}" style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: #1F1E1E;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
           <img src="assets/icons/c/notification_outlined_24-dark.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0;">
@@ -52,7 +190,7 @@
           </sc-if>
         </button>
         <sc-if value="{{ bellOpen }}" hint-placeholder-val="{{ false }}">
-          <div role="dialog" aria-label="Notifications" style="position: absolute; top: calc(100% + 16px); right: -8px; width: 384px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
+          <div role="dialog" data-r="pop" aria-label="Notifications" style="position: absolute; top: calc(100% + 16px); right: -8px; width: 384px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
             <div style="padding: 16px 24px; border-bottom: 1px solid #E5E4E3; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #1F1E1E;">Notifications</div>
             <sc-if value="{{ hasNotifs }}" hint-placeholder-val="{{ false }}">
               <ul style="list-style: none; margin: 0; padding: 0; max-height: 400px; overflow: auto;">
@@ -75,16 +213,16 @@
           </div>
         </sc-if>
       </div>
-      <span aria-hidden="true" style="width: 1px; height: 32px; background: #E5E4E3;"></span>
+      <span aria-hidden="true" data-r="hdr-sep" style="width: 1px; height: 32px; background: #E5E4E3;"></span>
       <div data-pop="user" style="position: relative;">
         <button type="button" onClick="{{ toggleUser }}" aria-haspopup="menu" aria-expanded="{{ userOpen }}" aria-label="{{ userButtonLabel }}" style="display: flex; align-items: center; gap: 16px; border: none; background: transparent; padding: 0; cursor: pointer; border-radius: 24px;" style-focus="outline: 2px solid #004488; outline-offset: 4px;">
-          <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2px; color: #1F1E1E; white-space: nowrap;">{{ user.name }}</span>
+          <span data-r="user-name" style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: 0.2px; color: #1F1E1E; white-space: nowrap;">{{ user.name }}</span>
           <span style="width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 0 0 1px #6E6E6D; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
             <span style="width: 40px; height: 40px; border-radius: 50%; background: #004D96; display: flex; align-items: center; justify-content: center; font-family: Poppins, sans-serif; font-weight: 500; font-size: 20px; line-height: 16px; color: #FFFFFF;">{{ user.initials }}</span>
           </span>
         </button>
         <sc-if value="{{ userOpen }}" hint-placeholder-val="{{ false }}">
-          <div role="menu" aria-label="Switch user" style="position: absolute; top: calc(100% + 16px); right: 0; width: 304px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
+          <div role="menu" data-r="pop" aria-label="Switch user" style="position: absolute; top: calc(100% + 16px); right: 0; width: 304px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow: hidden; z-index: 50;">
             <div style="padding: 16px 24px; border-bottom: 1px solid #E5E4E3; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px; color: #1F1E1E;">Switch user</div>
             <sc-for list="{{ userOptions }}" as="u" hint-placeholder-count="2">
               <button type="button" role="menuitemradio" aria-checked="{{ u.current }}" onClick="{{ u.pick }}" style="display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px 24px; border: none; background: transparent; text-align: left; cursor: pointer;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">
@@ -104,8 +242,28 @@
     </div>
   </header>
 
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-r="drawer" style="position: fixed; inset: 0; z-index: 80;">
+      <div onClick="{{ closeDrawer }}" aria-hidden="true" style="position: absolute; inset: 0; background: rgba(31,30,30,0.48);"></div>
+      <nav aria-label="Primary" style="position: absolute; top: 0; left: 0; bottom: 0; width: 320px; max-width: calc(100vw - 48px); display: flex; flex-direction: column; gap: 16px; padding: 8px 16px 32px; background: #FFFFFF; box-shadow: 0 8px 24px rgba(31,30,30,0.16); overflow-y: auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding-left: 8px;">
+          <img src="assets/sidekick-logo-full.svg" alt="SideKick Admin" width="136" height="24" style="display: block; width: 136px; height: auto;">
+          <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close navigation" onClick="{{ closeDrawer }}" autoFocus="{{ true }}"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="0">
+            <button type="button" data-r="drawer-item" onClick="{{ it.go }}" aria-current="{{ it.current }}" aria-disabled="{{ it.disabled }}" style="{{ it.fullStyle }}" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+              <span aria-hidden="true" style="{{ it.iconStyle }}"></span>
+              <span style="flex: 1; text-align: left;">{{ it.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </nav>
+    </div>
+  </sc-if>
+
   <div style="flex: 1; display: flex; min-height: 0;">
-    <nav aria-label="Primary" style="{{ navStyle }}">
+    <nav aria-label="Primary" data-r="sidenav" style="{{ navStyle }}">
       <div style="position: sticky; top: 120px; height: calc(100vh - 152px);">
       <sc-if value="{{ navCollapsed }}" hint-placeholder-val="{{ true }}">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 24px; height: 100%;">
@@ -144,19 +302,19 @@
     <main style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
 
       <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-        <section data-screen-label="Home" style="display: flex; flex-direction: column; gap: 32px; padding: 32px 40px;">
+        <section data-screen-label="Home" data-r="page" style="display: flex; flex-direction: column; gap: 32px; padding: 32px 40px;">
           <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #252733;">{{ greeting }}</h1>
           <div style="display: flex; flex-wrap: wrap; gap: 16px;">
-            <button type="button" onClick="{{ goDashboard }}" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border: none; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; cursor: pointer; text-align: center; overflow: hidden;" style-hover="box-shadow: inset 0 0 0 2px #004488;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+            <button type="button" data-r="home-card" onClick="{{ goDashboard }}" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border: none; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; cursor: pointer; text-align: center; overflow: hidden;" style-hover="box-shadow: inset 0 0 0 2px #004488;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
               <span style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0; width: 100%;">
-                <span aria-hidden="true" style="width: 124px; height: 124px; border-radius: 50%; background: url(assets/ill-entity-dashboard.png) 74.39% 50% / 133.065% 88.71% no-repeat, #DDEFFF;"></span>
+                <img src="assets/ill-entity-dashboard-v3.png" alt="" width="124" height="124" style="display: block; width: 124px; height: 124px; object-fit: contain;">
               </span>
               <span style="display: flex; flex-direction: column; gap: 8px; padding: 0 24px;">
                 <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #1A1A1A;">Entity Dashboard</span>
                 <span style="font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1A1A1A; text-wrap: pretty;">Add, organize and edit the entities available in Sidekick.</span>
               </span>
             </button>
-            <div aria-disabled="true" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
+            <div aria-disabled="true" data-r="home-card" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
               <div style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0;">
                 <img src="assets/ill-trace-tool.png" alt="" width="124" height="124" style="display: block; object-fit: cover;">
               </div>
@@ -165,7 +323,7 @@
                 <span style="font-size: 16px; line-height: 24px; color: #1A1A1A; text-wrap: pretty;">Trace how Sidekick reached an answer, step by step.</span>
               </div>
             </div>
-            <div aria-disabled="true" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
+            <div aria-disabled="true" data-r="home-card" style="width: 304px; display: flex; flex-direction: column; gap: 24px; padding: 0 0 32px; border-radius: 8px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #C2C1C0; text-align: center; overflow: hidden;">
               <div style="display: flex; justify-content: center; align-items: center; padding: 32px 0 0;">
                 <img src="assets/ill-evaluation.png" alt="" width="124" height="124" style="display: block; object-fit: cover;">
               </div>
@@ -179,14 +337,14 @@
       </sc-if>
 
       <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
-        <section data-screen-label="Entity dashboard" style="display: flex; flex-direction: column; gap: 60px; padding: 40px 32px 64px;">
+        <section data-screen-label="Entity dashboard" data-r="page" style="display: flex; flex-direction: column; gap: 60px; padding: 40px 32px 64px;">
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <nav aria-label="Breadcrumb">
-              <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <ol data-r="crumbs" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
                 <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="2">
                   <li style="display: flex; align-items: center; gap: 16px;">
-                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
-                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" data-r="crumb-sep" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" data-r="crumb-link" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><span data-r="crumb-back" class="pds-svg-chevron-left-small" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0; background: currentColor;"></span>{{ c.label }}</button></sc-if>
                     <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
                   </li>
                 </sc-for>
@@ -195,7 +353,7 @@
             <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; justify-content: normal; align-items: normal;">
               <div style="display: flex; align-items: center; gap: 16px; min-width: 0;">
                 <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #0F1D28;">Entity dashboard</h1>
-                <img src="assets/ill-entity-dashboard.png" alt="" width="144" height="76" style="display: block; object-fit: cover; object-position: 0% 50%;">
+                <img src="assets/ill-entity-dashboard-v3.png" data-r="page-ill" alt="" width="104" height="76" style="display: block; width: 121px; height: 77px; object-fit: contain">
               </div>
               
             </div>
@@ -204,7 +362,7 @@
           
 
           <sc-if value="{{ showQueue }}" hint-placeholder-val="{{ false }}">
-            <section aria-label="Waiting on your approval" style="display: flex; flex-direction: column; gap: 16px; padding: 24px 32px; border-radius: 8px; background: #FDF3D9; border: 1px solid #F8B775;">
+            <section aria-label="Waiting on your approval" data-r="queue" style="display: flex; flex-direction: column; gap: 16px; padding: 24px 32px; border-radius: 8px; background: #FDF3D9; border: 1px solid #F8B775;">
               <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">{{ queueTitle }}</h2>
               <div style="display: flex; flex-direction: column; gap: 8px;">
                 <sc-for list="{{ queue }}" as="qi" hint-placeholder-count="1">
@@ -220,10 +378,10 @@
             </section>
           </sc-if>
 
-          <div style="display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: 8px; background: #FFFFFF">
+          <div data-r="card" style="display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: 8px; background: #FFFFFF">
             <div role="search" style="display: flex; align-items: center; justify-content: flex-start; gap: 24px; flex-wrap: wrap">
               
-            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; width: 100%; padding-bottom: 52px; box-sizing: border-box">
+            <div data-r="ent-head" style="display: flex; flex-direction: row; align-items: center; gap: 8px; width: 100%; padding-bottom: 52px; box-sizing: border-box">
                 <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 32px; color: #262524; width: 100%">Entities</h2>
                 <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" onClick="{{ startNew }}" hint-size="200px,48px" style="width: 240px">{{ createLabel }}</x-import>
               </div></div>
@@ -234,7 +392,7 @@
                   <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search entities</span>
                   
                 </label>
-                <div style="box-sizing: border-box; display: flex; flex-direction: row; gap: 16px; align-items: center; flex-wrap: nowrap; justify-content: flex-end; position: static; align-self: auto; width: 100%; padding-bottom: 16px">
+                <div data-r="filters" style="box-sizing: border-box; display: flex; flex-direction: row; gap: 16px; align-items: center; flex-wrap: nowrap; justify-content: flex-end; position: static; align-self: auto; width: 100%; padding-bottom: 16px">
                   <input type="search" value="{{ search }}" onChange="{{ onSearch }}" placeholder="Search entities by name or description" style="width: 100%; height: 40px; padding: 0 16px; border: 1px solid #7D7C7C; border-radius: 8px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;"><dc-import name="Select" size="small" value="{{ fCat }}" options="{{ catFilterOpts }}" onChange="{{ setFCat }}" accessible-label="Filter by category" style="width: 160px;" hint-size="160px,40px"></dc-import>
                   <dc-import name="Select" size="small" value="{{ fStatus }}" options="{{ statusFilterOpts }}" onChange="{{ setFStatus }}" accessible-label="Filter by status" style="width: 176px;" hint-size="176px,40px"></dc-import>
                   <dc-import name="Select" size="small" value="{{ fSrc }}" options="{{ srcFilterOpts }}" onChange="{{ setFSrc }}" accessible-label="Filter by source" style="width: 144px;" hint-size="144px,40px"></dc-import>
@@ -248,26 +406,27 @@
                       
                     </div>
                     <div role="table" aria-label="{{ grp.tableLabel }}" style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
-                      <div role="row" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) 56px 56px minmax(136px, 1.25fr) minmax(0, 1fr) 112px; column-gap: 16px; align-items: center; min-height: 48px; padding: 8px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE;">
+                      <div role="row" data-r="ent-hrow" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) 56px 56px minmax(136px, 1.25fr) minmax(0, 1fr) 112px; column-gap: 16px; align-items: center; min-height: 48px; padding: 8px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE;">
                         <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Entity</span>
                         <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Source</span>
-                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Tables</span>
-                        <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Fields</span>
+                        <span role="columnheader" data-r="col-tables" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Tables</span>
+                        <span role="columnheader" data-r="col-fields" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Fields</span>
                         <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Status</span>
                         <span role="columnheader" style="font-size: 14px; font-weight: 600; line-height: 24px; color: #4B4B49;">Last updated</span>
                         <span role="columnheader" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Actions</span>
                       </div>
                       <sc-for list="{{ grp.rows }}" as="row" hint-placeholder-count="2">
                         <div role="rowgroup" style="{{ row.wrapStyle }}">
-                          <div role="row" onClick="{{ row.toggle }}" style="{{ row.headStyle }}" style-hover="background: #EBF3F9;">
-                            <div role="cell" style="display: flex; flex-direction: column; gap: 0; min-width: 0;">
+                          <div role="row" data-r="ent-row" onClick="{{ row.toggle }}" style="{{ row.headStyle }}" style-hover="background: #EBF3F9;">
+                            <div role="cell" data-r="c-name" style="display: flex; flex-direction: column; gap: 0; min-width: 0;">
                               <button type="button" onClick="{{ row.toggle }}" aria-expanded="{{ row.open }}" aria-label="{{ row.toggleLabel }}" style="align-self: flex-start; border: none; background: transparent; padding: 0; cursor: pointer; text-align: left; font-family: Poppins, sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #1F1E1E" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ row.name }}</button>
                               <sc-if value="{{ row.showDesc }}" hint-placeholder-val="{{ true }}"><span style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ row.desc }}</span></sc-if>
+                              <sc-if value="{{ row.draftMeta }}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ row.draftMeta }}</span></sc-if>
                             </div>
-                            <span role="cell" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere">{{ row.source }}</span>
-                            <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.tableCount }}</span>
-                            <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.fieldCount }}</span>
-                            <div role="cell" style="display: flex; min-width: 0;">
+                            <span role="cell" data-r="c-src" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere">{{ row.source }}</span>
+                            <span role="cell" data-r="col-tables" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.tableCount }}</span>
+                            <span role="cell" data-r="col-fields" style="font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.fieldCount }}</span>
+                            <div role="cell" data-r="c-status" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0;">
                               <sc-if value="{{ row.tagButton }}" hint-placeholder-val="{{ false }}">
                                 <button type="button" onClick="{{ row.openReview }}" title="Review submission" aria-label="{{ row.reviewLabel }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 32px; max-width: 100%; padding: 4px 16px; border-radius: 4px; background: #FDF3D9; border: 1px solid #F8B775; font-family: 'Nunito Sans', sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #906700; text-align: left; cursor: pointer;" style-hover="background: #FBE7B5;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ row.tagText }}</button>
                               </sc-if>
@@ -275,8 +434,8 @@
                                 <span style="{{ row.tagStyle }}">{{ row.tagText }}</span>
                               </sc-if>
                             </div>
-                            <span role="cell" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.updated }}</span>
-                            <div role="cell" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                            <span role="cell" data-r="c-upd" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.updated }}</span>
+                            <div role="cell" data-r="c-act" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
                               <button type="button" onClick="{{ row.edit }}" aria-label="{{ row.editLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><img src="assets/icons/c/edit_outlined_16-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"><span style="font-size: 14px">{{ row.editText }}</span></button>
                               <button type="button" onClick="{{ row.toggle }}" aria-expanded="{{ row.open }}" aria-label="{{ row.chevLabel }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
                                 <img src="assets/icons/c/chevron_down_outlined_24-dark.svg" alt="" aria-hidden="true" width="24" height="24" style="{{ row.chevronStyle }}">
@@ -284,11 +443,14 @@
                             </div>
                           </div>
                           <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
-                            <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px 24px 24px; background: #FFFFFF;">
+                            <div data-r="ent-detail" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 24px 24px; background: #FFFFFF;">
                               <sc-if value="{{ row.comment }}" hint-placeholder-val="{{ false }}">
                                 <div role="note" style="padding: 16px; margin-bottom: 8px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3;">
                                   <span style="font-size: 14px; line-height: 24px; color: #1F1E1E;"><strong>{{ row.commentBy }} requested changes:</strong> {{ row.comment }}</span>
                                 </div>
+                              </sc-if>
+                              <sc-if value="{{ row.approvedBy }}" hint-placeholder-val="{{ false }}">
+                                <span style="padding-bottom: 8px; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ row.approvedBy }}</span>
                               </sc-if>
                               <h4 style="margin: 0; padding-bottom: 8px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Schema annotation</h4>
                               <sc-if value="{{ row.hasTables }}" hint-placeholder-val="{{ true }}">
@@ -306,6 +468,13 @@
                 </sc-for>
               </div>
             </sc-if>
+            <sc-if value="{{ noEntities }}" hint-placeholder-val="{{ false }}">
+              <div role="status" style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 32px 24px; text-align: center;">
+                <img src="assets/ill-no-tables.png" alt="" width="104" height="80" style="display: block; object-fit: contain;">
+                <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 20px; line-height: 30px; color: #6E6E6D;">No entities yet</span>
+                <span style="font-size: 14px; line-height: 20px; color: #4B4B49; text-wrap: pretty;">Entities you create will show up here.</span>
+              </div>
+            </sc-if>
             <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
               <div role="status" style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 64px 24px; text-align: center;">
                 <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">No entities match that search</span>
@@ -319,14 +488,14 @@
 
       <sc-if value="{{ isFlow }}" hint-placeholder-val="{{ false }}">
         <section data-screen-label="{{ flowLabel }}" style="flex: 1; display: flex; flex-direction: column;">
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 40px; padding: 40px 32px 40px;">
+          <div data-r="flow-body" style="flex: 1; display: flex; flex-direction: column; gap: 40px; padding: 40px 32px 40px;">
             <div style="display: flex; flex-direction: column; gap: 16px;">
             <nav aria-label="Breadcrumb">
-              <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <ol data-r="crumbs" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
                 <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
                   <li style="display: flex; align-items: center; gap: 16px;">
-                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
-                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" data-r="crumb-sep" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                    <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" data-r="crumb-link" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><span data-r="crumb-back" class="pds-svg-chevron-left-small" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0; background: currentColor;"></span>{{ c.label }}</button></sc-if>
                     <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
                   </li>
                 </sc-for>
@@ -335,7 +504,7 @@
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <div style="display: flex; align-items: center; gap: 16px;">
                 <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 32px; line-height: 48px; color: #0F1D28;">{{ flowTitle }}</h1>
-                <img src="assets/ill-entity-dashboard.png" alt="" width="144" height="76" style="display: block; object-fit: cover; object-position: 0% 50%;">
+                <img src="assets/ill-entity-dashboard-v3.png" data-r="page-ill" alt="" width="104" height="76" style="display: block; width: 104px; height: 76px; object-fit: contain;">
               </div>
               <sc-if value="{{ flowSubtitle }}" hint-placeholder-val="{{ false }}">
                 <p style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #4B4B49;">{{ flowSubtitle }}</p>
@@ -344,7 +513,7 @@
             </div>
 
             <sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
-              <ol aria-label="Progress" style="list-style: none; margin: 0 auto; padding: 0 0 32px; display: flex; align-items: center; width: 400px; max-width: 100%;">
+              <ol aria-label="Progress" data-r="stepper" style="list-style: none; margin: 0 auto; padding: 0 0 32px; display: flex; align-items: center; width: 400px; max-width: 100%;">
                 <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
                   <li style="{{ st.liStyle }}">
                     <sc-if value="{{ st.hasLine }}" hint-placeholder-val="{{ false }}">
@@ -357,15 +526,16 @@
                       <sc-if value="{{ st.showNum }}" hint-placeholder-val="{{ true }}">
                         <span style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 12px; line-height: 16px;">{{ st.num }}</span>
                       </sc-if>
-                      <span style="position: absolute; top: 32px; left: 50%; transform: translateX(-50%); font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #4B4B49; white-space: nowrap;">{{ st.label }}</span>
+                      <span data-r="step-label" style="position: absolute; top: 32px; left: 50%; transform: translateX(-50%); font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #4B4B49; white-space: nowrap;">{{ st.label }}</span>
                     </button>
                   </li>
                 </sc-for>
               </ol>
+              <p data-r="step-mobile" style="margin: -8px 0 0; text-align: center; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #4B4B49;">{{ stepMobileText }}</p>
             </sc-if>
 
             <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
-              <div style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
+              <div data-r="card" style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
                 <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">Data &amp; schema</h2>
                 <sc-if value="{{ form.comment }}" hint-placeholder-val="{{ false }}">
                   <div role="note" style="display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3;">
@@ -373,12 +543,12 @@
                     <span style="font-size: 14px; line-height: 24px; color: #1F1E1E;"><strong>{{ form.commentBy }} requested changes:</strong> {{ form.comment }}</span>
                   </div>
                 </sc-if>
-                <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start;">
-                  <div style="flex: 1 1 560px; display: flex; flex-direction: column; gap: 24px; min-width: 0;">
-                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px;">
+                <div data-r="form-cols" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start;">
+                  <div data-r="form-main" style="flex: 1 1 560px; display: flex; flex-direction: column; gap: 24px; min-width: 0;">
+                    <div data-r="f-grid" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px;">
                       <div style="display: flex; flex-direction: column; gap: 8px;">
                         <label for="sel-category" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Category</label>
-                        <dc-import name="Select" id="sel-category" value="{{ form.category }}" placeholder="Select Category" options="{{ categoryOpts }}" onChange="{{ setCategory }}" disabled="{{ categoryDisabled }}" accessible-label="Category" style="width: 100%;" hint-size="100%,48px"></dc-import>
+                        <dc-import name="Select" id="sel-category" value="{{ form.category }}" placeholder="Select Category" options="{{ categoryOpts }}" onChange="{{ setCategory }}" disabled="{{ categoryDisabled }}" action-label="Create new category" onAction="{{ openNewCat }}" accessible-label="Category" style="width: 100%;" hint-size="100%,48px"></dc-import>
                       </div>
                       <div style="display: flex; flex-direction: column; gap: 8px;">
                         <label for="sel-entity" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Entity</label>
@@ -389,11 +559,11 @@
                         <dc-import name="Select" id="sel-source" value="{{ form.source }}" placeholder="Select data source" options="{{ sourceOpts }}" onChange="{{ setSource }}" accessible-label="Data source" style="width: 100%;" hint-size="100%,48px"></dc-import>
                       </div>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div data-r="f-tables" style="display: flex; flex-direction: column; gap: 8px;">
                       <span id="tables-label" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Tables</span>
                       <div role="list" aria-labelledby="tables-label" onDragOver="{{ onTableDragOver }}" onDragLeave="{{ onTableDragLeave }}" onDrop="{{ onTableDrop }}" style="{{ dropStyle }}">
                         <sc-for list="{{ formTables }}" as="tb" hint-placeholder-count="0">
-                          <div role="listitem" style="display: flex; align-items: center; gap: 8px; width: 200px; height: 40px; padding: 0 8px 0 16px; border-radius: 8px; background: #FFFFFF;">
+                          <div role="listitem" style="display: flex; align-items: center; gap: 8px; width: 200px; max-width: 100%; height: 40px; padding: 0 8px 0 16px; border-radius: 8px; background: #FFFFFF;">
                             <img src="assets/icons/c/drag_handle_outlined_24-grey.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0; flex-shrink: 0;">
                             <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 24px; color: #1F1E1E;">{{ tb.name }}</span>
                             <button type="button" onClick="{{ tb.remove }}" aria-label="{{ tb.removeLabel }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
@@ -401,15 +571,15 @@
                             </button>
                           </div>
                         </sc-for>
-                        <span style="{{ dropHintStyle }}">Drag tables from the panel on the right</span>
+                        <span style="{{ dropHintStyle }}"><span data-r="hint-side">Drag tables from the panel on the right</span><span data-r="hint-stack">Select a table under Data sources to add it</span></span>
                       </div>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div data-r="f-schema" style="display: flex; flex-direction: column; gap: 8px;">
                       <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Schema annotation</span>
                       <dc-import name="SchemaTable" tables="{{ formTablesRaw }}" editable="{{ true }}" onChange="{{ onSchemaChange }}" empty-title="No tables mapped yet" empty-text="Description will auto populate as you select a table" hint-size="100%,320px"></dc-import>
                     </div>
                   </div>
-                  <aside aria-label="Data sources" style="flex: 0 0 264px; background: #FAF9F8; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px; min-height: 496px;">
+                  <aside aria-label="Data sources" data-r="f-aside" style="flex: 0 0 264px; background: #FAF9F8; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px; min-height: 496px;">
                     <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; justify-content: normal; align-items: normal"><span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Data sources</span><span style="font-size: 14px; line-height: 20px; color: #4B4B49;">No data sources selected</span></div>
                     <sc-if value="{{ noSource }}" hint-placeholder-val="{{ true }}">
                       
@@ -434,14 +604,9 @@
 
             <sc-if value="{{ isFiles }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column; gap: 32px;">
-                <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap;">
-                  <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1 1 400px;">
-                    <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">Prompts &amp; evals</h2>
-                    <p style="margin: 0; font-size: 14px; line-height: 20px; color: #4B4B49; text-wrap: pretty;">Add files to each category. Drag them onto a category or browse. Up to 10 MB per file.</p>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-                    <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ filesStatus }}</span>
-                  </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap;">
+                  <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">Prompts &amp; evals</h2>
+                  <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ filesStatus }}</span>
                 </div>
                 <input ref="{{ fileInputRef }}" type="file" multiple="" onChange="{{ onFilePicked }}" aria-label="Upload files" tabindex="-1" style="display: none;">
                 <sc-for list="{{ cats }}" as="ct" hint-placeholder-count="5">
@@ -457,18 +622,18 @@
                       </button>
                     </h3>
                     <sc-if value="{{ ct.open }}" hint-placeholder-val="{{ true }}">
-                      <div id="{{ ct.bodyId }}" style="{{ ct.bodyStyle }}">
+                      <div id="{{ ct.bodyId }}" data-r="cat-body" style="{{ ct.bodyStyle }}">
                         <sc-if value="{{ ct.hasFiles }}" hint-placeholder-val="{{ false }}">
                           <div role="table" aria-label="{{ ct.tableLabel }}" style="display: flex; flex-direction: column; gap: 4px;">
-                            <div role="row" style="display: grid; grid-template-columns: minmax(160px, 1fr) 72px 176px 104px; column-gap: 16px; align-items: center; padding: 0 16px 4px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 12px; line-height: 16px; color: #6E6E6D;">
+                            <div role="row" data-r="file-hrow" style="display: grid; grid-template-columns: minmax(160px, 1fr) 72px 176px 104px; column-gap: 16px; align-items: center; padding: 0 16px 4px; font-family: Poppins, sans-serif; font-weight: 500; font-size: 12px; line-height: 16px; color: #6E6E6D;">
                               <span role="columnheader">File name</span>
                               <span role="columnheader">Size</span>
-                              <span role="columnheader">Uploaded</span>
+                              <span role="columnheader">Last updated</span>
                               <span role="columnheader" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">Actions</span>
                             </div>
                             <sc-for list="{{ ct.files }}" as="f" hint-placeholder-count="0">
-                              <div role="row" style="{{ f.rowStyle }}" style-hover="background: #FAF9F8;">
-                                <div role="cell" style="display: flex; align-items: center; gap: 16px; min-width: 0;">
+                              <div role="row" data-r="file-row" style="{{ f.rowStyle }}" style-hover="background: #FAF9F8;">
+                                <div role="cell" data-r="fc-name" style="display: flex; align-items: center; gap: 16px; min-width: 0;">
                                   <span aria-hidden="true" style="{{ f.tileStyle }}"></span>
                                   <span style="display: flex; flex-direction: column; min-width: 0;">
                                     <span title="{{ f.name }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ f.name }}</span>
@@ -481,23 +646,35 @@
                                   </span>
                                 </div>
                                 <sc-if value="{{ f.isDone }}" hint-placeholder-val="{{ true }}">
-                                  <div role="cell" style="font-size: 14px; line-height: 20px; color: #4B4B49; white-space: nowrap;">{{ f.sizeText }}</div>
-                                  <div role="cell" style="min-width: 0; display: flex; flex-direction: column;">
+                                  <div role="cell" data-r="fc-size" style="font-size: 14px; line-height: 20px; color: #4B4B49; white-space: nowrap;">{{ f.sizeText }}</div>
+                                  <div role="cell" data-r="fc-date" style="min-width: 0; display: flex; flex-direction: column;">
                                     <span style="font-size: 14px; line-height: 20px; color: #1F1E1E; white-space: nowrap;">{{ f.dateText }}</span>
-                                    <span title="{{ f.by }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: #6E6E6D;">by {{ f.by }}</span>
+                                    <span title="{{ f.byText }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ f.byText }}</span>
                                   </div>
                                 </sc-if>
                                 <sc-if value="{{ f.isUploading }}" hint-placeholder-val="{{ false }}">
-                                  <div role="cell" style="grid-column: span 2; display: flex; align-items: center; gap: 16px; min-width: 0;">
+                                  <div role="cell" data-r="fc-prog" style="grid-column: span 2; display: flex; align-items: center; gap: 16px; min-width: 0;">
                                     <div style="flex: 1; min-width: 0;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.ProgressBar" value="{{ f.progress }}" size="small" aria-label="{{ f.progressLabel }}" hint-size="100%,8px"></x-import></div>
                                     <span style="width: 40px; text-align: right; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ f.progressText }}</span>
                                   </div>
                                 </sc-if>
-                                <div role="cell" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
+                                <div role="cell" data-r="fc-act" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
                                   <sc-if value="{{ f.isDone }}" hint-placeholder-val="{{ true }}">
+                                    <div data-r="file-icons" style="display: flex; align-items: center; gap: 4px;">
                                     <button type="button" onClick="{{ f.preview }}" aria-label="{{ f.previewLabel }}" title="Preview" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
                                     <button type="button" onClick="{{ f.download }}" aria-label="{{ f.downloadLabel }}" title="Download" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
-                                    <button type="button" onClick="{{ f.remove }}" aria-label="{{ f.removeLabel }}" title="Remove" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #B00000;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M19.5944%2017.0854C20.4228%2017.0854%2021.0944%2017.757%2021.0944%2018.5854V35.1193C21.0944%2035.9477%2020.4228%2036.6193%2019.5944%2036.6193C18.766%2036.6193%2018.0944%2035.9477%2018.0944%2035.1193V18.5854C18.0944%2017.757%2018.766%2017.0854%2019.5944%2017.0854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M30.1573%2018.5854C30.1573%2017.757%2029.4857%2017.0854%2028.6573%2017.0854C27.8289%2017.0854%2027.1573%2017.757%2027.1573%2018.5854V35.1193C27.1573%2035.9477%2027.8289%2036.6193%2028.6573%2036.6193C29.4857%2036.6193%2030.1573%2035.9477%2030.1573%2035.1193V18.5854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.75%207.125V10.125H6C5.17157%2010.125%204.5%2010.7966%204.5%2011.625C4.5%2012.4534%205.17157%2013.125%206%2013.125H9V38.625C9%2041.3174%2011.1826%2043.5%2013.875%2043.5H34.125C36.8174%2043.5%2039%2041.3174%2039%2038.625V13.125H42C42.8284%2013.125%2043.5%2012.4534%2043.5%2011.625C43.5%2010.7966%2042.8284%2010.125%2042%2010.125H32.25V7.125C32.25%205.67525%2031.0747%204.5%2029.625%204.5H18.375C16.9253%204.5%2015.75%205.67525%2015.75%207.125ZM29.25%2010.125V7.5H18.75V10.125H29.25ZM36%2013.125H12V38.625C12%2039.6605%2012.8395%2040.5%2013.875%2040.5H34.125C35.1605%2040.5%2036%2039.6605%2036%2038.625V13.125Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                    <button type="button" onClick="{{ f.remove }}" aria-label="{{ f.removeLabel }}" title="Remove" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M19.5944%2017.0854C20.4228%2017.0854%2021.0944%2017.757%2021.0944%2018.5854V35.1193C21.0944%2035.9477%2020.4228%2036.6193%2019.5944%2036.6193C18.766%2036.6193%2018.0944%2035.9477%2018.0944%2035.1193V18.5854C18.0944%2017.757%2018.766%2017.0854%2019.5944%2017.0854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M30.1573%2018.5854C30.1573%2017.757%2029.4857%2017.0854%2028.6573%2017.0854C27.8289%2017.0854%2027.1573%2017.757%2027.1573%2018.5854V35.1193C27.1573%2035.9477%2027.8289%2036.6193%2028.6573%2036.6193C29.4857%2036.6193%2030.1573%2035.9477%2030.1573%2035.1193V18.5854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.75%207.125V10.125H6C5.17157%2010.125%204.5%2010.7966%204.5%2011.625C4.5%2012.4534%205.17157%2013.125%206%2013.125H9V38.625C9%2041.3174%2011.1826%2043.5%2013.875%2043.5H34.125C36.8174%2043.5%2039%2041.3174%2039%2038.625V13.125H42C42.8284%2013.125%2043.5%2012.4534%2043.5%2011.625C43.5%2010.7966%2042.8284%2010.125%2042%2010.125H32.25V7.125C32.25%205.67525%2031.0747%204.5%2029.625%204.5H18.375C16.9253%204.5%2015.75%205.67525%2015.75%207.125ZM29.25%2010.125V7.5H18.75V10.125H29.25ZM36%2013.125H12V38.625C12%2039.6605%2012.8395%2040.5%2013.875%2040.5H34.125C35.1605%2040.5%2036%2039.6605%2036%2038.625V13.125Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
+                                    </div>
+                                    <div data-r="file-more" data-pop="filemenu" style="position: relative;">
+                                      <button type="button" onClick="{{ f.toggleMenu }}" aria-label="{{ f.moreLabel }}" aria-haspopup="menu" aria-expanded="{{ f.menuOpen }}" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; gap: 3px; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 4px; height: 4px; border-radius: 50%; background: #4B4B49;"></span><span aria-hidden="true" style="display: block; width: 4px; height: 4px; border-radius: 50%; background: #4B4B49;"></span><span aria-hidden="true" style="display: block; width: 4px; height: 4px; border-radius: 50%; background: #4B4B49;"></span></button>
+                                      <sc-if value="{{ f.menuOpen }}" hint-placeholder-val="{{ false }}">
+                                        <div role="menu" aria-label="{{ f.moreLabel }}" style="position: absolute; top: calc(100% + 4px); right: 0; z-index: 40; width: 200px; padding: 8px 0; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 24px rgba(31,30,30,0.16);">
+                                          <button type="button" role="menuitem" onClick="{{ f.menuPreview }}" style="display: flex; align-items: center; width: 100%; min-height: 48px; padding: 0 16px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1F1E1E;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">Preview</button>
+                                          <button type="button" role="menuitem" onClick="{{ f.menuDownload }}" style="display: flex; align-items: center; width: 100%; min-height: 48px; padding: 0 16px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1F1E1E;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">Download</button>
+                                          <button type="button" role="menuitem" onClick="{{ f.menuRemove }}" style="display: flex; align-items: center; width: 100%; min-height: 48px; padding: 0 16px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1F1E1E;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">Remove</button>
+                                        </div>
+                                      </sc-if>
+                                    </div>
                                   </sc-if>
                                   <sc-if value="{{ f.isUploading }}" hint-placeholder-val="{{ false }}">
                                     <button type="button" onClick="{{ f.cancel }}" aria-label="{{ f.cancelLabel }}" title="Cancel upload" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #1F1E1E;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M41.4142%2038.5856C42.1953%2039.3666%2042.1953%2040.6329%2041.4142%2041.414C40.6332%2042.195%2039.3668%2042.195%2038.5858%2041.414L24.0001%2026.8283L9.41421%2041.4142C8.63316%2042.1952%207.36684%2042.1952%206.58579%2041.4142C5.80474%2040.6331%205.80474%2039.3668%206.58579%2038.5857L21.1717%2023.9999L6.58602%209.41421C5.80497%208.63317%205.80497%207.36683%206.58602%206.58579C7.36707%205.80474%208.6334%205.80474%209.41444%206.58579L24.0001%2021.1714L38.5856%206.58597C39.3666%205.80492%2040.6329%205.80492%2041.414%206.58597C42.195%207.36702%2042.195%208.63335%2041.414%209.4144L26.8285%2023.9999L41.4142%2038.5856Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
@@ -516,7 +693,7 @@
                             <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ ct.zoneTitle }}</span>
                             <span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ ct.zoneHint }}</span>
                           </span>
-                          <div style="display: flex; width: 128px; flex-shrink: 0;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-s-sb" aria-label="{{ ct.browseLabel }}" onClick="{{ ct.browse }}" hint-size="128px,32px">Browse files</x-import></div>
+                          <div data-r="zone-btn" style="display: flex; width: 128px; flex-shrink: 0;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="small" className="text-s-sb" aria-label="{{ ct.browseLabel }}" onClick="{{ ct.browse }}" hint-size="128px,32px">Browse files</x-import></div>
                         </div>
                         <sc-if value="{{ ct.hasErrors }}" hint-placeholder-val="{{ false }}">
                           <div role="alert" style="display: flex; flex-direction: column; gap: 8px;">
@@ -524,7 +701,7 @@
                               <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 20px; color: #B00000;">
                                 <span aria-hidden="true" style="{{ ct.errIcon }}"></span>
                                 <span style="flex: 1; min-width: 0; overflow-wrap: anywhere;"><strong>{{ er.name }}</strong> couldn’t be uploaded. {{ er.msg }}</span>
-                                <button type="button" onClick="{{ er.dismiss }}" aria-label="{{ er.dismissLabel }}" title="Dismiss" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #B00000;" style-hover="background: #FDECEC;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="{{ ct.closeIcon }}"></span></button>
+                                <button type="button" onClick="{{ er.dismiss }}" aria-label="{{ er.dismissLabel }}" title="Dismiss" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #F1F0EE; color: #1F1E1E;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="{{ ct.closeIcon }}"></span></button>
                               </div>
                             </sc-for>
                           </div>
@@ -537,7 +714,7 @@
             </sc-if>
 
             <sc-if value="{{ isSummary }}" hint-placeholder-val="{{ false }}">
-              <div style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
+              <div data-r="card" style="background: #FFFFFF; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 32px;">
                 <h2 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 30px; color: #262524;">{{ summaryHeading }}</h2>
                 <sc-if value="{{ reviewNote }}" hint-placeholder-val="{{ false }}">
                   <div role="note" style="display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 8px; background: #EBF3F9; border: 1px solid #A4C9E2;">
@@ -556,13 +733,13 @@
                     </sc-if>
                   </div>
                   <div style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
-                    <div style="display: flex; align-items: center; gap: 64px; padding: 16px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE; flex-wrap: wrap;">
+                    <div data-r="sum-head" style="display: flex; align-items: center; gap: 64px; padding: 16px 24px; background: #FAF9F8; border-bottom: 1px solid #F1F0EE; flex-wrap: wrap;">
                       <span style="flex: 1 1 240px; font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; line-height: 30px; color: #000000">{{ sum.name }}</span>
                       <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">Category: {{ sum.category }}</span>
                       <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">{{ sum.tablesText }}</span>
                       <span style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 24px; color: #000000">{{ sum.fieldsText }}</span>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 16px; padding: 16px 24px 24px; background: #FFFFFF;">
+                    <div data-r="sum-inner" style="display: flex; flex-direction: column; gap: 16px; padding: 16px 24px 24px; background: #FFFFFF;">
                       <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">Schema annotation</span>
                       <dc-import name="SchemaTable" tables="{{ sum.tables }}" editable="{{ false }}" hint-size="100%,320px"></dc-import>
                     </div>
@@ -582,10 +759,10 @@
                     
                   </sc-if>
                   <div style="border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden;">
-                    <div role="list" style="display: flex; flex-direction: column; padding: 0 24px 8px; background: #FFFFFF;">
+                    <div role="list" data-r="sum-list" style="display: flex; flex-direction: column; padding: 0 24px 8px; background: #FFFFFF;">
                     <sc-for list="{{ sumCats }}" as="sc" hint-placeholder-count="5">
                       <div role="listitem" style="{{ sc.rowStyle }}">
-                        <div style="flex: 0 0 200px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                        <div data-r="sum-cat" style="flex: 0 0 200px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
                           <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #262524;">{{ sc.title }}</span>
                           <span style="{{ sc.pillStyle }}">{{ sc.countText }}</span>
                         </div>
@@ -599,7 +776,7 @@
                                     <span title="{{ sf.name }}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: #1F1E1E;">{{ sf.name }}</span>
                                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ sf.metaText }}</span>
                                   </span>
-                                  <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                                  <div data-r="sum-act" style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
                                     <button type="button" onClick="{{ sf.preview }}" aria-label="{{ sf.previewLabel }}" title="Preview" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #FFFFFF; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
                                     <button type="button" onClick="{{ sf.download }}" aria-label="{{ sf.downloadLabel }}" title="Download" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D;" style-hover="background: #FFFFFF; color: #004488;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><span aria-hidden="true" style="display: block; width: 20px; height: 20px; background: currentColor; mask: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E) center / contain no-repeat;"></span></button>
                                   </div>
@@ -631,24 +808,39 @@
             </sc-if>
           </div>
 
-          <div style="position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 24px 32px; background: #FFFFFF; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+          <div data-r="footer" style="position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 32px; background: #FFFFFF; flex-wrap: wrap;">
+            <div data-r="footer-left" style="display: flex; align-items: center; min-height: 48px;">
+              <sc-if value="{{ showDelete }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ askDelete }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                  <span>Delete entity</span>
+                </button>
+              </sc-if>
+            </div>
+            <div data-r="footer-right" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
               <sc-if value="{{ false }}" hint-placeholder-val="{{ false }}">
                 <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ footerHint }}</span>
               </sc-if>
               <sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
-                <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" hint-size="144px,48px">{{ nextLabel }}</x-import></div>
+                <div data-r="footer-grp" style="display: flex; align-items: center; gap: 16px;">
+                  <sc-if value="{{ showSaveDraft }}" hint-placeholder-val="{{ false }}">
+                    <div data-r="fdraft" style="display: flex;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="transparent" tone="primary" size="large" className="text-l-sb" disabled="{{ draftSaveDisabled }}" onClick="{{ saveDraft }}" hint-size="160px,48px">Save as draft</x-import></div>
+                  </sc-if>
+                  <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+                    <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" disabled="{{ submitting }}" onClick="{{ onBack }}" hint-size="144px,48px">Back</x-import></div>
+                  </sc-if>
+                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" hint-size="144px,48px">{{ nextLabel }}</x-import></div>
+                </div>
               </sc-if>
               <sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}">
-                <div style="display: flex; gap: 16px;">
-                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ backToDashboard }}" hint-size="144px,48px">Cancel</x-import></div>
-                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="144px,48px">Save</x-import></div>
+                <div data-r="footer-grp" style="display: flex; gap: 16px;">
+                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ backToDashboard }}" hint-size="144px,48px">Cancel</x-import></div>
+                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="144px,48px">Save</x-import></div>
                 </div>
               </sc-if>
               <sc-if value="{{ showDecision }}" hint-placeholder-val="{{ false }}">
-                <div style="display: flex; gap: 16px;">
-                  <div style="display: flex; min-width: 184px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ openChanges }}" hint-size="184px,48px">Request changes</x-import></div>
-                  <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ approving }}" onClick="{{ approve }}" hint-size="144px,48px">{{ approveLabel }}</x-import></div>
+                <div data-r="footer-grp" style="display: flex; gap: 16px;">
+                  <div data-r="fbtn" style="display: flex; min-width: 184px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ openChanges }}" hint-size="184px,48px">Request changes</x-import></div>
+                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ approving }}" onClick="{{ approve }}" hint-size="144px,48px">{{ approveLabel }}</x-import></div>
                 </div>
               </sc-if>
             </div>
@@ -657,22 +849,22 @@
       </sc-if>
 
       <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
-        <section data-screen-label="Submitted for review" style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 40px 32px 48px; text-align: center;">
+        <section data-screen-label="Submitted for review" data-r="page" style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 40px 32px 48px; text-align: center;">
           <nav aria-label="Breadcrumb" style="align-self: stretch;">
-            <ol style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <ol data-r="crumbs" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
               <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
                 <li style="display: flex; align-items: center; gap: 16px;">
-                  <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
-                  <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">{{ c.label }}</button></sc-if>
+                  <sc-if value="{{ c.showSep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" data-r="crumb-sep" style="display: block; width: 1px; height: 24px; background: #C2C1C0; flex-shrink: 0;"></span></sc-if>
+                  <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" data-r="crumb-link" onClick="{{ c.go }}" style="border: none; background: transparent; padding: 0; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #004488; text-decoration: underline;" style-hover="color: #002D56;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><span data-r="crumb-back" class="pds-svg-chevron-left-small" aria-hidden="true" style="width: 24px; height: 24px; flex-shrink: 0; background: currentColor;"></span>{{ c.label }}</button></sc-if>
                   <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 14px; line-height: 24px; color: #6E6E6D;">{{ c.label }}</span></sc-if>
                 </li>
               </sc-for>
             </ol>
           </nav>
-          <img src="assets/ill-submitted.png" alt="" width="144" height="144" style="display: block; border-radius: 50%; object-fit: cover;">
+          <img src="assets/ill-submitted.png" data-r="success-ill" alt="" width="144" height="144" style="display: block; border-radius: 50%; object-fit: cover;">
           <h1 style="margin: 0; font-family: Poppins, sans-serif; font-weight: 700; font-size: 32px; line-height: 48px; color: #262524;">Submitted for review</h1>
-          <p style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 30px; color: #1F1E1E;">We will notify you when it will be reviewed and published.</p>
-          <div style="display: flex; gap: 16px; padding-top: 32px; flex-wrap: wrap; justify-content: center;">
+          <p data-r="success-sub" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 30px; color: #1F1E1E;">We will notify you when it will be reviewed and published.</p>
+          <div data-r="success-btns" style="display: flex; gap: 16px; padding-top: 32px; flex-wrap: wrap; justify-content: center;">
             <div style="display: flex; min-width: 200px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ goDashboard }}" hint-size="200px,48px">Back to Dashboard</x-import></div>
             <div style="display: flex; min-width: 200px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" onClick="{{ startFresh }}" hint-size="200px,48px">Add another entity</x-import></div>
           </div>
@@ -689,22 +881,42 @@
             <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">{{ previewTitle }}</h3>
             <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ closePreview }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
           </div>
-          <sc-if value="{{ previewMeta }}" hint-placeholder-val="{{ false }}">
-            <p style="margin: -8px 0 0; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ previewMeta }}</p>
-          </sc-if>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: -8px; min-height: 24px; flex-wrap: wrap;">
+            <p style="margin: 0; flex: 1 1 320px; min-width: 0; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ previewMeta }}</p>
+            <sc-if value="{{ showEditBtn }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ startEditFile }}" aria-label="{{ editFileLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 14px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
+                <img src="assets/icons/c/edit_outlined_24-blue.svg" alt="" aria-hidden="true" width="20" height="20" style="display: block; flex-shrink: 0;">
+                <span>Edit</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; color: #004488;">Editing</span>
+            </sc-if>
+          </div>
           <sc-if value="{{ previewPdf }}" hint-placeholder-val="{{ false }}">
-            <iframe src="{{ previewUrl }}" title="{{ previewTitle }}" style="width: 100%; height: 480px; border: 1px solid #E5E4E3; border-radius: 8px;"></iframe>
+            <iframe data-r="modal-scroll" src="{{ previewUrl }}" title="{{ previewTitle }}" style="width: 100%; height: 480px; border: 1px solid #E5E4E3; border-radius: 8px;"></iframe>
+          </sc-if>
+          <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+            <textarea data-r="modal-scroll" value="{{ editText }}" onChange="{{ onEditText }}" autoFocus="{{ true }}" aria-label="{{ editAreaLabel }}" spellcheck="false" style="display: block; width: 100%; height: 480px; margin: 0; padding: 24px; box-sizing: border-box; resize: vertical; background: #FFFFFF; border: 1.5px solid #1F1E1E; border-radius: 8px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E;" style-focus="outline: none; border-color: #004488;"></textarea>
           </sc-if>
           <sc-if value="{{ previewText }}" hint-placeholder-val="{{ false }}">
-            <pre style="margin: 0; max-height: 480px; overflow: auto; padding: 24px; background: #FAF9F8; border-radius: 8px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E; white-space: pre-wrap;">{{ previewText }}</pre>
+            <pre data-r="modal-scroll" style="margin: 0; max-height: 480px; overflow: auto; padding: 24px; background: #FAF9F8; border-radius: 8px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E; white-space: pre-wrap;">{{ previewText }}</pre>
           </sc-if>
           <sc-if value="{{ previewNone }}" hint-placeholder-val="{{ false }}">
             <p style="margin: 0; font-size: 16px; line-height: 24px; color: #4B4B49;">{{ previewNone }}</p>
           </sc-if>
-          <div style="display: flex; justify-content: flex-end; gap: 16px;">
-            <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ previewDownload }}" hint-size="144px,40px">Download</x-import></div>
-            <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ closePreview }}" hint-size="120px,40px">Close</x-import></div>
-          </div>
+          <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ previewDownload }}" hint-size="144px,40px">Download</x-import></div>
+              <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ closePreview }}" hint-size="120px,40px">Close</x-import></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ cancelEditFile }}" hint-size="120px,40px">Cancel</x-import></div>
+              <div style="display: flex; min-width: 160px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" disabled="{{ saveFileDisabled }}" onClick="{{ saveEditFile }}" hint-size="160px,40px">Save changes</x-import></div>
+            </div>
+          </sc-if>
         </div>
       </x-import>
     </div>
@@ -720,7 +932,7 @@
           </div>
           <div style="display: flex; flex-direction: column; gap: 24px;">
             <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;"><strong>{{ removeName }}</strong> will be permanently removed from <strong>{{ removeCat }}</strong>. This can’t be undone.</p>
-            <div style="display: flex; justify-content: flex-end; gap: 16px;">
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
               <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ cancelRemove }}" hint-size="120px,40px">Cancel</x-import></div>
               <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ confirmRemove }}" hint-size="144px,40px">Remove file</x-import></div>
             </div>
@@ -745,7 +957,7 @@
             <textarea id="changes-comment" value="{{ changesText }}" onChange="{{ onChangesText }}" autoFocus="{{ true }}" rows="4" aria-invalid="{{ changesInvalid }}" aria-describedby="changes-help" placeholder="e.g. Add a description for on_time_flag that explains the stage-by window" style="{{ changesStyle }}"></textarea>
             <span id="changes-help" style="{{ changesHelpStyle }}">{{ changesHelp }}</span>
           </div>
-          <div style="display: flex; justify-content: flex-end; gap: 16px;">
+          <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
             <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ closeChanges }}" hint-size="120px,40px">Cancel</x-import></div>
             <div style="display: flex; min-width: 184px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ sendChanges }}" hint-size="184px,40px">Request changes</x-import></div>
           </div>
@@ -755,14 +967,78 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ discardOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 95;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="medium" dc-props="{{ modalDiscard }}" hint-size="100%,100%">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">Discard unsaved changes?</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ keepEditing }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">Your edits to <strong>{{ previewTitle }}</strong> haven’t been saved. If you leave now, they’ll be lost.</p>
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ keepEditing }}" hint-size="144px,40px">Keep editing</x-import></div>
+              <div style="display: flex; min-width: 176px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ confirmDiscard }}" hint-size="176px,40px">Discard changes</x-import></div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ deleteOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="medium" dc-props="{{ modalDelete }}" hint-size="100%,100%">
+        <div data-r="modal-body" style="display: flex; flex-direction: column; gap: 16px; height: 156px">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">Delete entity?</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ cancelDelete }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;"><strong>{{ deleteName }}</strong> will be permanently deleted from the Entity dashboard, along with its schema and files.</p>
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ cancelDelete }}" hint-size="120px,40px">Cancel</x-import></div>
+              <div style="display: flex; min-width: 160px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ confirmDelete }}" hint-size="160px,40px">Delete entity</x-import></div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ newCatOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90;">
+      <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Modal" open="{{ true }}" size="medium" dc-props="{{ modalNewCat }}" hint-size="100%,100%">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h3 style="margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high);">Create new category</h3>
+            <button type="button" class="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick="{{ closeNewCat }}" style="flex-shrink: 0; margin-right: -8px;"><span class="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <label for="new-cat-name" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; color: #262524;">Category name</label>
+              <input id="new-cat-name" type="text" value="{{ newCatText }}" onChange="{{ onNewCatText }}" onKeyDown="{{ onNewCatKey }}" autoFocus="{{ true }}" maxlength="40" aria-invalid="{{ newCatInvalid }}" aria-describedby="new-cat-help" placeholder="e.g. Fulfillment speed" style="{{ newCatStyle }}">
+              <span id="new-cat-help" style="{{ newCatHelpStyle }}">{{ newCatHelp }}</span>
+            </div>
+            <div data-r="modal-actions" style="display: flex; justify-content: flex-end; gap: 16px;">
+              <div style="display: flex; min-width: 120px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="medium" className="text-m-sb" onClick="{{ closeNewCat }}" hint-size="120px,40px">Cancel</x-import></div>
+              <div style="display: flex; min-width: 176px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="medium" className="text-m-sb" onClick="{{ createCat }}" hint-size="176px,40px">Create category</x-import></div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
-    <div role="status" aria-live="polite" style="position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px);">
+    <div role="status" data-r="toast" aria-live="polite" style="position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px);">
       <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Toast" tone="{{ toastTone }}" message="{{ toastMessage }}" actions="{{ toastActions }}" dismissible="{{ true }}" onDismiss="{{ dismissToast }}" hint-size="400px,64px"></x-import>
     </div>
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;grouping&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;category&quot;,&quot;none&quot;],&quot;default&quot;:&quot;category&quot;,&quot;tsType&quot;:&quot;'category'|'none'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;approvalQueue&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Approval&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Prompts &amp; evals&quot;,&quot;Review &amp; submit&quot;,&quot;Home&quot;],&quot;default&quot;:&quot;Prompts &amp; evals&quot;,&quot;tsType&quot;:&quot;'Prompts &amp; evals'|'Review &amp; submit'|'Home'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;sampleFiles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;grouping&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;category&quot;,&quot;none&quot;],&quot;default&quot;:&quot;category&quot;,&quot;tsType&quot;:&quot;'category'|'none'&quot;,&quot;section&quot;:&quot;Dashboard&quot;},&quot;approvalQueue&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Approval&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Entity dashboard&quot;,&quot;Prompts &amp; evals&quot;,&quot;Review &amp; submit&quot;,&quot;Home&quot;],&quot;default&quot;:&quot;Entity dashboard&quot;,&quot;tsType&quot;:&quot;'Entity dashboard'|'Prompts &amp; evals'|'Review &amp; submit'|'Home'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;emptyDashboard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;sampleFiles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
 const USERS = {
   priya: { id: 'priya', name: 'Priya Sethi', first: 'Priya', initials: 'PS', canApprove: false, role: 'Can submit' },
   gary: { id: 'gary', name: 'Gary Spark', first: 'Gary', initials: 'GS', canApprove: true, role: 'Can submit and approve' }
@@ -780,15 +1056,15 @@ const SOURCES = {
   'BigQuery': ['picking_sessions', 'substitutions']
 };
 const TABLE_FIELDS = {
-  'ott_orders': [['order-id', 'Unique order identifier'], ['tilled_at', 'Timestamp the order was tilled'], ['on_time_flag', '']],
-  'ott_oss_Entitys': [['late_count', 'Orders tilled after stage-by time'], ['missed_count', 'Orders never tilled']],
-  'coe-daily': [['store_id', 'Store number'], ['pick_rate', 'Items picked per labor hour'], ['coe_score', '']],
-  'fa-flash': [['item_id', 'Item UPC'], ['flash_available', '1 when the item can be flashed to customers'], ['updated_at', '']],
-  'oth_summary': [['store_id', 'Store number'], ['handoff_count', 'Orders handed off to customers'], ['avg_wait_min', '']],
-  'order_events': [['event_id', 'Unique event identifier'], ['order-id', 'Unique order identifier'], ['event_type', '']],
-  'store_daily_kpis': [['store_id', 'Store number'], ['business_date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Orders completed per labor hour']],
-  'picking_sessions': [['session_id', 'Unique picking session identifier'], ['picker_id', 'Associate who ran the session'], ['session_minutes', '']],
-  'substitutions': [['order-id', 'Unique order identifier'], ['item_id', 'Original item UPC'], ['sub_accepted', '']]
+  'ott_orders': [['order-id', 'String', 'Unique order identifier'], ['tilled_at', 'Timestamp', 'Timestamp the order was tilled'], ['on_time_flag', 'Boolean', '']],
+  'ott_oss_Entitys': [['late_count', 'Integer', 'Orders tilled after stage-by time'], ['missed_count', 'Integer', 'Orders never tilled']],
+  'coe-daily': [['store_id', 'String', 'Store number'], ['pick_rate', 'Decimal', 'Items picked per labor hour'], ['coe_score', 'Integer', '']],
+  'fa-flash': [['item_id', 'String', 'Item UPC'], ['flash_available', 'Boolean', '1 when the item can be flashed to customers'], ['updated_at', 'Timestamp', '']],
+  'oth_summary': [['store_id', 'String', 'Store number'], ['handoff_count', 'Integer', 'Orders handed off to customers'], ['avg_wait_min', 'Decimal', '']],
+  'order_events': [['event_id', 'String', 'Unique event identifier'], ['order-id', 'String', 'Unique order identifier'], ['event_type', 'String', '']],
+  'store_daily_kpis': [['store_id', 'String', 'Store number'], ['business_date', 'Date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Decimal', 'Orders completed per labor hour']],
+  'picking_sessions': [['session_id', 'String', 'Unique picking session identifier'], ['picker_id', 'String', 'Associate who ran the session'], ['session_minutes', 'Integer', '']],
+  'substitutions': [['order-id', 'String', 'Unique order identifier'], ['item_id', 'String', 'Original item UPC'], ['sub_accepted', 'Boolean', '']]
 };
 const FILLED = {
   on_time_flag: '1 when tilled before stage-by time', coe_score: 'Composite center-of-excellence score for the store, 0–100',
@@ -796,10 +1072,11 @@ const FILLED = {
   event_type: 'Order lifecycle event, e.g. picked, staged, handed off', session_minutes: 'Minutes from first scan to last scan in the session',
   sub_accepted: '1 when the customer accepted the substitution'
 };
-const fieldsFor = (t, fill) => (TABLE_FIELDS[t] || []).map(([name, desc]) => ({ name, desc: desc || (fill ? FILLED[name] || '' : '') }));
+const fieldsFor = (t, fill) => (TABLE_FIELDS[t] || []).map(([name, type, desc]) => ({ name, type, desc: desc || (fill ? FILLED[name] || '' : '') }));
+const ALL_ENTITY_NAMES = Object.values(ENTITY_OPTIONS).flat();
 const md = (title, lines) => '# ' + title + '\n\n' + lines.join('\n');
 const seedFile = (name, size, content) => ({ id: 'f' + Math.random().toString(36).slice(2), name, size, ext: name.split('.').pop().toLowerCase(), cat: name.includes('eval') ? 'evals' : 'prompts', by: 'Priya Sethi', at: Date.parse('2026-09-05T10:00:00'), status: 'done', content });
-const seed = (id, category, name, source, tables, files) => ({ id, category, name, source, tables: tables.map(t => ({ name: t, fields: fieldsFor(t, true) })), files, status: 'published', updatedAt: Date.parse({ e1: '2026-09-10', e2: '2026-08-28', e3: '2026-09-12', e4: '2026-09-02', e5: '2026-09-18', e6: '2026-08-21' }[id] + 'T12:00:00') });
+const seed = (id, category, name, source, tables, files) => ({ id, category, name, source, tables: tables.map(t => ({ name: t, fields: fieldsFor(t, true) })), files, status: 'published', approvedBy: 'Gary Spark', updatedAt: Date.parse({ e1: '2026-09-10', e2: '2026-08-28', e3: '2026-09-12', e4: '2026-09-02', e5: '2026-09-18', e6: '2026-08-21' }[id] + 'T12:00:00') });
 const SEED = [
   seed('e1', 'OTT', 'Stage-by compliance', 'Pulse', ['ott_orders'], [
     seedFile('stage_by_prompts.md', 26 * 1024, md('Stage-by compliance prompts', ['- How many orders missed stage-by at store 1234 yesterday?', '- Which stores had the lowest stage-by compliance this week?'])),
@@ -813,20 +1090,20 @@ const SEED = [
 ];
 const D = (s) => Date.parse(s + 'T10:00:00');
 let sfN = 0;
-const sf = (cat, name, kb, by, date, lines) => ({ id: 'sf' + (++sfN), name, size: Math.round(kb * 1024), ext: name.split('.').pop().toLowerCase(), cat, status: 'done', by, at: D(date), content: md(name.slice(0, name.lastIndexOf('.')).split('_').join(' '), lines) });
+const sf = (cat, name, kb, by, date, lines) => { const ext = name.split('.').pop().toLowerCase(); const title = name.slice(0, name.lastIndexOf('.')).split('_').join(' '); return { id: 'sf' + (++sfN), name, size: Math.round(kb * 1024), ext, cat, status: 'done', by, at: D(date), content: ext === 'txt' ? title + '\n\n' + lines.join('\n') : md(title, lines) }; };
 const D1_FILES = [
   sf('prompts', 'late_order_recovery_prompts.md', 24, 'Priya Sethi', '2026-09-29', ['- Which stores recovered the most late orders last week?', '- How many late orders at store 1234 were recovered yesterday?']),
-  sf('prompts', 'recovery_followup_prompts.docx', 86, 'Priya Sethi', '2026-09-29', ['- What should a store do when an order is running late?', '- Which late orders still need a follow-up call?']),
-  sf('prompts', 'store_manager_prompt_templates.pdf', 1229, 'Gary Spark', '2026-09-24', ['- Show late order recovery for my store this week.', '- Compare my store with the district on recovered orders.']),
-  sf('kb', 'late_order_playbook.pdf', 2457, 'Gary Spark', '2026-09-22', ['A late order is any order handed off after its promised window.', 'Stores should contact the customer before the window closes.']),
-  sf('kb', 'recovery_sla_overview.docx', 312, 'Priya Sethi', '2026-09-22', ['Overview of how recovered orders are counted for each store.']),
+  sf('prompts', 'recovery_followup_prompts.txt', 14, 'Priya Sethi', '2026-09-29', ['- What should a store do when an order is running late?', '- Which late orders still need a follow-up call?']),
+  sf('prompts', 'store_manager_prompt_templates.md', 31, 'Gary Spark', '2026-09-24', ['- Show late order recovery for my store this week.', '- Compare my store with the district on recovered orders.']),
+  sf('kb', 'late_order_playbook.md', 48, 'Gary Spark', '2026-09-22', ['A late order is any order handed off after its promised window.', 'Stores should contact the customer before the window closes.']),
+  sf('kb', 'recovery_sla_overview.txt', 22, 'Priya Sethi', '2026-09-22', ['Overview of how recovered orders are counted for each store.']),
   sf('evals', 'late_order_recovery_evals.md', 18, 'Priya Sethi', '2026-10-01', ['1. Answer cites the ott_orders table.', '2. Recovery rate is reported as a percentage with one decimal.']),
-  sf('evals', 'recovery_golden_answers.docx', 54, 'Priya Sethi', '2026-10-01', ['Expected answers for the recovery prompts, one per question.']),
+  sf('evals', 'recovery_golden_answers.txt', 16, 'Priya Sethi', '2026-10-01', ['Expected answers for the recovery prompts, one per question.']),
   sf('evals', 'edge_case_evals.md', 9, 'Marcus Lee', '2026-10-02', ['1. Store with zero late orders returns 0 and says so.', '2. Closed stores are excluded from the answer.']),
-  sf('evals', 'store_level_evals_q3.pdf', 640, 'Gary Spark', '2026-09-30', ['Store-level checks for Q3.']),
+  sf('evals', 'store_level_evals_q3.md', 27, 'Gary Spark', '2026-09-30', ['Store-level checks for Q3.']),
   sf('evals', 'recovery_sla_checks.md', 12, 'Priya Sethi', '2026-09-29', ['1. Answer names the store and the business date.']),
   sf('evals', 'negative_cases.md', 7, 'Priya Sethi', '2026-09-26', ['1. Questions about other banners are declined.']),
-  sf('evals', 'regression_suite_v1.docx', 120, 'Gary Spark', '2026-09-24', ['Regression checks carried over from the first release.']),
+  sf('evals', 'regression_suite_v1.txt', 19, 'Gary Spark', '2026-09-24', ['Regression checks carried over from the first release.']),
   sf('md', 'sidekick_context.md', 6, 'Gary Spark', '2026-09-30', ['Answer late order questions with the store number and the business date.'])
 ];
 const D1 = { id: 'd1', category: 'OTT', name: 'Late order recovery', source: 'Pulse', tables: ['ott_orders', 'ott_oss_Entitys'].map(t => ({ name: t, fields: fieldsFor(t, true) })), files: D1_FILES, status: 'draft', step: 2, updatedAt: D('2026-10-05') };
@@ -851,7 +1128,9 @@ const STATUS = {
   draft: { label: 'Draft', bg: '#F1F0EE', border: '#C2C1C0', fg: '#4B4B49' }
 };
 const fmtDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-const ACCEPT = ['pdf', 'doc', 'docx', 'md', 'rtf'];
+const ACCEPT = ['txt', 'md'];
+const TEXT_EXT = ['txt', 'md'];
+const fmtDateTime = (ts) => fmtDate(ts) + ', ' + new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 const MAX_BYTES = 10 * 1024 * 1024;
 const FILE_CATS = [
   { key: 'prompts', title: 'Prompt Templates', desc: 'Prompts Sidekick can run for this entity.', accept: ACCEPT },
@@ -866,6 +1145,7 @@ const extOf = (n) => (n.split('.').pop() || '').toLowerCase();
 const ICO = {"file":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%205h17l9%209v29H12z%20M29%205v9h9%22%20stroke%3D%22%23000%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E","checkmark_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M43.7362%207.42789C44.6045%208.11062%2044.7549%209.36799%2044.0722%2010.2363L19.6972%2041.2363C19.3513%2041.6763%2018.8368%2041.9511%2018.2788%2041.9942C17.7207%2042.0372%2017.1702%2041.8444%2016.7609%2041.4627L2.13591%2027.8227C1.32813%2027.0693%201.28403%2025.8038%202.0374%2024.996C2.79077%2024.1882%204.05633%2024.1441%204.86411%2024.8975L17.8978%2037.0533L40.9278%207.76388C41.6105%206.89558%2042.8679%206.74515%2043.7362%207.42789Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","info_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%205.5C13.7827%205.5%205.5%2013.7827%205.5%2024C5.5%2034.2173%2013.7827%2042.5%2024%2042.5C34.2173%2042.5%2042.5%2034.2173%2042.5%2024C42.5%2013.7827%2034.2173%205.5%2024%205.5ZM2.5%2024C2.5%2012.1259%2012.1259%202.5%2024%202.5C35.8741%202.5%2045.5%2012.1259%2045.5%2024C45.5%2035.8741%2035.8741%2045.5%2024%2045.5C12.1259%2045.5%202.5%2035.8741%202.5%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2012.5C24.8284%2012.5%2025.5%2013.1716%2025.5%2014V15.6C25.5%2016.4284%2024.8284%2017.1%2024%2017.1C23.1716%2017.1%2022.5%2016.4284%2022.5%2015.6V14C22.5%2013.1716%2023.1716%2012.5%2024%2012.5ZM24%2019.9C24.8284%2019.9%2025.5%2020.5716%2025.5%2021.4V34.4C25.5%2035.2284%2024.8284%2035.9%2024%2035.9C23.1716%2035.9%2022.5%2035.2284%2022.5%2034.4V21.4C22.5%2020.5716%2023.1716%2019.9%2024%2019.9Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","show_password_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M23.5712%2012.5C12.8854%2012.5%206.68895%2018.7826%204.21234%2022.2687C4.20281%2022.2822%204.19305%2022.2954%204.18308%2022.3085C3.69405%2022.951%203.5%2023.5671%203.5%2024.1238C3.5%2024.6785%203.69262%2025.2921%204.17765%2025.932C6.94056%2029.4647%2013.1476%2035.5%2023.5712%2035.5C34.3477%2035.5%2041.5757%2029.3711%2043.9856%2025.9789C44.6656%2025.0217%2044.6714%2023.5083%2044.0032%2022.5415C41.2329%2019.0101%2034.2427%2012.5%2023.5712%2012.5ZM1.78043%2020.512C4.59029%2016.5657%2011.584%209.5%2023.5712%209.5C35.5623%209.5%2043.3394%2016.8199%2046.3903%2020.724C46.4044%2020.742%2046.418%2020.7603%2046.4312%2020.7789C47.8563%2022.7848%2047.8563%2025.7104%2046.4312%2027.7164C43.5637%2031.7528%2035.4874%2038.5%2023.5712%2038.5C11.8378%2038.5%204.85289%2031.6682%201.80759%2027.7713L1.79583%2027.7562C0.965522%2026.6654%200.5%2025.4242%200.5%2024.1238C0.5%2022.8316%200.959826%2021.5979%201.78043%2020.512Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24%2019C21.2386%2019%2019%2021.2386%2019%2024C19%2026.7614%2021.2386%2029%2024%2029C26.7614%2029%2029%2026.7614%2029%2024C29%2021.2386%2026.7614%2019%2024%2019ZM16%2024C16%2019.5817%2019.5817%2016%2024%2016C28.4183%2016%2032%2019.5817%2032%2024C32%2028.4183%2028.4183%2032%2024%2032C19.5817%2032%2016%2028.4183%2016%2024Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","download_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M24%207v24M13.5%2021.5%2024%2032l10.5-10.5M8%2040h32%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E","trash_outlined_16":"data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M19.5944%2017.0854C20.4228%2017.0854%2021.0944%2017.757%2021.0944%2018.5854V35.1193C21.0944%2035.9477%2020.4228%2036.6193%2019.5944%2036.6193C18.766%2036.6193%2018.0944%2035.9477%2018.0944%2035.1193V18.5854C18.0944%2017.757%2018.766%2017.0854%2019.5944%2017.0854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M30.1573%2018.5854C30.1573%2017.757%2029.4857%2017.0854%2028.6573%2017.0854C27.8289%2017.0854%2027.1573%2017.757%2027.1573%2018.5854V35.1193C27.1573%2035.9477%2027.8289%2036.6193%2028.6573%2036.6193C29.4857%2036.6193%2030.1573%2035.9477%2030.1573%2035.1193V18.5854Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.75%207.125V10.125H6C5.17157%2010.125%204.5%2010.7966%204.5%2011.625C4.5%2012.4534%205.17157%2013.125%206%2013.125H9V38.625C9%2041.3174%2011.1826%2043.5%2013.875%2043.5H34.125C36.8174%2043.5%2039%2041.3174%2039%2038.625V13.125H42C42.8284%2013.125%2043.5%2012.4534%2043.5%2011.625C43.5%2010.7966%2042.8284%2010.125%2042%2010.125H32.25V7.125C32.25%205.67525%2031.0747%204.5%2029.625%204.5H18.375C16.9253%204.5%2015.75%205.67525%2015.75%207.125ZM29.25%2010.125V7.5H18.75V10.125H29.25ZM36%2013.125H12V38.625C12%2039.6605%2012.8395%2040.5%2013.875%2040.5H34.125C35.1605%2040.5%2036%2039.6605%2036%2038.625V13.125Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","close_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20d%3D%22M41.4142%2038.5856C42.1953%2039.3666%2042.1953%2040.6329%2041.4142%2041.414C40.6332%2042.195%2039.3668%2042.195%2038.5858%2041.414L24.0001%2026.8283L9.41421%2041.4142C8.63316%2042.1952%207.36684%2042.1952%206.58579%2041.4142C5.80474%2040.6331%205.80474%2039.3668%206.58579%2038.5857L21.1717%2023.9999L6.58602%209.41421C5.80497%208.63317%205.80497%207.36683%206.58602%206.58579C7.36707%205.80474%208.6334%205.80474%209.41444%206.58579L24.0001%2021.1714L38.5856%206.58597C39.3666%205.80492%2040.6329%205.80492%2041.414%206.58597C42.195%207.36702%2042.195%208.63335%2041.414%209.4144L26.8285%2023.9999L41.4142%2038.5856Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","chevron_down_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M37.4142%2018.5858C36.6332%2017.8047%2035.3668%2017.8047%2034.5858%2018.5858L24%2029.1716L13.4142%2018.5858C12.6332%2017.8047%2011.3668%2017.8047%2010.5858%2018.5858C9.80474%2019.3668%209.80474%2020.6332%2010.5858%2021.4142L22.5858%2033.4142C23.3668%2034.1953%2024.6332%2034.1953%2025.4142%2033.4142L37.4142%2021.4142C38.1953%2020.6332%2038.1953%2019.3668%2037.4142%2018.5858Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E","share_ios_outlined_24":"data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M9%2021.4998C8.17157%2021.4998%207.5%2022.1714%207.5%2022.9998V40.9998C7.5%2041.8282%208.17157%2042.4998%209%2042.4998H39C39.8284%2042.4998%2040.5%2041.8282%2040.5%2040.9998V22.9998C40.5%2022.1714%2039.8284%2021.4998%2039%2021.4998H29.25V18.4998H39C41.4853%2018.4998%2043.5%2020.5145%2043.5%2022.9998V40.9998C43.5%2043.4851%2041.4853%2045.4998%2039%2045.4998H9C6.51472%2045.4998%204.5%2043.4851%204.5%2040.9998V22.9998C4.5%2020.5145%206.51472%2018.4998%209%2018.4998H18.75V21.4998H9Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M25.1532%201.88992C24.8703%201.59527%2024.4795%201.42871%2024.0711%201.42871C23.6626%201.42871%2023.2718%201.59527%2022.989%201.88992L16.0623%209.10537C15.4886%209.70299%2015.508%2010.6525%2016.1056%2011.2262C16.7032%2011.8%2017.6528%2011.7806%2018.2265%2011.1829L22.5%206.73126V29.2499C22.5%2030.0783%2023.1716%2030.7499%2024%2030.7499C24.8284%2030.7499%2025.5%2030.0783%2025.5%2029.2499V6.5832L29.9157%2011.1829C30.4894%2011.7806%2031.4389%2011.8%2032.0365%2011.2262C32.6342%2010.6525%2032.6536%209.70299%2032.0798%209.10537L25.1532%201.88992Z%22%20fill%3D%22%231F1E1E%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E"};
 const icoStyle = (name, size, extra) => ({ display: 'block', flexShrink: 0, width: size, height: size, background: 'currentColor', mask: 'url(' + ICO[name] + ') center / contain no-repeat', WebkitMask: 'url(' + ICO[name] + ') center / contain no-repeat', ...extra });
 const listNames = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+const draftKey = (d) => d ? JSON.stringify([d.category || '', d.entity || '', d.source || '', d.tables || [], (d.files || []).filter(x => x.status === 'done').map(x => [x.id, x.content || '', x.cat])]) : '';
 const emptyDraft = () => ({ category: '', entity: '', source: '', tables: [], files: [] });
 const cloneEntity = (e) => JSON.parse(JSON.stringify({ category: e.category, entity: e.name, source: e.source, tables: e.tables, comment: e.comment || '', commentBy: e.commentBy || '' }));
 const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
@@ -875,8 +1155,8 @@ const ago = (ts) => { const m = Math.floor((Date.now() - ts) / 60000); if (m < 1
 
 class Component extends DCLogic {
   state = {
-    user: 'priya', screen: 'home', navOpen: false,
-    entities: SEED_ALL, notifications: [],
+    user: 'priya', screen: 'home', navOpen: false, drawerOpen: false, fileMenu: null,
+    entities: [], notifications: [],
     search: '', fCat: '', fStatus: '', fSrc: '', draftAt: 0, expanded: {},
     draft: null, step: 1, editId: null, editDraft: null, editOriginal: '', reviewId: null,
     bellOpen: false, userOpen: false,
@@ -884,6 +1164,8 @@ class Component extends DCLogic {
     changes: null, submitting: false, approving: false,
     tableDragOver: false, fileDragOver: false, dragging: null, uploadError: '',
     collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, removing: null, uploadErrors: {},
+    categories: [...CATEGORIES], newCat: null, deleting: null,
+    previewEditable: false, editing: false, editText: '', discardAsk: null,
     ...this.navPatch(this.startKey())
   };
   headerRef = React.createRef();
@@ -891,42 +1173,55 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this._doc = (e) => {
-      if (!this.state.bellOpen && !this.state.userOpen) return;
       const pop = e.target.closest && e.target.closest('[data-pop]');
-      if (!pop) this.setState({ bellOpen: false, userOpen: false });
-      else if (pop.dataset.pop === 'bell' && this.state.userOpen) this.setState({ userOpen: false });
-      else if (pop.dataset.pop === 'user' && this.state.bellOpen) this.setState({ bellOpen: false });
+      const kind = pop ? pop.dataset.pop : '';
+      if (this.state.fileMenu && kind !== 'filemenu') this.setState({ fileMenu: null });
+      if (!this.state.bellOpen && !this.state.userOpen) return;
+      if (kind !== 'bell' && kind !== 'user') this.setState({ bellOpen: false, userOpen: false });
+      else if (kind === 'bell' && this.state.userOpen) this.setState({ userOpen: false });
+      else if (kind === 'user' && this.state.bellOpen) this.setState({ bellOpen: false });
     };
     this._key = (e) => {
       if (e.key !== 'Escape') return;
-      if (this.state.removing) this.setState({ removing: null });
-      else if (this.state.preview) this.setState({ preview: null });
+      if (this.state.drawerOpen) { this.setState({ drawerOpen: false }); return; }
+      if (this.state.fileMenu) { this.setState({ fileMenu: null }); return; }
+      if (this.state.discardAsk) this.setState({ discardAsk: null });
+      else if (this.state.newCat) this.setState({ newCat: null });
+      else if (this.state.deleting) this.setState({ deleting: null });
+      else if (this.state.removing) this.setState({ removing: null });
+      else if (this.state.preview) this.tryClosePreview();
       else if (this.state.changes) this.setState({ changes: null });
       else if (this.state.bellOpen || this.state.userOpen) this.setState({ bellOpen: false, userOpen: false });
     };
     document.addEventListener('mousedown', this._doc);
     document.addEventListener('keydown', this._key);
+    this._rs = () => { if (this.state.drawerOpen && window.innerWidth >= 1024) this.setState({ drawerOpen: false }); };
+    window.addEventListener('resize', this._rs);
     this._tick = setInterval(() => this.forceUpdate(), 30000);
-    this.setState(this.navPatch(this.startKey()));
+    this.setState({ ...this.navPatch(this.startKey()), ...(this.emptyDash() ? { entities: [] } : {}) });
   }
   componentDidUpdate(prev) {
+    if (prev.emptyDashboard !== this.props.emptyDashboard) this.setState({ entities: this.emptyDash() ? [] : SEED_ALL });
     if (prev.startScreen !== this.props.startScreen || prev.sampleFiles !== this.props.sampleFiles) this.setState(this.navPatch(this.startKey()));
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this._doc);
     document.removeEventListener('keydown', this._key);
+    window.removeEventListener('resize', this._rs);
     clearInterval(this._tick); clearTimeout(this._toastT); Object.values(this._up || {}).forEach(clearInterval);
   }
 
-  go(screen, extra) {
+  go(screen, extra, opts) {
     const s = this.state; const d = s.draft;
     let saved = null;
-    if (s.screen === 'wizard' && screen !== 'wizard' && d && d.category && d.entity) {
+    if (!(opts && opts.noSave) && s.screen === 'wizard' && screen !== 'wizard' && d && d.category && d.entity) {
       const id = s.draftId || ('d' + Date.now());
       saved = { id, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now() };
     }
+    if (s.screen !== screen) Object.assign(extra = extra || {}, { preview: null, editing: false, discardAsk: null });
+    if (screen === 'wizard' && extra && extra.draft) extra.draftBase = draftKey(extra.draft);
     this.setState(st => ({
-      screen, bellOpen: false, userOpen: false, uploadError: '',
+      screen, bellOpen: false, userOpen: false, drawerOpen: false, fileMenu: null, uploadError: '',
       ...(st.screen === 'wizard' && screen !== 'wizard' ? { draft: null, draftId: null, step: 1 } : {}),
       ...(saved ? { entities: [saved, ...st.entities.filter(e => e.id !== saved.id)] } : {}),
       ...(extra || {})
@@ -951,12 +1246,14 @@ class Component extends DCLogic {
   }
   removeTable(name) { this.patchForm({ tables: this.form().tables.filter(t => t.name !== name) }); }
 
-  startKey() { return { 'Prompts & evals': 'prompts', 'Review & submit': 'review', 'Home': 'home' }[this.props && this.props.startScreen] || 'prompts'; }
+  startKey() { return { 'Entity dashboard': 'dashboard', 'Prompts & evals': 'prompts', 'Review & submit': 'review', 'Home': 'home' }[this.props && this.props.startScreen] || 'dashboard'; }
+  emptyDash() { return (this.props && this.props.emptyDashboard) ?? true; }
   navPatch(name) {
     const base = { bellOpen: false, userOpen: false, preview: null, removing: null, collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, uploadErrors: {} };
     if (name === 'home') return { ...base, screen: 'home', draft: null, draftId: null, step: 1 };
+    if (name === 'dashboard') return { ...base, screen: 'dashboard', draft: null, draftId: null, step: 1 };
     const e = D1; const empty = !(this.props && this.props.sampleFiles === true);
-    return { ...base, uploadErrors: empty ? {} : { kb: [{ id: 'ue1', name: 'vendor_exceptions.xlsx', msg: 'Unsupported file type. Use .pdf, .doc, .docx, .md or .rtf.' }] }, screen: 'wizard', draftId: 'd1', step: name === 'review' ? 3 : 2, draft: { category: e.category, entity: e.name, source: e.source, tables: e.tables, files: empty ? [] : D1_FILES.map(x => ({ ...x })) } };
+    return { ...base, uploadErrors: empty ? {} : { kb: [{ id: 'ue1', name: 'vendor_exceptions.xlsx', msg: 'Only .txt and .md files are supported.' }] }, screen: 'wizard', draftId: 'd1', step: name === 'review' ? 3 : 2, draft: { category: e.category, entity: e.name, source: e.source, tables: e.tables, files: empty ? [] : D1_FILES.map(x => ({ ...x })) }, draftBase: draftKey({ category: e.category, entity: e.name, source: e.source, tables: e.tables, files: empty ? [] : D1_FILES }) };
   }
   toggleCat(key) { this.setState(s => ({ collapsed: { ...s.collapsed, [key]: !s.collapsed[key] } })); }
   goCat(key) {
@@ -972,13 +1269,13 @@ class Component extends DCLogic {
     const recs = []; const errs = [];
     picked.forEach(file => {
       const ext = extOf(file.name); let msg = '';
-      if (!cat.accept.includes(ext)) msg = cat.accept.length === 1 ? 'Only .' + cat.accept[0] + ' files can be added to ' + cat.title + '.' : 'Unsupported file type. Use ' + cat.accept.map(e => '.' + e).join(', ') + '.';
+      if (!cat.accept.includes(ext)) msg = cat.accept.length === 1 ? 'Only .' + cat.accept[0] + ' files can be added to ' + cat.title + '.' : 'Only .txt and .md files are supported.';
       else if (file.size > MAX_BYTES) msg = 'File is larger than 10 MB.';
       else if (taken.has(file.name.toLowerCase())) msg = 'A file with this name is already in ' + cat.title + '.';
       if (msg) { errs.push({ id: 'ue' + Math.random().toString(36).slice(2), name: file.name, msg }); return; }
       taken.add(file.name.toLowerCase());
       const rec = { id: 'f' + Math.random().toString(36).slice(2), name: file.name, size: file.size, ext, cat: catKey, status: 'uploading', progress: 0, by: me.name, at: Date.now(), url: URL.createObjectURL(file) };
-      if (ext === 'md') file.text().then(t => this.updateFile(rec.id, { content: t }));
+      if (TEXT_EXT.includes(ext)) file.text().then(t => this.updateFile(rec.id, { content: t }));
       recs.push(rec);
     });
     this.setState(s => ({
@@ -1017,29 +1314,79 @@ class Component extends DCLogic {
   updateFile(id, p) { this.setState(s => s.draft ? ({ draft: { ...s.draft, files: s.draft.files.map(f => f.id === id ? { ...f, ...p } : f) } }) : null); }
   download(f) {
     const a = document.createElement('a');
-    a.href = f.url || URL.createObjectURL(new Blob([f.content || ''], { type: 'text/markdown' }));
+    a.href = f.url || URL.createObjectURL(new Blob([f.content || ''], { type: f.ext === 'md' ? 'text/markdown' : 'text/plain' }));
     a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+  }
+  openPreview(f, editable) { this.setState({ preview: f, previewEditable: !!editable, editing: false, editText: '', discardAsk: null }); }
+  liveFile() { const p = this.state.preview; if (!p) return null; const d = this.state.draft; return (d && d.files.find(x => x.id === p.id)) || p; }
+  editDirty() { const f = this.liveFile(); return !!(this.state.editing && f && this.state.editText !== (f.content || '')); }
+  tryClosePreview() { if (this.editDirty()) this.setState({ discardAsk: 'close' }); else this.setState({ preview: null, editing: false, editText: '' }); }
+  cancelEditFile() { if (this.editDirty()) this.setState({ discardAsk: 'cancel' }); else this.setState({ editing: false, editText: '' }); }
+  confirmDiscard() { const close = this.state.discardAsk === 'close'; this.setState({ discardAsk: null, editing: false, editText: '', ...(close ? { preview: null } : {}) }); }
+  saveEditFile() {
+    const f = this.liveFile(); if (!f || !this.editDirty()) return;
+    const text = this.state.editText; const me = this.me();
+    const patch = { content: text, size: new Blob([text]).size, editedAt: Date.now(), editedBy: me.name, url: null };
+    this.updateFile(f.id, patch);
+    this.setState({ preview: { ...f, ...patch }, editing: false, editText: '' });
+    this.toast('Saved changes to ' + f.name + '.');
+  }
+  askDelete() {
+    const s = this.state; const id = s.screen === 'edit' ? s.editId : s.draftId;
+    const e = s.entities.find(x => x.id === id); if (!e) return;
+    this.setState({ deleting: { id, name: e.name || 'Untitled entity' } });
+  }
+  confirmDelete() {
+    const del = this.state.deleting; if (!del) return;
+    this.setState(s => ({ entities: s.entities.filter(e => e.id !== del.id), notifications: s.notifications.filter(n => n.entityId !== del.id), deleting: null }));
+    this.go('dashboard', { editDraft: null, editId: null, draft: null, draftId: null, step: 1 }, { noSave: true });
+    this.toast('Deleted ' + del.name + '.');
+  }
+  saveDraft() {
+    const s = this.state; const d = s.draft; if (!d) return;
+    const id = s.draftId || ('d' + Date.now());
+    const prev = s.entities.find(e => e.id === id);
+    const rec = { ...(prev || {}), id, category: d.category || '', name: d.entity || '', source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now() };
+    this.setState(st => ({ entities: [rec, ...st.entities.filter(e => e.id !== id)] }));
+    this.go('dashboard', {}, { noSave: true });
+    this.toast('Saved ' + (rec.name || 'Untitled entity') + ' as a draft.');
+  }
+  createCat() {
+    const nc = this.state.newCat; if (!nc) return;
+    const name = nc.text.trim().replace(/\s+/g, ' ');
+    if (!name) { this.setState({ newCat: { ...nc, error: 'Enter a category name.' } }); return; }
+    const dup = this.state.categories.find(c => c.toLowerCase() === name.toLowerCase());
+    if (dup) { this.setState({ newCat: { ...nc, error: 'A category named “' + dup + '” already exists.' } }); return; }
+    const f = this.form(); const isEdit = this.state.screen === 'edit';
+    this.setState(s => ({ categories: [...s.categories, name], newCat: null }));
+    this.patchForm(isEdit ? { category: name } : { category: name, entity: '' });
+    this.toast('Created category ' + name + '.');
   }
   fileRow(f, i) {
     const done = f.status === 'done'; const fresh = done && !!f.fresh;
     return {
       name: f.name, tileStyle: icoStyle('file', 24, { color: '#6E6E6D' }),
       isDone: done, isUploading: !done, showSub: fresh,
-      sizeText: sizeText(f.size || 0), dateText: fmtDate(f.at || Date.now()), by: f.by || '—',
+      sizeText: sizeText(f.size || 0), dateText: f.editedAt ? fmtDateTime(f.editedAt) : fmtDate(f.at || Date.now()), byText: f.editedAt ? 'Edited by ' + f.editedBy : 'Uploaded by ' + (f.by || '—'),
       progress: f.progress || 0, progressText: (f.progress || 0) + '%', progressLabel: 'Uploading ' + f.name,
       previewLabel: 'Preview ' + f.name, downloadLabel: 'Download ' + f.name, removeLabel: 'Remove ' + f.name, cancelLabel: 'Cancel upload of ' + f.name,
-      preview: () => this.setState({ preview: f }), download: () => this.download(f),
+      preview: () => this.openPreview(f, true), download: () => this.download(f),
       remove: () => this.setState({ removing: { id: f.id, name: f.name, cat: f.cat } }),
       cancel: () => this.cancelUpload(f.id),
+      menuOpen: this.state.fileMenu === f.id, moreLabel: 'More actions for ' + f.name,
+      toggleMenu: () => this.setState(st => ({ fileMenu: st.fileMenu === f.id ? null : f.id })),
+      menuPreview: () => { this.setState({ fileMenu: null }); this.openPreview(f, true); },
+      menuDownload: () => { this.setState({ fileMenu: null }); this.download(f); },
+      menuRemove: () => this.setState({ fileMenu: null, removing: { id: f.id, name: f.name, cat: f.cat } }),
       rowStyle: { display: 'grid', gridTemplateColumns: 'minmax(160px, 1fr) 72px 176px 104px', columnGap: 16, alignItems: 'center', minHeight: 64, padding: '12px 16px', borderRadius: 8, background: fresh ? '#FAF9F8' : '#FFFFFF', transition: 'background 400ms ease' }
     };
   }
-  sumFile(f, j) {
+  sumFile(f, j, editable) {
     return {
       name: f.name, tileStyle: icoStyle('file', 24, { color: '#6E6E6D' }),
-      metaText: sizeText(f.size || 0) + ' · Uploaded ' + fmtDate(f.at || Date.now()) + ' by ' + (f.by || '—'),
+      metaText: sizeText(f.size || 0) + ' · ' + (f.editedAt ? 'Last edited ' + fmtDateTime(f.editedAt) + ' by ' + f.editedBy : 'Uploaded ' + fmtDate(f.at || Date.now()) + ' by ' + (f.by || '—')),
       previewLabel: 'Preview ' + f.name, downloadLabel: 'Download ' + f.name,
-      preview: () => this.setState({ preview: f }), download: () => this.download(f),
+      preview: () => this.openPreview(f, editable), download: () => this.download(f),
       rowStyle: { display: 'flex', alignItems: 'center', gap: 16, minHeight: 56, padding: '8px 0', borderTop: j ? '1px solid #F1F0EE' : 'none' }
     };
   }
@@ -1074,7 +1421,7 @@ class Component extends DCLogic {
   saveEdit() {
     const d = this.state.editDraft; const id = this.state.editId;
     let saved;
-    this.setState(s => ({ entities: s.entities.map(e => { if (e.id !== id) return e; saved = { ...e, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated' }; return saved; }) }), () => {
+    this.setState(s => ({ entities: s.entities.map(e => { if (e.id !== id) return e; saved = { ...e, category: d.category, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated' }; return saved; }) }), () => {
       this.notify(saved, 'updated');
       this.toast('Changes to ' + saved.name + ' sent for approval.');
     });
@@ -1084,7 +1431,7 @@ class Component extends DCLogic {
     const id = this.state.reviewId;
     const ent = this.state.entities.find(e => e.id === id);
     this.setState(s => ({
-      entities: s.entities.map(e => e.id !== id ? e : approved ? { ...e, status: 'published', comment: '', commentBy: '', updatedAt: Date.now() } : { ...e, status: 'changes', comment, commentBy: this.me().name, updatedAt: Date.now() }),
+      entities: s.entities.map(e => e.id !== id ? e : approved ? { ...e, status: 'published', comment: '', commentBy: '', approvedBy: this.me().name, approvedAt: Date.now(), updatedAt: Date.now() } : { ...e, status: 'changes', comment, commentBy: this.me().name, updatedAt: Date.now() }),
       notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n),
       changes: null, approving: false
     }));
@@ -1145,13 +1492,15 @@ class Component extends DCLogic {
       const hay = [e.name, ENTITY_DESC[e.name] || '', e.category, e.source, ...e.tables.map(t => t.name), ...e.tables.flatMap(t => t.fields.map(x => x.name + ' ' + x.desc))].join(' ').toLowerCase();
       return hay.includes(q);
     });
-    const allCats = CATEGORIES.filter(c => all.some(e => e.category === c)).length;
+    const catList = s.categories;
+    const groupCats = [...catList, ...(all.some(e => !e.category) ? [''] : [])];
+    const allCats = catList.filter(c => all.some(e => e.category === c)).length;
     const density = this.props.density ?? 'comfortable';
     const compact = density === 'compact';
     const grouping = this.props.grouping ?? 'category';
     const rawGroups = grouping === 'none'
       ? (filtered.length ? [{ name: 'All entities', list: [...filtered].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)) }] : [])
-      : CATEGORIES.map(c => ({ name: c, list: filtered.filter(e => e.category === c) })).filter(g => g.list.length);
+      : groupCats.map(c => ({ name: c || 'Uncategorized', list: filtered.filter(e => (e.category || '') === c) })).filter(g => g.list.length);
     const groups = rawGroups.map(g => ({
       name: g.name, countText: plural(g.list.length, 'entity').replace('entitys', 'entities'), tableLabel: g.name + ' entities',
       rows: g.list.map((e, i) => {
@@ -1160,7 +1509,9 @@ class Component extends DCLogic {
         const st = STATUS[e.status] || STATUS.published;
         const stop = (fn) => (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(ev); };
         return {
-          name: e.name, desc: ENTITY_DESC[e.name] || '', showDesc: !compact && !!ENTITY_DESC[e.name], source: grouping === 'none' ? e.category + ' · ' + e.source : e.source, open, tables: e.tables,
+          name: e.name || 'Untitled entity', desc: ENTITY_DESC[e.name] || '',
+          draftMeta: isDraft ? 'Step ' + (e.step || 1) + ' of 3 · ' + ['Data & schema', 'Prompts & evals', 'Review & submit'][(e.step || 1) - 1] : '',
+          approvedBy: e.status === 'published' && e.approvedBy ? 'Approved by ' + e.approvedBy + (e.approvedAt ? ' on ' + fmtDate(e.approvedAt) : '') : '', showDesc: !compact && !!ENTITY_DESC[e.name], source: grouping === 'none' ? e.category + ' · ' + e.source : e.source, open, tables: e.tables,
           hasTables: e.tables.length > 0, noTables: e.tables.length === 0,
           tableCount: String(e.tables.length), fieldCount: String(fieldCount(e.tables)),
           updated: fmtDate(e.updatedAt || Date.now()),
@@ -1171,8 +1522,8 @@ class Component extends DCLogic {
           dotStyle: { width: 8, height: 8, borderRadius: '50%', background: st.fg, flexShrink: 0 },
           reviewLabel: 'Pending approval — review ' + e.name,
           comment: e.status === 'changes' ? e.comment : '', commentBy: e.commentBy || '',
-          editText: 'Edit',
-          editLabel: 'Edit ' + e.name,
+          editText: isDraft ? 'Edit' : 'Edit',
+          editLabel: (isDraft ? 'Continue editing ' : 'Edit ') + (e.name || 'Untitled entity'),
           toggleLabel: e.name + (open ? ', collapse details' : ', expand details'),
           toggle: stop(() => this.setState(x => ({ expanded: { ...x.expanded, [e.id]: !x.expanded[e.id] } }))),
           edit: stop(() => { if (isDraft) this.go('wizard', { draft: { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] }, draftId: e.id, step: e.step || 1 }); else this.go('edit', { editId: e.id, editDraft: cloneEntity(e), editOriginal: JSON.stringify(cloneEntity(e)) }); }),
@@ -1186,8 +1537,9 @@ class Component extends DCLogic {
     }));
 
     // Form
-    const existingNames = s.entities.filter(e => !(isEdit && e.id === s.editId)).map(e => e.name);
-    const entityOpts = (ENTITY_OPTIONS[f.category] || []).map(n => ({ label: n, value: n, disabled: existingNames.includes(n), meta: existingNames.includes(n) ? 'Already added' : '' }));
+    const existingNames = s.entities.filter(e => !(isEdit && e.id === s.editId) && e.id !== s.draftId).map(e => e.name);
+    const baseEntities = ENTITY_OPTIONS[f.category] || ALL_ENTITY_NAMES;
+    const entityOpts = [...baseEntities, ...(f.entity && !baseEntities.includes(f.entity) ? [f.entity] : [])].map(n => ({ label: n, value: n, disabled: existingNames.includes(n), meta: existingNames.includes(n) ? 'Already added' : '' }));
     const srcTables = SOURCES[f.source] || [];
     const addedNames = f.tables.map(t => t.name);
     const dropActive = s.tableDragOver || f.tables.length > 0;
@@ -1219,6 +1571,7 @@ class Component extends DCLogic {
 
     const byNew = (a, b) => (b.at || 0) - (a.at || 0);
     const dfiles = d.files || []; const LIMIT = 5;
+    const touch = typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia('(hover: none)').matches;
     const plain = { fontSize: 14, lineHeight: '20px', color: '#4B4B49', whiteSpace: 'nowrap' };
     const cats = FILE_CATS.map(c => {
       const list = dfiles.filter(f => f.cat === c.key).sort(byNew);
@@ -1246,8 +1599,8 @@ class Component extends DCLogic {
         zoneStyle: { display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', padding: has ? '16px 24px' : 24, borderRadius: 10, background: drag ? '#EBF3F9' : '#FFFFFF', border: '1px dashed #6E6E6D' },
         zoneIconWrap: has ? { display: 'none' } : { width: 40, height: 40, borderRadius: '50%', background: '#EBF3F9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#004488', flexShrink: 0 },
         zoneIcon: icoStyle('share_ios_outlined_24', 24),
-        zoneTitle: drag ? 'Drop to upload to ' + c.title : has ? 'Drag and drop more files here' : 'Drag and drop files here',
-        zoneHint: (c.accept.length === 1 ? '.' + c.accept[0] + ' files only' : c.accept.map(e => '.' + e).join(', ')) + ' · up to 10 MB each',
+        zoneTitle: drag ? 'Drop to upload to ' + c.title : touch ? (has ? 'Add more files' : 'Upload files') : has ? 'Drag and drop more files here' : 'Drag and drop files here',
+        zoneHint: (c.accept.length === 1 ? '.' + c.accept[0] + ' files only' : '.txt or .md files') + ' · up to 10 MB each',
         browseLabel: 'Browse files for ' + c.title,
         browse: () => { this._pickCat = c.key; const el = this.fileInputRef.current; if (el) { el.accept = c.accept.map(e => '.' + e).join(','); el.click(); } },
         hasErrors: errs.length > 0,
@@ -1268,7 +1621,7 @@ class Component extends DCLogic {
         title: c.title, hasFiles: has, noFiles: !has, listLabel: c.title + ' files',
         countText: has ? plural(list.length, 'file') : 'No files', pillStyle: plain,
         rowStyle: { display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start', padding: '16px 0', borderTop: i ? '1px solid #F1F0EE' : 'none' },
-        files: shown.map((f, j) => this.sumFile(f, j)),
+        files: shown.map((f, j) => this.sumFile(f, j, isWizard)),
         hasMore: list.length > SLIM, moreLabel: exp ? 'Show fewer files' : 'Show ' + hidden + ' more ' + (hidden === 1 ? 'file' : 'files'),
         toggleMore: () => this.setState(x => ({ sumExpanded: { ...x.sumExpanded, [c.key]: !x.sumExpanded[c.key] } })),
         canAdd: isWizard, addLabel: 'Add files to ' + c.title, add: () => this.goCat(c.key)
@@ -1282,7 +1635,8 @@ class Component extends DCLogic {
 
     let reviewNote = '';
     if (reviewEnt) {
-      if (reviewEnt.status !== 'pending') reviewNote = 'This submission was already reviewed.';
+      if (reviewEnt.status === 'published' && reviewEnt.approvedBy) reviewNote = 'Approved by ' + reviewEnt.approvedBy + (reviewEnt.approvedAt ? ' on ' + fmtDate(reviewEnt.approvedAt) : '') + '.';
+      else if (reviewEnt.status !== 'pending') reviewNote = 'This submission was already reviewed.';
       else if (!me.canApprove) reviewNote = 'You don\'t have approval rights. Only approvers can approve or request changes.';
     }
     const showDecision = !!reviewEnt && reviewEnt.status === 'pending' && me.canApprove;
@@ -1295,10 +1649,14 @@ class Component extends DCLogic {
 
     let flowTitle = 'New Entity'; let flowSubtitle = ''; let flowLabel = 'New entity — ' + stepLabels[s.step - 1];
     if (isEdit) { flowTitle = 'Edit Entity'; flowLabel = 'Edit entity'; }
-    if (isReview) { flowTitle = 'Review submission'; flowLabel = 'Review submission'; flowSubtitle = reviewEnt ? (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt) : ''; }
+    if (isReview) { flowTitle = 'Review submission'; flowLabel = 'Review submission'; flowSubtitle = reviewEnt ? (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt) + (reviewEnt.status === 'published' && reviewEnt.approvedBy ? ' · Approved by ' + reviewEnt.approvedBy : '') : ''; }
 
     const ch = s.changes;
-    const pf = s.preview;
+    const pf = this.liveFile(); const fileDirty = this.editDirty();
+    const isDraftEmpty = !d.category && !d.entity && !d.source && !d.tables.length && !d.files.length;
+    const delTarget = isEdit ? s.editId : isWizard ? s.draftId : null;
+    const modalStyle = { boxSizing: 'border-box', paddingLeft: 8, paddingRight: 8, width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 };
+    const nc = s.newCat;
     const pfExt = pf ? (pf.ext || (pf.name.split('.').pop() || '').toLowerCase()) : '';
     const firstName = me.first;
 
@@ -1321,7 +1679,9 @@ class Component extends DCLogic {
       })),
       userOptions: Object.values(USERS).map(u => ({ name: u.name, initials: u.initials, role: u.role, current: u.id === s.user, pick: () => this.setState({ user: u.id, userOpen: false }) })),
 
-      navCollapsed: !s.navOpen, navExpanded: s.navOpen, navItems, crumbs,
+      navCollapsed: !s.navOpen, navExpanded: s.navOpen, navItems, crumbs, navAttr: s.navOpen ? 'open' : 'closed',
+      drawerOpen: !!s.drawerOpen, openDrawer: () => this.setState({ drawerOpen: true, bellOpen: false, userOpen: false }), closeDrawer: () => this.setState({ drawerOpen: false }),
+      stepMobileText: 'Step ' + s.step + ' of 3 · ' + (['Data & schema', 'Prompts & evals', 'Review & submit'][s.step - 1] || ''),
       modalLarge: { 'aria-label': pf ? pf.name : 'File preview', style: { width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 } },
       modalMedium: { 'aria-label': 'Request changes', style: { boxSizing: 'border-box', paddingLeft: 8, paddingRight: 8, width: '100%', background: 'var(--pds-theme-color-background-baseline)', paddingTop: 'calc(32px - var(--pds-global-space-50))', paddingBottom: 48 } },
       navStyle: { alignSelf: 'stretch', width: s.navOpen ? 320 : 88, flexShrink: 0, padding: '32px 24px', background: '#FFFFFF', boxSizing: 'border-box' },
@@ -1344,22 +1704,32 @@ class Component extends DCLogic {
       createBody: 'Define an entity, connect its source tables, and configure the fields Sidekick can use.',
       statusFilterOpts: [{ label: 'All statuses', value: '' }, ...Object.keys(STATUS).map(k => ({ label: STATUS[k].label, value: k }))],
       setFStatus: (v) => this.setState({ fStatus: v }),
-      catFilterOpts: [{ label: 'All categories', value: '' }, ...CATEGORIES.map(c => ({ label: c, value: c }))],
+      catFilterOpts: [{ label: 'All categories', value: '' }, ...catList.map(c => ({ label: c, value: c }))],
       srcFilterOpts: [{ label: 'All sources', value: '' }, ...Object.keys(SOURCES).map(c => ({ label: c, value: c }))],
       setFCat: (v) => this.setState({ fCat: v }), setFSrc: (v) => this.setState({ fSrc: v }),
       clearFilters: () => this.setState({ search: '', fCat: '', fStatus: '', fSrc: '' }),
-      groups, hasResults: groups.length > 0, noResults: groups.length === 0,
+      groups, hasResults: groups.length > 0, noEntities: all.length === 0, noResults: groups.length === 0 && all.length > 0,
       startNew: () => this.go('wizard', { draft: emptyDraft(), draftId: null, step: 1 }),
       startFresh: () => this.go('wizard', { draft: emptyDraft(), step: 1 }),
 
       flowTitle, flowSubtitle, flowLabel, steps,
       form: { category: f.category, entity: f.entity, source: f.source, comment: isEdit ? f.comment : '', commentBy: f.commentBy || '' },
-      categoryOpts: CATEGORIES.map(c => ({ label: c, value: c })),
-      categoryDisabled: isEdit,
+      categoryOpts: catList.map(c => ({ label: c, value: c })),
+      categoryDisabled: false,
+      openNewCat: () => this.setState({ newCat: { text: '', error: '' } }),
+      newCatOpen: !!nc, newCatText: nc ? nc.text : '',
+      onNewCatText: (e) => this.setState({ newCat: { text: e.target.value, error: '' } }),
+      onNewCatKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.createCat(); } },
+      newCatInvalid: nc && nc.error ? 'true' : undefined,
+      newCatHelp: nc && nc.error ? nc.error : 'It will be selected for this entity and added to the Category list.',
+      newCatHelpStyle: { fontSize: 12, lineHeight: '16px', color: nc && nc.error ? '#B00000' : '#6E6E6D' },
+      newCatStyle: { width: '100%', height: 48, padding: '0 16px', borderRadius: 10, border: nc && nc.error ? '1.5px solid #B00000' : '1px solid #7D7C7C', fontFamily: "'Nunito Sans', sans-serif", fontSize: 14, lineHeight: '24px', color: '#1F1E1E', boxSizing: 'border-box', outline: 'none' },
+      closeNewCat: () => this.setState({ newCat: null }), createCat: () => this.createCat(),
+      modalNewCat: { 'aria-label': 'Create new category', style: modalStyle },
       entityOpts, entityDisabled: !f.category,
       entityPlaceholder: 'Select entity',
       sourceOpts: Object.keys(SOURCES).map(c => ({ label: c, value: c })),
-      setCategory: (v) => { if (v !== f.category) this.patchForm({ category: v, entity: '' }); },
+      setCategory: (v) => { if (v !== f.category) this.patchForm(isEdit ? { category: v } : { category: v, entity: '' }); },
       setEntity: (v) => this.patchForm({ entity: v }),
       setSource: (v) => { if (v !== f.source) this.patchForm({ source: v, tables: [] }); },
       noSource: !f.source, hasSource: !!f.source,
@@ -1401,6 +1771,14 @@ class Component extends DCLogic {
       sumCoverStyle: plain, sumIcon: icoStyle('info_outlined_24', 20, { color: '#4B4B49' }), sumFileIcon: icoStyle('file', 24, { color: '#6E6E6D' }),
 
       footerHint,
+      showDelete: !!delTarget && s.entities.some(e => e.id === delTarget),
+      askDelete: () => this.askDelete(),
+      deleteOpen: !!s.deleting, deleteName: s.deleting ? s.deleting.name : '',
+      cancelDelete: () => this.setState({ deleting: null }), confirmDelete: () => this.confirmDelete(),
+      modalDelete: { 'aria-label': 'Delete entity', style: modalStyle },
+      showBack: isWizard && s.step > 1, submitting: s.submitting,
+      onBack: () => { this.setState({ step: Math.max(1, s.step - 1), uploadError: '' }); window.scrollTo(0, 0); },
+      showSaveDraft: isWizard && draftKey(s.draft) !== (s.draftBase || ''), draftSaveDisabled: s.submitting || isDraftEmpty, saveDraft: () => this.saveDraft(),
       nextDisabled: s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2)),
       nextLabel: s.step === 3 ? (s.submitting ? 'Submitting…' : 'Submit') : 'Next',
       onNext: () => { if (s.step < 3) { this.setState({ step: s.step + 1, uploadError: '' }); window.scrollTo(0, 0); } else this.submit(); },
@@ -1428,10 +1806,18 @@ class Component extends DCLogic {
 
       previewOpen: !!pf, previewTitle: pf ? pf.name : '',
       previewPdf: !!(pf && pfExt === 'pdf' && pf.url), previewUrl: pf && pf.url ? pf.url : '',
-      previewText: pf && !(pfExt === 'pdf' && pf.url) ? (pf.content != null ? pf.content : pfExt === 'md' ? 'Loading preview…' : '') : '',
-      previewNone: pf && !(pfExt === 'pdf' && pf.url) && pf.content == null && pfExt !== 'md' ? "Preview isn't available for ." + pfExt + ' files. Download the file to view it.' : '',
-      previewMeta: pf && pf.cat ? CAT_BY_KEY[pf.cat].title + ' · ' + sizeText(pf.size || 0) + ' · Uploaded ' + fmtDate(pf.at || Date.now()) + ' by ' + (pf.by || '—') : '',
-      closePreview: () => this.setState({ preview: null }),
+      previewText: pf && !s.editing && !(pfExt === 'pdf' && pf.url) ? (pf.content != null ? (pf.content || ' ') : TEXT_EXT.includes(pfExt) ? 'Loading preview…' : '') : '',
+      previewNone: pf && !s.editing && !(pfExt === 'pdf' && pf.url) && pf.content == null && !TEXT_EXT.includes(pfExt) ? "Preview isn't available for ." + pfExt + ' files. Download the file to view it.' : '',
+      previewMeta: pf && pf.cat ? CAT_BY_KEY[pf.cat].title + ' · ' + sizeText(pf.size || 0) + ' · ' + (pf.editedAt ? 'Last edited ' + fmtDateTime(pf.editedAt) + ' by ' + pf.editedBy : 'Uploaded ' + fmtDate(pf.at || Date.now()) + ' by ' + (pf.by || '—')) : '',
+      closePreview: () => this.tryClosePreview(),
+      showEditBtn: !!pf && s.previewEditable && !s.editing && TEXT_EXT.includes(pfExt) && pf.content != null,
+      editing: !!pf && s.editing, notEditing: !(pf && s.editing),
+      editText: s.editText, onEditText: (e) => this.setState({ editText: e.target.value }),
+      editFileLabel: pf ? 'Edit ' + pf.name : 'Edit', editAreaLabel: pf ? 'Contents of ' + pf.name : 'File contents',
+      startEditFile: () => this.setState({ editing: true, editText: pf && pf.content || '' }),
+      cancelEditFile: () => this.cancelEditFile(), saveEditFile: () => this.saveEditFile(), saveFileDisabled: !fileDirty,
+      discardOpen: !!s.discardAsk, keepEditing: () => this.setState({ discardAsk: null }), confirmDiscard: () => this.confirmDiscard(),
+      modalDiscard: { 'aria-label': 'Discard unsaved changes', style: modalStyle },
       previewDownload: () => pf && this.download(pf),
 
       toastOpen: !!s.toast,

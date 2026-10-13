@@ -25,11 +25,18 @@
           </sc-if>
         </li>
       </sc-for>
+      <sc-if value="{{ hasAction }}" hint-placeholder-val="{{ false }}">
+        <li role="separator" aria-hidden="true" style="height: 1px; margin: 8px 0; background: #E5E4E3;"></li>
+        <li role="option" aria-selected="false" aria-label="{{ actionLabel }}" onClick="{{ pickAction }}" onMouseEnter="{{ hoverAction }}" style="{{ actionStyle }}">
+          <img src="assets/icons/c/plus_outlined_24-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;">
+          <span style="flex: 1; white-space: nowrap;">{{ actionLabel }}</span>
+        </li>
+      </sc-if>
     </ul>
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:320,&quot;height&quot;:360},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Select Category&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;options&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;string|{label:string,value:string,disabled?:boolean,meta?:string}&gt;&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(value:string)=&gt;void&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;medium&quot;,&quot;small&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;'medium'|'small'&quot;},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;id&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:320,&quot;height&quot;:360},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Select Category&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;options&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;string|{label:string,value:string,disabled?:boolean,meta?:string}&gt;&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(value:string)=&gt;void&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;medium&quot;,&quot;small&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;'medium'|'small'&quot;},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;id&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;actionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onAction&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;}}">
 class Component extends DCLogic {
   state = { open: false, active: -1 };
   rootRef = React.createRef();
@@ -40,17 +47,20 @@ class Component extends DCLogic {
   componentWillUnmount() { document.removeEventListener('mousedown', this._onDoc); }
   opts() { return (this.props.options || []).map(o => typeof o === 'string' ? { label: o, value: o } : o); }
   pick(o) { if (o.disabled) return; this.setState({ open: false }); this.props.onChange && this.props.onChange(o.value); }
+  hasAction() { return !!(this.props.actionLabel && this.props.onAction); }
+  pickAction() { this.setState({ open: false }); this.props.onAction && this.props.onAction(); }
   onTriggerKey = (e) => {
     const opts = this.opts();
     if (e.key === 'Escape') { this.setState({ open: false }); return; }
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
       const dir = e.key === 'ArrowDown' ? 1 : -1;
+      const total = opts.length + (this.hasAction() ? 1 : 0);
       let i = this.state.open ? this.state.active : opts.findIndex(o => o.value === this.props.value);
-      for (let n = 0; n < opts.length; n++) { i = (i + dir + opts.length) % opts.length; if (!opts[i].disabled) break; }
+      for (let n = 0; n < total; n++) { i = (i + dir + total) % total; if (i === opts.length || !opts[i].disabled) break; }
       this.setState({ open: true, active: i });
     }
-    if ((e.key === 'Enter' || e.key === ' ') && this.state.open && this.state.active >= 0) { e.preventDefault(); this.pick(opts[this.state.active]); }
+    if ((e.key === 'Enter' || e.key === ' ') && this.state.open && this.state.active >= 0) { e.preventDefault(); if (this.state.active === opts.length) this.pickAction(); else this.pick(opts[this.state.active]); }
   };
   renderVals() {
     const p = this.props;
@@ -79,6 +89,9 @@ class Component extends DCLogic {
       chevStyle: { display: 'block', flexShrink: 0, opacity: p.disabled ? 0.4 : 1, transform: this.state.open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' },
       toggle: () => { if (!p.disabled) this.setState(s => ({ open: !s.open, active: opts.findIndex(o => o.value === p.value) })); },
       onTriggerKey: this.onTriggerKey,
+      hasAction: this.hasAction(), actionLabel: p.actionLabel || '',
+      pickAction: () => this.pickAction(), hoverAction: () => this.setState({ active: opts.length }),
+      actionStyle: { display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '8px 16px', boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif', fontSize: 14, lineHeight: '24px', color: '#004488', cursor: 'pointer', background: this.state.active === opts.length ? '#EBF3F9' : 'transparent' },
       items: opts.map((o, i) => ({
         label: o.label, meta: o.meta || '', selected: o.value === p.value, disabled: !!o.disabled,
         pick: () => this.pick(o),

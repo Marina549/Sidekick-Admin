@@ -6,7 +6,7 @@ Read this file first. It describes a working React implementation of the **Sidek
 
 Sidekick Admin is an internal tool for managing the "entities" Sidekick can answer questions about. An entity is a category, a data source, its tables and field descriptions, and supporting files (prompts, KB articles, thresholds, evals, Markdown context). New entities and edits go through an approval workflow.
 
-- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype). The design history is in `chats/chat1.md` to `chats/chat3.md`.
+- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype, updated from `Sidekick Admin-handoff.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
 - **Implementation:** `app/`, which is React 19, Vite 8 and TypeScript 5.9. There's no backend: state lives in memory and uploads are simulated.
 
 ## Run it
@@ -17,6 +17,10 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # tsc -b && vite build; must pass with no errors
 ```
+
+The app opens on an **empty Entity dashboard**, as in the design. Add `?sample` to the URL (e.g. `http://localhost:5173/?sample`) to start with example entities and the "Late order recovery" draft.
+
+Live demo (GitHub Pages, redeployed on every push to `main`): https://marina549.github.io/Sidekick-Admin-repo/
 
 ## File map (`app/src`)
 
@@ -43,6 +47,7 @@ npm run build    # tsc -b && vite build; must pass with no errors
 | `screens/Success.tsx` | Submitted for review screen. |
 | `pds/` | Vendored subset of the Pantry DS: tokens, fonts and 7 component stylesheets. Don't edit it. |
 | `styles/` | App CSS, with an `sk-` prefix. Hover and focus states live here; one-off layout values are inline. |
+| `styles/responsive.css` | Breakpoints copied from the prototype (1199, 1439 with nav open, 1023, 767). Rules target `data-r="…"` attributes on components, which use the same names as the prototype. |
 
 Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
@@ -65,11 +70,23 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 1. **Data & schema.** Pick a category, an entity (from a predefined list; entities that already exist are disabled) and a data source. Add tables by dragging or clicking them from the right-hand panel. Every field needs a description. Next stays disabled until the step is complete, and no hint text appears next to the button.
 2. **Prompts & evals.**
    - There are 5 collapsible categories: Prompt Templates, KB Articles, Thresholds, Evals and MD Files.
-   - Each has a dashed drop zone and a Browse files button. Accepted types are `.pdf`, `.doc`, `.docx`, `.md` and `.rtf`; MD Files accepts `.md` only. The limit is 10 MB per file, and names can't repeat within a category.
+   - Each has a dashed drop zone and a Browse files button. Accepted types are `.txt` and `.md`; MD Files accepts `.md` only. The limit is 10 MB per file, and names can't repeat within a category.
    - Invalid files show a red inline error and never reach the file list.
    - The list shows 5 files, then "Show N more files". Removing a file asks for confirmation.
    - Next stays disabled until at least 1 file has finished uploading.
 3. **Review & submit.** Shows a summary of both steps with Edit links. Empty categories show "No files added". Submit is enabled with empty categories.
+
+**Wizard footer:** **Back** from step 2 on; **Save as draft** appears once the draft differs from how it was opened (it saves even without a category or entity, grouped under "Uncategorized"); **Delete entity** on the left once the entity exists on the dashboard. Draft rows show "Step N of 3 · step name".
+
+**Categories:** the Category dropdown ends with "+ Create new category", which opens a modal (name required, no duplicates, max 40 characters) and selects the new category. A new category offers every predefined entity. In Edit entity the category can now be changed.
+
+**Fields** have a type (String, Integer, Decimal, Boolean, Date, Timestamp), shown in a Type column. "Add field" includes a type dropdown.
+
+**Files:** only `.txt` and `.md` are accepted. Text files opened from the wizard can be edited in the preview (Edit → Save changes). Closing or cancelling with unsaved edits asks "Discard unsaved changes?". Edited files show "Last edited <date, time> by <name>".
+
+**Approval info:** approved entities record who approved them and when; it shows in the expanded dashboard row and on Review submission.
+
+**Responsive:** below 1024px the side nav becomes a hamburger + drawer. On phones, breadcrumbs collapse to a back link, rows and file lists stack, file actions move into a "⋯" menu, modals become bottom sheets and footer buttons go full width.
 
 **Leaving the wizard** by any route (breadcrumb, side nav or logo) saves a grey **Draft** row, once a category and entity are chosen. Editing a draft reopens it on the step where it was left. "Add new entity" always starts fresh.
 
@@ -82,11 +99,11 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 - **Approve** sets the entity to Active.
 - **Request changes** needs a comment. The entity becomes Changes requested, and the comment shows in its expanded row and at the top of Edit entity.
 
-**Edit entity:** Data & schema only, with Category locked. Save stays disabled until something changes. Saving sends the entity back to Pending approval.
+**Edit entity:** Data & schema only (Category can be changed). Save stays disabled until something changes. Saving sends the entity back to Pending approval.
 
 **Toasts:** Pantry toasts close after 5 seconds, or 8 seconds when they have an action. Deleting a field shows a toast with Undo.
 
-**Escape** closes, in order: the Remove modal, the Preview modal, the Request changes modal, then the popovers.
+**Escape** closes, in order: the drawer, the file "⋯" menu, the Discard modal, the Create category modal, the Delete modal, the Remove modal, the Preview (asking first if there are unsaved edits), the Request changes modal, then the popovers.
 
 ## Design rules (from the user's feedback in the chats)
 
@@ -100,6 +117,7 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 - **Tags:** no dots, 14px text.
 - **Tables:** never scroll horizontally. Status column is at least 136px.
 - **Breadcrumbs:** bold, underlined blue links; 1px grey vertical dividers; current page in grey.
+- **Removed or changed in the latest design:** the Prompts & evals description line is gone, the file Remove icon hovers blue (not red), upload-error dismiss buttons are grey, and the illustration is `ill-entity-dashboard-v3.png`.
 
 ## Known gaps and decisions
 

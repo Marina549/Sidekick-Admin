@@ -11,11 +11,23 @@ export function Header() {
   const showDot = me.canApprove && unread > 0;
 
   return (
-    <header className="sk-header">
-      <button type="button" className="sk-header__logo" onClick={() => go('home')} aria-label="SideKick Admin home">
-        <img src={asset('assets/sidekick-logo-full.svg')} alt="" width={181} height={32} style={{ display: 'block' }} />
+    <header className="sk-header" data-r="header">
+      <button
+        type="button"
+        className="sk-hamburger"
+        data-r="hamburger"
+        onClick={() => set({ drawerOpen: true, bellOpen: false, userOpen: false })}
+        aria-label="Open navigation"
+        aria-expanded={s.drawerOpen}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
       </button>
-      <div className="sk-header__tools">
+      <button type="button" className="sk-header__logo" onClick={() => go('home')} aria-label="SideKick Admin home">
+        <img src={asset('assets/sidekick-logo-full.svg')} data-r="logo" alt="" width={181} height={32} style={{ display: 'block' }} />
+      </button>
+      <div className="sk-header__tools" data-r="hdr-actions">
         <div className="sk-pop" data-pop="bell">
           <button
             type="button"
@@ -29,7 +41,7 @@ export function Header() {
             {showDot && <span aria-hidden="true" className="sk-bell__dot" />}
           </button>
           {s.bellOpen && (
-            <div role="dialog" aria-label="Notifications" className="sk-menu sk-notifs">
+            <div role="dialog" data-r="pop" aria-label="Notifications" className="sk-menu sk-notifs">
               <div className="sk-menu__title">Notifications</div>
               {notifs.length > 0 ? (
                 <ul>
@@ -53,7 +65,7 @@ export function Header() {
             </div>
           )}
         </div>
-        <span aria-hidden="true" className="sk-header__divider" />
+        <span aria-hidden="true" className="sk-header__divider" data-r="hdr-sep" />
         <div className="sk-pop" data-pop="user">
           <button
             type="button"
@@ -63,13 +75,13 @@ export function Header() {
             aria-expanded={s.userOpen}
             aria-label={me.name + ', switch user'}
           >
-            <span className="sk-user-btn__name">{me.name}</span>
+            <span className="sk-user-btn__name" data-r="user-name">{me.name}</span>
             <span className="sk-avatar-ring">
               <span className="sk-avatar" style={{ width: 40, height: 40, fontSize: 20, lineHeight: '16px' }}>{me.initials}</span>
             </span>
           </button>
           {s.userOpen && (
-            <div role="menu" aria-label="Switch user" className="sk-menu sk-users">
+            <div role="menu" data-r="pop" aria-label="Switch user" className="sk-menu sk-users">
               <div className="sk-menu__title">Switch user</div>
               {Object.values(USERS).map(u => (
                 <button key={u.id} type="button" role="menuitemradio" aria-checked={u.id === s.user} className="sk-menu__item" onClick={() => set({ user: u.id, userOpen: false })}>

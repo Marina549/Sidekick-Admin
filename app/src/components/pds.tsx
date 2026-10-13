@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes, ReactNode } f
 
 type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
   children: ReactNode;
-  variant?: 'filled' | 'outlined';
+  variant?: 'filled' | 'outlined' | 'transparent';
   tone?: 'primary';
   size?: 'small' | 'medium' | 'large';
 };
@@ -21,6 +21,8 @@ export function Button({ children, variant = 'filled', tone = 'primary', size = 
 
 type ModalProps = {
   size?: 'small' | 'medium' | 'large';
+  /** Stacking order; a confirmation over another modal uses a higher value. */
+  zIndex?: number;
   children: ReactNode;
   'aria-label': string;
   style?: CSSProperties;
@@ -30,10 +32,10 @@ type ModalProps = {
  * PDS Modal, always open. The title and close button are rendered by the caller inside
  * `children` (as in the design) so the X can sit centred on the title.
  */
-export function Modal({ size = 'medium', children, style, ...rest }: ModalProps) {
+export function Modal({ size = 'medium', children, style, zIndex = 90, ...rest }: ModalProps) {
   const pad = size === 'large' ? 'large' : 'small';
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 90 }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex }}>
     <div
       className="pds-modal show"
       role="presentation"
@@ -113,9 +115,9 @@ export function ProgressBar({ value, size = 'medium', ...rest }: { value: number
 }
 
 /** The PDS close icon button used in modal headers. */
-export function ModalClose({ onClick }: { onClick: () => void }) {
+export function ModalClose({ onClick, label = 'Close', autoFocus, style }: { onClick: () => void; label?: string; autoFocus?: boolean; style?: CSSProperties }) {
   return (
-    <button type="button" className="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label="Close" onClick={onClick} style={{ flexShrink: 0, marginRight: -8 }}>
+    <button type="button" className="pds-icon-btn pds-icon-btn-size_medium pds-icon-btn-transparent--neutral" aria-label={label} onClick={onClick} autoFocus={autoFocus} style={{ flexShrink: 0, marginRight: -8, ...style }}>
       <span className="pds-svg-close-medium pds-icon-btn-transparent--neutral__icon" aria-hidden="true" />
     </button>
   );

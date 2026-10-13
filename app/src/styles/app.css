@@ -29,7 +29,6 @@ a:hover { color: #002D56; }
 .sk-icon-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #6E6E6D; padding: 0; }
 .sk-icon-btn:hover { background: #F1F0EE; color: #004488; }
 .sk-icon-btn:focus-visible { outline: 2px solid #004488; outline-offset: 0; }
-.sk-icon-btn--danger:hover { color: #B00000; }
 .sk-icon-btn--neutral:hover { color: #1F1E1E; }
 .sk-icon-btn--navy { color: #002D56; }
 .sk-icon-btn--navy:hover { background: #EBF3F9; color: #002D56; }
@@ -123,3 +122,17 @@ button.sk-tag:focus-visible { outline: 2px solid #004488; outline-offset: 2px; }
 .sk-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .sk-modal-title { margin: 0; flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--pds-global-font-family-poppins), sans-serif; font-size: var(--pds-global-font-size-700); font-weight: 700; line-height: var(--pds-global-font-line-height-50); color: var(--pds-theme-color-foreground-neutral-high); }
 .sk-modal-actions { display: flex; justify-content: flex-end; gap: 16px; }
+
+/* ---- hamburger + navigation drawer (< 1024px) ---- */
+
+.sk-hamburger { width: 44px; height: 44px; margin-left: -8px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: none; background: transparent; border-radius: 8px; cursor: pointer; padding: 0; }
+.sk-hamburger span { display: block; width: 20px; height: 2px; border-radius: 1px; background: #1F1E1E; }
+.sk-hamburger:hover { background: #F1F0EE; }
+.sk-hamburger:focus-visible { outline: 2px solid #004488; outline-offset: 0; }
+.sk-drawer { position: fixed; inset: 0; z-index: 80; }
+.sk-drawer__scrim { position: absolute; inset: 0; background: rgba(31, 30, 30, 0.48); }
+.sk-drawer__panel { position: absolute; top: 0; left: 0; bottom: 0; width: 320px; max-width: calc(100vw - 48px); display: flex; flex-direction: column; gap: 16px; padding: 8px 16px 32px; background: #FFFFFF; box-shadow: 0 8px 24px rgba(31, 30, 30, 0.16); overflow-y: auto; }
+.sk-drawer__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding-left: 8px; }
+.sk-drawer .sk-nav__item { width: 100%; padding-right: 16px; }
+.sk-file-editor { display: block; width: 100%; height: 480px; margin: 0; padding: 24px; resize: vertical; background: #FFFFFF; border: 1.5px solid #1F1E1E; border-radius: 8px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E; }
+.sk-file-editor:focus { outline: none; border-color: #004488; }

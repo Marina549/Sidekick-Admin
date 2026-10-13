@@ -11,7 +11,7 @@ export interface User {
   role: string;
 }
 
-export interface Field { name: string; desc: string }
+export interface Field { name: string; type?: string; desc: string }
 export interface Table { name: string; fields: Field[] }
 
 export type FileCatKey = 'prompts' | 'kb' | 'thresholds' | 'evals' | 'md';
@@ -28,6 +28,8 @@ export interface FileRec {
   url?: string;
   content?: string;
   fresh?: boolean;
+  editedAt?: number;
+  editedBy?: string;
 }
 
 export type EntityStatus = 'published' | 'pending' | 'changes' | 'draft';
@@ -46,6 +48,8 @@ export interface Entity {
   verb?: 'submitted' | 'updated';
   comment?: string;
   commentBy?: string;
+  approvedBy?: string;
+  approvedAt?: number;
 }
 
 export type Step = 1 | 2 | 3;
@@ -100,16 +104,16 @@ export const SOURCES: Record<string, string[]> = {
   'BigQuery': ['picking_sessions', 'substitutions'],
 };
 
-const TABLE_FIELDS: Record<string, [string, string][]> = {
-  'ott_orders': [['order-id', 'Unique order identifier'], ['tilled_at', 'Timestamp the order was tilled'], ['on_time_flag', '']],
-  'ott_oss_Entitys': [['late_count', 'Orders tilled after stage-by time'], ['missed_count', 'Orders never tilled']],
-  'coe-daily': [['store_id', 'Store number'], ['pick_rate', 'Items picked per labor hour'], ['coe_score', '']],
-  'fa-flash': [['item_id', 'Item UPC'], ['flash_available', '1 when the item can be flashed to customers'], ['updated_at', '']],
-  'oth_summary': [['store_id', 'Store number'], ['handoff_count', 'Orders handed off to customers'], ['avg_wait_min', '']],
-  'order_events': [['event_id', 'Unique event identifier'], ['order-id', 'Unique order identifier'], ['event_type', '']],
-  'store_daily_kpis': [['store_id', 'Store number'], ['business_date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Orders completed per labor hour']],
-  'picking_sessions': [['session_id', 'Unique picking session identifier'], ['picker_id', 'Associate who ran the session'], ['session_minutes', '']],
-  'substitutions': [['order-id', 'Unique order identifier'], ['item_id', 'Original item UPC'], ['sub_accepted', '']],
+const TABLE_FIELDS: Record<string, [string, string, string][]> = {
+  'ott_orders': [['order-id', 'String', 'Unique order identifier'], ['tilled_at', 'Timestamp', 'Timestamp the order was tilled'], ['on_time_flag', 'Boolean', '']],
+  'ott_oss_Entitys': [['late_count', 'Integer', 'Orders tilled after stage-by time'], ['missed_count', 'Integer', 'Orders never tilled']],
+  'coe-daily': [['store_id', 'String', 'Store number'], ['pick_rate', 'Decimal', 'Items picked per labor hour'], ['coe_score', 'Integer', '']],
+  'fa-flash': [['item_id', 'String', 'Item UPC'], ['flash_available', 'Boolean', '1 when the item can be flashed to customers'], ['updated_at', 'Timestamp', '']],
+  'oth_summary': [['store_id', 'String', 'Store number'], ['handoff_count', 'Integer', 'Orders handed off to customers'], ['avg_wait_min', 'Decimal', '']],
+  'order_events': [['event_id', 'String', 'Unique event identifier'], ['order-id', 'String', 'Unique order identifier'], ['event_type', 'String', '']],
+  'store_daily_kpis': [['store_id', 'String', 'Store number'], ['business_date', 'Date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Decimal', 'Orders completed per labor hour']],
+  'picking_sessions': [['session_id', 'String', 'Unique picking session identifier'], ['picker_id', 'String', 'Associate who ran the session'], ['session_minutes', 'Integer', '']],
+  'substitutions': [['order-id', 'String', 'Unique order identifier'], ['item_id', 'String', 'Original item UPC'], ['sub_accepted', 'Boolean', '']],
 };
 
 /** Descriptions "Generate with AI" returns, and that seeded entities already have. */
@@ -124,7 +128,11 @@ export const AI_DESCRIPTIONS: Record<string, string> = {
 };
 
 export const fieldsFor = (table: string, fill: boolean): Field[] =>
-  (TABLE_FIELDS[table] || []).map(([name, desc]) => ({ name, desc: desc || (fill ? AI_DESCRIPTIONS[name] || '' : '') }));
+  (TABLE_FIELDS[table] || []).map(([name, type, desc]) => ({ name, type, desc: desc || (fill ? AI_DESCRIPTIONS[name] || '' : '') }));
+
+export const FIELD_TYPES = ['String', 'Integer', 'Decimal', 'Boolean', 'Date', 'Timestamp'];
+/** Shown in the Entity dropdown before a category is picked. */
+export const ALL_ENTITY_NAMES = Object.values(ENTITY_OPTIONS).flat();
 
 export const ENTITY_DESC: Record<string, string> = {
   'On-time tilling': 'Tracks orders tilled before stage-by time',
@@ -147,7 +155,9 @@ export const STATUS: Record<EntityStatus, { label: string; bg: string; border: s
   draft: { label: 'Draft', bg: '#F1F0EE', border: '#C2C1C0', fg: '#4B4B49' },
 };
 
-export const ACCEPT = ['pdf', 'doc', 'docx', 'md', 'rtf'];
+export const ACCEPT = ['txt', 'md'];
+/** Files that can be previewed and edited as text. */
+export const TEXT_EXT = ['txt', 'md'];
 export const MAX_BYTES = 10 * 1024 * 1024;
 
 export interface FileCat { key: FileCatKey; title: string; desc: string; accept: string[] }
@@ -167,6 +177,7 @@ export const STEP_LABELS = ['Data & schema', 'Prompts & evals', 'Review & submit
 export const uid = (prefix: string) => prefix + Math.random().toString(36).slice(2);
 export const extOf = (name: string) => (name.split('.').pop() || '').toLowerCase();
 export const fmtDate = (ts: number) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+export const fmtDateTime = (ts: number) => fmtDate(ts) + ', ' + new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 export const plural = (n: number, word: string, many = word + 's') => n + ' ' + (n === 1 ? word : many);
 export const fieldCount = (tables: Table[]) => tables.reduce((a, t) => a + t.fields.length, 0);
 export const sizeText = (b: number) => b >= 1024 * 1024 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
@@ -177,6 +188,10 @@ export const ago = (ts: number, now = Date.now()) => {
   const h = Math.floor(m / 60);
   return h + (h === 1 ? ' hour ago' : ' hours ago');
 };
+/** Snapshot of a draft's saveable content, used to tell whether it changed since it was opened. */
+export const draftKey = (d: Draft | null) => d
+  ? JSON.stringify([d.category, d.entity, d.source, d.tables, d.files.filter(x => x.status === 'done').map(x => [x.id, x.content || '', x.cat])])
+  : '';
 export const emptyDraft = (): Draft => ({ category: '', entity: '', source: '', tables: [], files: [] });
 export const cloneTables = (tables: Table[]): Table[] => tables.map(t => ({ ...t, fields: t.fields.map(f => ({ ...f })) }));
 export const toEditDraft = (e: Entity): EditDraft => ({
@@ -212,30 +227,34 @@ const seedFile = (name: string, kb: number, content: string): FileRec => ({
 
 const SEED_UPDATED: Record<string, string> = { e1: '2026-09-10', e2: '2026-08-28', e3: '2026-09-12', e4: '2026-09-02', e5: '2026-09-18', e6: '2026-08-21' };
 const seed = (id: string, category: string, name: string, source: string, tables: string[], files: FileRec[]): Entity => ({
-  id, category, name, source, files, status: 'published',
+  id, category, name, source, files, status: 'published', approvedBy: 'Gary Spark',
   tables: tables.map(t => ({ name: t, fields: fieldsFor(t, true) })),
   updatedAt: Date.parse(SEED_UPDATED[id] + 'T12:00:00'),
 });
 
 let sfN = 0;
-const sf = (cat: FileCatKey, name: string, kb: number, by: string, date: string, lines: string[]): FileRec => ({
-  id: 'sf' + (++sfN), name, size: Math.round(kb * 1024), ext: extOf(name), cat, status: 'done', by, at: D(date),
-  content: md(name.slice(0, name.lastIndexOf('.')).split('_').join(' '), lines),
-});
+const sf = (cat: FileCatKey, name: string, kb: number, by: string, date: string, lines: string[]): FileRec => {
+  const ext = extOf(name);
+  const title = name.slice(0, name.lastIndexOf('.')).split('_').join(' ');
+  return {
+    id: 'sf' + (++sfN), name, size: Math.round(kb * 1024), ext, cat, status: 'done', by, at: D(date),
+    content: ext === 'txt' ? title + '\n\n' + lines.join('\n') : md(title, lines),
+  };
+};
 
 const LATE_ORDER_FILES: FileRec[] = [
   sf('prompts', 'late_order_recovery_prompts.md', 24, 'Priya Sethi', '2026-09-29', ['- Which stores recovered the most late orders last week?', '- How many late orders at store 1234 were recovered yesterday?']),
-  sf('prompts', 'recovery_followup_prompts.docx', 86, 'Priya Sethi', '2026-09-29', ['- What should a store do when an order is running late?', '- Which late orders still need a follow-up call?']),
-  sf('prompts', 'store_manager_prompt_templates.pdf', 1229, 'Gary Spark', '2026-09-24', ['- Show late order recovery for my store this week.', '- Compare my store with the district on recovered orders.']),
-  sf('kb', 'late_order_playbook.pdf', 2457, 'Gary Spark', '2026-09-22', ['A late order is any order handed off after its promised window.', 'Stores should contact the customer before the window closes.']),
-  sf('kb', 'recovery_sla_overview.docx', 312, 'Priya Sethi', '2026-09-22', ['Overview of how recovered orders are counted for each store.']),
+  sf('prompts', 'recovery_followup_prompts.txt', 14, 'Priya Sethi', '2026-09-29', ['- What should a store do when an order is running late?', '- Which late orders still need a follow-up call?']),
+  sf('prompts', 'store_manager_prompt_templates.md', 31, 'Gary Spark', '2026-09-24', ['- Show late order recovery for my store this week.', '- Compare my store with the district on recovered orders.']),
+  sf('kb', 'late_order_playbook.md', 48, 'Gary Spark', '2026-09-22', ['A late order is any order handed off after its promised window.', 'Stores should contact the customer before the window closes.']),
+  sf('kb', 'recovery_sla_overview.txt', 22, 'Priya Sethi', '2026-09-22', ['Overview of how recovered orders are counted for each store.']),
   sf('evals', 'late_order_recovery_evals.md', 18, 'Priya Sethi', '2026-10-01', ['1. Answer cites the ott_orders table.', '2. Recovery rate is reported as a percentage with one decimal.']),
-  sf('evals', 'recovery_golden_answers.docx', 54, 'Priya Sethi', '2026-10-01', ['Expected answers for the recovery prompts, one per question.']),
+  sf('evals', 'recovery_golden_answers.txt', 16, 'Priya Sethi', '2026-10-01', ['Expected answers for the recovery prompts, one per question.']),
   sf('evals', 'edge_case_evals.md', 9, 'Marcus Lee', '2026-10-02', ['1. Store with zero late orders returns 0 and says so.', '2. Closed stores are excluded from the answer.']),
-  sf('evals', 'store_level_evals_q3.pdf', 640, 'Gary Spark', '2026-09-30', ['Store-level checks for Q3.']),
+  sf('evals', 'store_level_evals_q3.md', 27, 'Gary Spark', '2026-09-30', ['Store-level checks for Q3.']),
   sf('evals', 'recovery_sla_checks.md', 12, 'Priya Sethi', '2026-09-29', ['1. Answer names the store and the business date.']),
   sf('evals', 'negative_cases.md', 7, 'Priya Sethi', '2026-09-26', ['1. Questions about other banners are declined.']),
-  sf('evals', 'regression_suite_v1.docx', 120, 'Gary Spark', '2026-09-24', ['Regression checks carried over from the first release.']),
+  sf('evals', 'regression_suite_v1.txt', 19, 'Gary Spark', '2026-09-24', ['Regression checks carried over from the first release.']),
   sf('md', 'sidekick_context.md', 6, 'Gary Spark', '2026-09-30', ['Answer late order questions with the store number and the business date.']),
 ];
 

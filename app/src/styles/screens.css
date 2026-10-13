@@ -17,6 +17,7 @@
 .sk-dash__title { flex: 1; margin: 0; font-family: Poppins, sans-serif; font-weight: 600; font-size: 20px; line-height: 32px; color: #262524; }
 .sk-dash__filters { display: flex; align-items: center; gap: 16px; padding-bottom: 16px; }
 .sk-dash__group { margin: 0; font-family: Poppins, sans-serif; font-weight: 400; font-size: 12px; line-height: 24px; color: #1F1E1E; }
+.sk-dash__none { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 32px 24px; text-align: center; }
 .sk-dash__empty { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 64px 24px; text-align: center; }
 
 .sk-etable { border: 1px solid #F1F0EE; border-radius: 8px; overflow: hidden; }

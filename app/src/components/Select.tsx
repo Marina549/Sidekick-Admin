@@ -14,10 +14,13 @@ interface SelectProps {
   ariaLabel: string;
   id?: string;
   style?: CSSProperties;
+  /** Optional last item, below a divider, e.g. "Create new category". */
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 /** Listbox dropdown from the design (Select.dc.html). */
-export function Select({ value, options, onChange, placeholder = 'Select', disabled = false, size = 'medium', ariaLabel, id, style }: SelectProps) {
+export function Select({ value, options, onChange, placeholder = 'Select', disabled = false, size = 'medium', ariaLabel, id, style, actionLabel, onAction }: SelectProps) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const root = useRef<HTMLDivElement>(null);
@@ -32,18 +35,26 @@ export function Select({ value, options, onChange, placeholder = 'Select', disab
   const sel = options.find(o => o.value === value);
   const small = size === 'small';
   const pick = (o: SelectOption) => { if (o.disabled) return; setOpen(false); onChange(o.value); };
+  const hasAction = !!(actionLabel && onAction);
+  // The action item sits at index options.length for keyboard navigation.
+  const actionIndex = options.length;
+  const pickAction = () => { setOpen(false); onAction?.(); };
 
   const onKey = (e: KeyboardEvent) => {
     if (e.key === 'Escape') { setOpen(false); return; }
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
       const dir = e.key === 'ArrowDown' ? 1 : -1;
+      const total = options.length + (hasAction ? 1 : 0);
       let i = open ? active : options.findIndex(o => o.value === value);
-      for (let n = 0; n < options.length; n++) { i = (i + dir + options.length) % options.length; if (!options[i].disabled) break; }
+      for (let n = 0; n < total; n++) { i = (i + dir + total) % total; if (i === actionIndex || !options[i].disabled) break; }
       setOpen(true);
       setActive(i);
     }
-    if ((e.key === 'Enter' || e.key === ' ') && open && active >= 0) { e.preventDefault(); pick(options[active]); }
+    if ((e.key === 'Enter' || e.key === ' ') && open && active >= 0) {
+      e.preventDefault();
+      if (active === actionIndex) pickAction(); else pick(options[active]);
+    }
   };
 
   const border = disabled ? '1px solid #C2C1C0' : open ? '1px solid #4B4B49' : sel && !small ? '1.5px solid #1F1E1E' : '1px solid #7D7C7C';
@@ -95,6 +106,22 @@ export function Select({ value, options, onChange, placeholder = 'Select', disab
               </li>
             );
           })}
+          {hasAction && (
+            <>
+              <li role="separator" aria-hidden="true" style={{ height: 1, minHeight: 0, margin: '8px 0', padding: 0, background: '#E5E4E3' }} />
+              <li
+                role="option"
+                aria-selected={false}
+                aria-label={actionLabel}
+                onClick={pickAction}
+                onMouseEnter={() => setActive(actionIndex)}
+                style={{ gap: 8, fontFamily: 'Poppins, sans-serif', color: '#004488', cursor: 'pointer', background: active === actionIndex ? '#EBF3F9' : 'transparent' }}
+              >
+                <ImgIcon src="c/plus_outlined_24-blue.svg" size={16} />
+                <span style={{ flex: 1, whiteSpace: 'nowrap' }}>{actionLabel}</span>
+              </li>
+            </>
+          )}
         </ul>
       )}
     </div>

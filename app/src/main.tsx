@@ -5,6 +5,7 @@ import './styles/app.css';
 import './styles/controls.css';
 import './styles/screens.css';
 import './styles/flow.css';
+import './styles/responsive.css';
 import { App } from './App';
 import { AdminProvider } from './store';
 

@@ -11,10 +11,26 @@
   <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-buttons.css">
   <link rel="stylesheet" href="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/components/pantry/pds-typography.css">
   <script src="_ds/pantry-design-system-new-pds-5779efe9-4163-4539-a313-fc0705f5bc71/_ds_bundle.js"></script>
+  <style>
+    @media (max-width: 767px) {
+      [data-r="st-root"] { --st-px: 16px !important; }
+      [data-r="st-hrow"] { display: none !important; }
+      [data-r="st-row"] { grid-template-columns: minmax(0, 1fr) auto !important; row-gap: 4px; align-items: start !important; padding-top: 12px !important; padding-bottom: 12px !important; }
+      [data-r="st-name"] { grid-column: 1; grid-row: 1; font-weight: 600; }
+      [data-r="st-type"] { grid-column: 1; grid-row: 2; font-size: 12px !important; line-height: 16px !important; }
+      [data-r="st-desc"] { grid-column: 1 / -1; grid-row: 3; padding-right: 0 !important; }
+      [data-r="st-act"] { grid-column: 2; grid-row: 1 / span 2; }
+      [data-r="st-act"] button { width: 40px !important; height: 40px !important; }
+      [data-r="st-edit"] { grid-template-columns: minmax(0, 1fr) !important; row-gap: 8px; }
+      [data-r="st-edit"] > [role="cell"] { padding-right: 0 !important; padding-top: 0 !important; white-space: normal !important; }
+      [data-r="st-edit"] input { min-width: 0 !important; }
+    }
+  </style>
 </helmet>
-<div role="table" aria-label="Schema annotation" style="{{ rootStyle }}">
-  <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); border-bottom: 1px solid #E5E4E3; box-sizing: border-box; background: #FFFFFF;">
+<div role="table" data-r="st-root" aria-label="Schema annotation" style="{{ rootStyle }}">
+  <div role="row" data-r="st-hrow" style="display: grid; grid-template-columns: minmax(112px, 232px) 112px minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); border-bottom: 1px solid #E5E4E3; box-sizing: border-box; background: #FFFFFF;">
     <span role="columnheader" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">Field</span>
+    <span role="columnheader" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">Type</span>
     <span role="columnheader" style="font-size: 14px; font-weight: 700; line-height: 24px; color: #1F1E1E;">Description</span>
     <span></span>
   </div>
@@ -33,10 +49,11 @@
       <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
         <div>
           <sc-if value="{{ r.isView }}" hint-placeholder-val="{{ true }}">
-            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
-              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
-              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; padding-right: 16px;">{{ r.desc }}</span>
-              <div style="display: flex; justify-content: flex-end; align-items: center;">
+            <div role="row" data-r="st-row" style="display: grid; grid-template-columns: minmax(112px, 232px) 112px minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
+              <span role="cell" data-r="st-name" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <span role="cell" data-r="st-type" style="font-size: 14px; line-height: 24px; color: #4B4B49; padding-right: 16px;">{{ r.type }}</span>
+              <span role="cell" data-r="st-desc" style="font-size: 14px; line-height: 24px; color: #1F1E1E; padding-right: 16px;">{{ r.desc }}</span>
+              <div data-r="st-act" style="display: flex; justify-content: flex-end; align-items: center;">
                 <sc-if value="{{ editable }}" hint-placeholder-val="{{ false }}">
                   <div style="display: flex; align-items: center;">
                     <button type="button" aria-label="{{ r.editLabel }}" onClick="{{ r.onEdit }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #002D56;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><img src="assets/icons/c/edit_outlined_16-navy.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"></button>
@@ -47,19 +64,21 @@
             </div>
           </sc-if>
           <sc-if value="{{ r.isEmpty }}" hint-placeholder-val="{{ false }}">
-            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
-              <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
-              <div role="cell" style="padding-right: 16px;">
+            <div role="row" data-r="st-row" style="display: grid; grid-template-columns: minmax(112px, 232px) 112px minmax(0, 1fr) 80px; align-items: center; min-height: 40px; padding: 8px var(--st-px, 24px); box-sizing: border-box;">
+              <span role="cell" data-r="st-name" style="font-size: 14px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <span role="cell" data-r="st-type" style="font-size: 14px; line-height: 24px; color: #4B4B49; padding-right: 16px;">{{ r.type }}</span>
+              <div role="cell" data-r="st-desc" style="padding-right: 16px;">
                 <button type="button" onClick="{{ r.onEdit }}" aria-label="{{ r.addLabel }}" style="display: flex; align-items: center; width: 100%; max-width: 656px; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1px solid #7D7C7C; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #6E6E6D; text-align: left; cursor: text;" style-hover="border-color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">Add description</button>
               </div>
-              <div style="display: flex; justify-content: flex-end; align-items: center;">
+              <div data-r="st-act" style="display: flex; justify-content: flex-end; align-items: center;">
                 <button type="button" aria-label="{{ r.deleteLabel }}" onClick="{{ r.onDelete }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer; color: #002D56;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: 0;"><img src="assets/icons/c/trash_outlined_16-navy.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"></button>
               </div>
             </div>
           </sc-if>
           <sc-if value="{{ r.isEditing }}" hint-placeholder-val="{{ false }}">
-            <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr); align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
+            <div role="row" data-r="st-edit" style="display: grid; grid-template-columns: minmax(112px, 232px) 112px minmax(0, 1fr); align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
               <span role="cell" style="font-size: 14px; line-height: 24px; color: #1F1E1E; padding-top: 8px; overflow-wrap: anywhere;">{{ r.name }}</span>
+              <span role="cell" style="font-size: 14px; line-height: 24px; color: #4B4B49; padding-top: 8px; padding-right: 16px;">{{ r.type }}</span>
               <div role="cell" style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; white-space: nowrap;">
                 <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">
                   <input type="text" aria-label="{{ r.inputLabel }}" value="{{ draftText }}" onChange="{{ onDraftText }}" onKeyDown="{{ onKey }}" autoFocus="{{ true }}" disabled="{{ generating }}" placeholder="Add description" style="flex: 1; min-width: 160px; max-width: 656px; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1.5px solid #1F1E1E; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 24px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">
@@ -75,12 +94,15 @@
         </div>
       </sc-for>
       <sc-if value="{{ g.isAdding }}" hint-placeholder-val="{{ false }}">
-        <div role="row" style="display: grid; grid-template-columns: minmax(112px, 232px) minmax(0, 1fr); column-gap: 0; align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
+        <div role="row" data-r="st-edit" style="display: grid; grid-template-columns: minmax(112px, 232px) 128px minmax(0, 1fr); column-gap: 0; align-items: start; padding: 16px var(--st-px, 24px); box-sizing: border-box; background: #EBF3F9;">
           <div role="cell" style="padding-right: 16px;">
             <input type="text" aria-label="New field name" value="{{ draftName }}" onChange="{{ onDraftName }}" onKeyDown="{{ onKey }}" autoFocus="{{ true }}" placeholder="Field name" style="width: 100%; height: 40px; padding: 0 16px; box-sizing: border-box; border: 1.5px solid #1F1E1E; border-radius: 10px; background: #FFFFFF; font-family: 'Nunito Sans', sans-serif; font-size: 14px; color: #1F1E1E;" style-focus="outline: none; border-color: #4B4B49;">
             <sc-if value="{{ nameError }}" hint-placeholder-val="{{ false }}">
               <span style="display: block; font-size: 12px; line-height: 16px; color: #B00000; padding-top: 8px;">{{ nameError }}</span>
             </sc-if>
+          </div>
+          <div role="cell" style="padding-right: 16px;">
+            <dc-import name="Select" size="small" value="{{ draftType }}" options="{{ typeOpts }}" onChange="{{ onDraftType }}" accessible-label="New field type" style="width: 100%;" hint-size="100%,40px"></dc-import>
           </div>
           <div role="cell" style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; white-space: nowrap;">
             <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">
@@ -106,9 +128,10 @@
   </sc-for>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:480},&quot;tables&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{name:string,fields:Array&lt;{name:string,desc:string}&gt;}&gt;&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;emptyTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;No tables mapped yet&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;emptyText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(tables, info)=&gt;void&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:480},&quot;tables&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{name:string,fields:Array&lt;{name:string,type?:string,desc:string}&gt;}&gt;&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;emptyTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;No tables mapped yet&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;emptyText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(tables, info)=&gt;void&quot;}}">
 class Component extends DCLogic {
-  state = { edit: null, text: '', name: '', generating: false, nameError: '' };
+  state = { edit: null, text: '', name: '', type: 'String', generating: false, nameError: '' };
+  static TYPES = ['String', 'Integer', 'Decimal', 'Boolean', 'Date', 'Timestamp'];
   static AI = {
     on_time_flag: '1 when tilled before stage-by time',
     coe_score: 'Composite center-of-excellence score for the store, 0–100',
@@ -122,7 +145,7 @@ class Component extends DCLogic {
   emit(tables, info) { this.props.onChange && this.props.onChange(tables, info); }
   clone() { return (this.props.tables || []).map(t => ({ ...t, fields: t.fields.map(f => ({ ...f })) })); }
   startEdit(t, f, text) { this.setState({ edit: { t, f }, text: text || '', name: '', generating: false, nameError: '' }); }
-  startAdd(t) { this.setState({ edit: { t, f: -1 }, text: '', name: '', generating: false, nameError: '' }); }
+  startAdd(t) { this.setState({ edit: { t, f: -1 }, text: '', name: '', type: 'String', generating: false, nameError: '' }); }
   cancel = () => { clearTimeout(this._gen); this.setState({ edit: null, text: '', name: '', generating: false, nameError: '' }); };
   save = () => {
     const e = this.state.edit; if (!e) return;
@@ -132,7 +155,7 @@ class Component extends DCLogic {
       const name = this.state.name.trim();
       if (!name) { this.setState({ nameError: 'Give the field a name.' }); return; }
       if (tables[e.t].fields.some(x => x.name === name)) { this.setState({ nameError: 'That field already exists in this table.' }); return; }
-      tables[e.t].fields.push({ name, desc: text });
+      tables[e.t].fields.push({ name, type: this.state.type || 'String', desc: text });
       this.emit(tables, { type: 'add', table: tables[e.t].name, field: name });
     } else {
       tables[e.t].fields[e.f].desc = text;
@@ -171,7 +194,7 @@ class Component extends DCLogic {
         const editing = editable && !!e && e.t === ti && e.f === fi;
         const hasDesc = !!(f.desc && f.desc.trim());
         return {
-          name: f.name, desc: f.desc,
+          name: f.name, desc: f.desc, type: f.type || '—',
           isEditing: editing,
           isEmpty: editable && !editing && !hasDesc,
           isView: !editing && (hasDesc || !editable),
@@ -192,6 +215,8 @@ class Component extends DCLogic {
       emptyText: this.props.emptyText ?? '',
       draftText: this.state.text,
       draftName: this.state.name,
+      draftType: this.state.type, typeOpts: Component.TYPES,
+      onDraftType: (v) => this.setState({ type: v }),
       nameError: this.state.nameError,
       generating: this.state.generating,
       generateLabel: this.state.generating ? 'Generating…' : 'Generate with AI',

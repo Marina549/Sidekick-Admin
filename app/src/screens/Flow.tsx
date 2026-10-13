@@ -1,7 +1,7 @@
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ImgIcon } from '../components/Icon';
 import { Button } from '../components/pds';
-import { STEP_LABELS, ago, emptyDraft, step1Missing, step2Missing, type Step } from '../data';
+import { STEP_LABELS, ago, draftKey, emptyDraft, step1Missing, step2Missing, type Step } from '../data';
 import { useAdmin } from '../store';
 import { DataSchemaForm } from './flow/DataSchemaForm';
 import { PromptsEvals } from './flow/PromptsEvals';
@@ -10,7 +10,7 @@ import { asset } from '../asset';
 
 /** New entity (3-step wizard), Edit entity and Review submission share this layout. */
 export function Flow() {
-  const { s, me, now, set, go, submit, saveEdit, approve } = useAdmin();
+  const { s, me, now, set, go, submit, saveEdit, approve, saveDraft, askDelete } = useAdmin();
   const isWizard = s.screen === 'wizard';
   const isEdit = s.screen === 'edit';
   const isReview = s.screen === 'review';
@@ -27,7 +27,10 @@ export function Flow() {
   if (isReview) {
     title = 'Review submission';
     label = 'Review submission';
-    if (reviewEnt?.submittedBy) subtitle = (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt || now, now);
+    if (reviewEnt?.submittedBy) {
+      subtitle = (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt || now, now)
+        + (reviewEnt.status === 'published' && reviewEnt.approvedBy ? ' · Approved by ' + reviewEnt.approvedBy : '');
+    }
   }
 
   const showForm = (isWizard && s.step === 1) || isEdit;
@@ -45,54 +48,87 @@ export function Flow() {
 
   const showDecision = !!reviewEnt && reviewEnt.status === 'pending' && me.canApprove;
 
+  // "Delete entity" is offered once the entity exists on the dashboard (a saved draft, or Edit entity).
+  const deleteTarget = isEdit ? s.editId : isWizard ? s.draftId : null;
+  const showDelete = !!deleteTarget && s.entities.some(e => e.id === deleteTarget);
+  // "Save as draft" appears once the draft differs from how it was opened.
+  const showSaveDraft = isWizard && draftKey(s.draft) !== s.draftBase;
+  const draftEmpty = !d.category && !d.entity && !d.source && !d.tables.length && !d.files.length;
+
   return (
     <section data-screen-label={label} className="sk-flow">
-      <div className="sk-flow__body">
+      <div className="sk-flow__body" data-r="flow-body">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Breadcrumbs />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div className="sk-title-row">
               <h1 className="sk-h1">{title}</h1>
-              <img src={asset('assets/ill-entity-dashboard.png')} alt="" width={144} height={76} className="sk-title-ill" />
+              <img src={asset('assets/ill-entity-dashboard-v3.png')} data-r="page-ill" alt="" width={104} height={76} style={{ display: 'block', width: 104, height: 76, objectFit: 'contain' }} />
             </div>
             {subtitle && <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 16, lineHeight: '24px', color: '#4B4B49' }}>{subtitle}</p>}
           </div>
         </div>
 
         {isWizard && <Stepper reachable={[true, !m1, !m1 && !m2]} />}
+        {isWizard && (
+          <p data-r="step-mobile" style={{ margin: '-8px 0 0', textAlign: 'center', fontFamily: 'Poppins, sans-serif', fontWeight: 500, fontSize: 14, lineHeight: '24px', color: '#4B4B49' }}>
+            Step {s.step} of 3 · {STEP_LABELS[s.step - 1]}
+          </p>
+        )}
         {showForm && <DataSchemaForm />}
         {showFiles && <PromptsEvals />}
         {showSummary && <Summary />}
       </div>
 
-      <div className="sk-flow__footer">
+      <div className="sk-flow__footer" data-r="footer">
+        <div data-r="footer-left" style={{ display: 'flex', alignItems: 'center', minHeight: 48 }}>
+          {showDelete && (
+            <button type="button" className="sk-link" style={{ padding: '8px 0', fontSize: 16 }} onClick={askDelete}>
+              <span>Delete entity</span>
+            </button>
+          )}
+        </div>
+        <div data-r="footer-right" style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
         {isWizard && (
-          <div style={{ display: 'flex', minWidth: 144 }}>
-            <Button variant="filled" size="large" className="text-l-sb" disabled={nextDisabled} onClick={onNext}>
-              {s.step === 3 ? (s.submitting ? 'Submitting…' : 'Submit') : 'Next'}
-            </Button>
+          <div data-r="footer-grp" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            {showSaveDraft && (
+              <div data-r="fdraft" style={{ display: 'flex' }}>
+                <Button variant="transparent" size="large" className="text-l-sb" disabled={s.submitting || draftEmpty} onClick={saveDraft}>Save as draft</Button>
+              </div>
+            )}
+            {s.step > 1 && (
+              <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
+                <Button variant="outlined" size="large" className="text-l-sb" disabled={s.submitting} onClick={() => { set({ step: (s.step - 1) as Step }); window.scrollTo(0, 0); }}>Back</Button>
+              </div>
+            )}
+            <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
+              <Button variant="filled" size="large" className="text-l-sb" disabled={nextDisabled} onClick={onNext}>
+                {s.step === 3 ? (s.submitting ? 'Submitting…' : 'Submit') : 'Next'}
+              </Button>
+            </div>
           </div>
         )}
         {isEdit && (
-          <div style={{ display: 'flex', gap: 16 }}>
-            <div style={{ display: 'flex', minWidth: 144 }}>
+          <div data-r="footer-grp" style={{ display: 'flex', gap: 16 }}>
+            <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
               <Button variant="outlined" size="large" className="text-l-sb" onClick={() => go('dashboard', { editDraft: null, editId: null })}>Cancel</Button>
             </div>
-            <div style={{ display: 'flex', minWidth: 144 }}>
+            <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
               <Button variant="filled" size="large" className="text-l-sb" disabled={!editDirty || editIncomplete} onClick={saveEdit}>Save</Button>
             </div>
           </div>
         )}
         {showDecision && (
-          <div style={{ display: 'flex', gap: 16 }}>
-            <div style={{ display: 'flex', minWidth: 184 }}>
+          <div data-r="footer-grp" style={{ display: 'flex', gap: 16 }}>
+            <div data-r="fbtn" style={{ display: 'flex', minWidth: 184 }}>
               <Button variant="outlined" size="large" className="text-l-sb" onClick={() => set({ changes: { text: '', error: false } })}>Request changes</Button>
             </div>
-            <div style={{ display: 'flex', minWidth: 144 }}>
+            <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
               <Button variant="filled" size="large" className="text-l-sb" disabled={s.approving} onClick={approve}>{s.approving ? 'Approving…' : 'Approve'}</Button>
             </div>
           </div>
         )}
+        </div>
       </div>
     </section>
   );
@@ -102,7 +138,7 @@ export function Flow() {
 function Stepper({ reachable }: { reachable: boolean[] }) {
   const { s, set } = useAdmin();
   return (
-    <ol aria-label="Progress" className="sk-stepper">
+    <ol aria-label="Progress" className="sk-stepper" data-r="stepper">
       {STEP_LABELS.map((label, i) => {
         const n = (i + 1) as Step;
         const done = n < s.step;
@@ -127,7 +163,7 @@ function Stepper({ reachable }: { reachable: boolean[] }) {
               {done
                 ? <ImgIcon src="c/checkmark_outlined_24-white.svg" size={16} />
                 : <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600, fontSize: 12, lineHeight: '16px' }}>{n}</span>}
-              <span className="sk-stepper__label">{label}</span>
+              <span className="sk-stepper__label" data-r="step-label">{label}</span>
             </button>
           </li>
         );
