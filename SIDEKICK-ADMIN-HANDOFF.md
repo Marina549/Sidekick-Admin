@@ -100,12 +100,12 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
 **Submitting:**
 - Creates a Pending review entity and a notification.
-- Gary's bell shows a red dot. Priya never sees notifications.
+- Gary's bell shows a red dot. Priya only gets notified when changes are requested on her submissions.
 
 **Approving:**
 - Gary opens a submission from the bell or with the Review link on its dashboard row.
 - **Approve** sets the entity to Active.
-- **Request changes** needs a comment. The entity becomes Changes requested, and the comment shows in its expanded row and at the top of Edit entity.
+- **Request changes** needs a comment. The entity becomes Changes requested, the comment shows in its expanded row, and the submitter is notified (see Make Changes above).
 
 **Edit entity:** Data & schema only (Category can be changed). Save stays disabled until something changes. Saving sends the entity back to Pending review (the button reads "Resubmit for review" if changes were requested).
 
