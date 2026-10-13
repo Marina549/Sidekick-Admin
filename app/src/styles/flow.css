@@ -51,3 +51,4 @@
 .sk-more-menu button { display: flex; align-items: center; width: 100%; min-height: 48px; padding: 0 16px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif; font-size: 16px; line-height: 24px; color: #1F1E1E; }
 .sk-more-menu button:hover { background: #EBF3F9; }
 .sk-more-menu button:focus-visible { outline: 2px solid #004488; outline-offset: -2px; }
+.sk-feedback { display: flex; gap: 16px; align-items: flex-start; padding: 24px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3; }

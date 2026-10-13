@@ -21,6 +21,7 @@ export function Summary() {
     if (reviewEnt.status === 'published' && reviewEnt.approvedBy) note = 'Approved by ' + reviewEnt.approvedBy + (reviewEnt.approvedAt ? ' on ' + fmtDate(reviewEnt.approvedAt) : '') + '.';
     else if (reviewEnt.status !== 'pending') note = 'This submission was already reviewed.';
     else if (!me.canApprove) note = 'You don’t have approval rights. Only approvers can approve or request changes.';
+    else if (reviewEnt.lastFeedback?.comment) note = 'Resubmitted after ' + (reviewEnt.lastFeedback.by || 'a reviewer') + ' requested changes: “' + reviewEnt.lastFeedback.comment + '”';
   }
 
   const editLink = (step: Step, label: string) => isWizard && (

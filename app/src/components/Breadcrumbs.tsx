@@ -14,7 +14,7 @@ export function Breadcrumbs({ style }: { style?: CSSProperties }) {
   const { s, go } = useAdmin();
   const crumbs: { label: string; target?: Screen }[] = [{ label: 'Home', target: 'home' }];
   if (s.screen === 'dashboard') crumbs.push({ label: 'Entity dashboard' });
-  else crumbs.push({ label: 'Entity dashboard', target: 'dashboard' }, { label: CURRENT_LABEL[s.screen] || '' });
+  else crumbs.push({ label: 'Entity dashboard', target: 'dashboard' }, { label: s.resubmitId && s.screen === 'wizard' ? 'Make changes' : CURRENT_LABEL[s.screen] || '' });
 
   const leave = (target: Screen) => go(target, s.screen === 'edit' ? { editDraft: null, editId: null } : {});
 

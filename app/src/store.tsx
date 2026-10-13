@@ -2,8 +2,8 @@
 // and resets on reload.
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  CATEGORIES, CAT_BY_KEY, SEED_ENTITIES, SOURCES, TEXT_EXT, USERS, draftKey, emptyDraft, extOf, fieldsFor, toEditDraft, uid, MAX_BYTES,
-  type Draft, type EditDraft, type Entity, type FileCatKey, type FileRec, type Notification, type Step, type UserId,
+  CATEGORIES, CAT_BY_KEY, SEED_ENTITIES, SOURCES, TEXT_EXT, USERS, draftKey, emptyDraft, entityDraft, extOf, fieldsFor, toEditDraft, uid, MAX_BYTES,
+  type Draft, type EditDraft, type Entity, type FileCatKey, type FileRec, type Notification, type Step, type UserId, type Verb,
 } from './data';
 import type { ToastAction, ToastTone } from './components/pds';
 
@@ -30,6 +30,12 @@ export interface State {
   draftId: string | null;
   /** draftKey() of the draft when it was opened; "Save as draft" shows once it differs. */
   draftBase: string;
+  /** Set in "Make changes" mode: the Changes requested entity being revised in the wizard. */
+  resubmitId: string | null;
+  /** The reviewer's comment shown at the top of "Make changes". */
+  feedback: { comment: string; by: string; at: number } | null;
+  /** draftKey() when changes were requested; Submit needs at least one change from it. */
+  revBase: string;
   step: Step;
   submitting: boolean;
   // edit entity
@@ -70,6 +76,7 @@ const initialState: State = {
   search: '', fCat: '', fStatus: '', fSrc: '', expanded: {},
   categories: [...CATEGORIES], newCat: null, deleting: null,
   draft: null, draftId: null, draftBase: '', step: 1, submitting: false,
+  resubmitId: null, feedback: null, revBase: '',
   editId: null, editDraft: null, editOriginal: '',
   reviewId: null, approving: false, changes: null,
   collapsed: {}, showAll: {}, sumExpanded: {}, uploadErrors: {}, removing: null, preview: null,
@@ -108,7 +115,14 @@ function useAdminStore() {
     const d = s.draft;
     const leavingWizard = s.screen === 'wizard' && screen !== 'wizard';
     let saved: Entity | null = null;
-    if (!noSave && leavingWizard && d && d.category && d.entity) {
+    let revised: Entity | null = null;
+    if (!noSave && leavingWizard && s.resubmitId && d) {
+      // Leaving "Make changes" keeps the edits on the entity (still Changes requested), not as a draft.
+      const prev = s.entities.find(e => e.id === s.resubmitId);
+      if (prev && draftKey(d) !== draftKey(entityDraft(prev))) {
+        revised = { ...prev, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), updatedAt: Date.now() };
+      }
+    } else if (!noSave && leavingWizard && d && d.category && d.entity) {
       saved = {
         id: s.draftId || 'd' + Date.now(), category: d.category, name: d.entity, source: d.source || '—',
         tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now(),
@@ -118,11 +132,13 @@ function useAdminStore() {
     if (screen === 'wizard' && extra.draft) extra = { ...extra, draftBase: draftKey(extra.draft) };
     set(st => ({
       screen, bellOpen: false, userOpen: false, drawerOpen: false, fileMenu: null,
-      ...(leavingWizard ? { draft: null, draftId: null, step: 1 as Step } : {}),
+      ...(leavingWizard ? { draft: null, draftId: null, step: 1 as Step, resubmitId: null, feedback: null, revBase: '' } : {}),
       ...(saved ? { entities: [saved, ...st.entities.filter(e => e.id !== saved!.id)] } : {}),
+      ...(revised ? { entities: st.entities.map(e => e.id === revised!.id ? revised! : e) } : {}),
       ...extra,
     }));
     if (saved) toast('Draft saved to Entities.', 'info');
+    if (revised) toast('Your changes to ' + revised.name + ' are saved. Submit for review when you’re ready.', 'info');
     window.scrollTo(0, 0);
   };
 
@@ -292,20 +308,52 @@ function useAdminStore() {
   };
 
   // ---- submit / approve ----
-  const notify = (entity: Entity, verb: 'submitted' | 'updated') => {
-    const n: Notification = { id: 'n' + Date.now(), entityId: entity.id, by: me.name, verb, entity: entity.name, category: entity.category, at: Date.now(), read: false };
-    set(s => ({ notifications: [n, ...s.notifications.filter(x => x.entityId !== entity.id)] }));
+  /** Approvers hear about submissions; a submitter hears when changes are requested. */
+  const notify = (entity: Entity, verb: Verb, { to = 'approvers' as Notification['to'], kind = 'review' as Notification['kind'], comment = '' } = {}) => {
+    const n: Notification = { id: uid('n'), entityId: entity.id, to, kind, comment, by: me.name, verb, entity: entity.name, category: entity.category, at: Date.now(), read: false };
+    set(s => ({ notifications: [n, ...s.notifications.filter(x => !(x.entityId === entity.id && x.to === to))] }));
+  };
+  const readChangesNotifs = (id: string) => (s: State) => ({ notifications: s.notifications.map(n => n.entityId === id && n.kind === 'changes' ? { ...n, read: true } : n) });
+  const submitterId = (e: Entity) => e.submittedById || Object.values(USERS).find(u => u.name === e.submittedBy)?.id;
+
+  /** "Make changes": reopen a Changes requested entity in the wizard on Review & submit, with the feedback on top. */
+  const startRevision = (e: Entity) => {
+    go('wizard', {
+      draft: JSON.parse(JSON.stringify(entityDraft(e))), draftId: null, step: 3,
+      resubmitId: e.id, revBase: e.revBase || draftKey(entityDraft(e)),
+      feedback: { comment: e.comment || '', by: e.commentBy || 'The reviewer', at: e.commentAt || e.updatedAt },
+    });
   };
 
   const submit = () => {
     const d = ref.current.draft;
     if (!d) return;
     set({ submitting: true });
+    const resubmitId = ref.current.resubmitId;
+    if (resubmitId) {
+      window.setTimeout(() => {
+        const prev = ref.current.entities.find(e => e.id === resubmitId);
+        if (!prev) { set({ submitting: false }); return; }
+        const ent: Entity = {
+          ...prev, category: d.category, name: d.entity, source: d.source, tables: d.tables, files: d.files.filter(x => x.status === 'done'),
+          status: 'pending', verb: 'resubmitted', submittedBy: me.name, submittedById: me.id, submittedAt: Date.now(), updatedAt: Date.now(),
+          lastFeedback: { comment: prev.comment || '', by: prev.commentBy || '', at: prev.commentAt || 0 }, comment: '', commentBy: '', revBase: '',
+        };
+        set(s => ({
+          ...readChangesNotifs(resubmitId)(s),
+          entities: s.entities.map(e => e.id === resubmitId ? ent : e),
+          draft: null, draftId: null, step: 1 as Step, submitting: false, screen: 'success', resubmitId: null, feedback: null, revBase: '',
+        }));
+        notify(ent, 'resubmitted');
+        window.scrollTo(0, 0);
+      }, 900);
+      return;
+    }
     window.setTimeout(() => {
       const ent: Entity = {
         id: 'e' + Date.now(), category: d.category, name: d.entity, source: d.source, tables: d.tables,
         files: d.files.filter(x => x.status === 'done'), status: 'pending',
-        submittedBy: me.name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'submitted',
+        submittedBy: me.name, submittedById: me.id, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'submitted',
       };
       set(s => ({ entities: [ent, ...s.entities.filter(e => e.id !== s.draftId)], draft: null, draftId: null, step: 1 as Step, submitting: false, screen: 'success' }));
       notify(ent, 'submitted');
@@ -318,13 +366,14 @@ function useAdminStore() {
     const d = s.editDraft;
     const orig = s.entities.find(e => e.id === s.editId);
     if (!d || !orig) return;
+    const verb: Verb = orig.status === 'changes' ? 'resubmitted' : 'updated';
     const saved: Entity = {
       ...orig, category: d.category, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '',
-      submittedBy: me.name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated',
+      submittedBy: me.name, submittedById: me.id, submittedAt: Date.now(), updatedAt: Date.now(), verb,
     };
-    set(st => ({ entities: st.entities.map(e => e.id === saved.id ? saved : e) }));
-    notify(saved, 'updated');
-    toast('Changes to ' + saved.name + ' sent for approval.');
+    set(st => ({ ...readChangesNotifs(saved.id)(st), entities: st.entities.map(e => e.id === saved.id ? saved : e) }));
+    notify(saved, verb);
+    toast(verb === 'resubmitted' ? 'Resubmitted ' + saved.name + ' for review. Approvers have been notified.' : 'Changes to ' + saved.name + ' sent for approval.');
     go('dashboard', { editDraft: null, editId: null });
   };
 
@@ -335,12 +384,14 @@ function useAdminStore() {
     set(s => ({
       entities: s.entities.map(e => e.id !== id ? e : approved
         ? { ...e, status: 'published', comment: '', commentBy: '', approvedBy: me.name, approvedAt: Date.now(), updatedAt: Date.now() }
-        : { ...e, status: 'changes', comment, commentBy: me.name, updatedAt: Date.now() }),
-      notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n),
+        : { ...e, status: 'changes', comment, commentBy: me.name, commentAt: Date.now(), revBase: draftKey(entityDraft(e)), updatedAt: Date.now() }),
+      notifications: s.notifications.map(n => n.entityId === id && n.kind !== 'changes' ? { ...n, read: true } : n),
       changes: null, approving: false,
     }));
+    const toId = submitterId(ent);
+    if (!approved && toId) notify(ent, ent.verb || 'submitted', { to: toId, kind: 'changes', comment });
     go('dashboard', { reviewId: null });
-    toast(approved ? ent.name + ' is approved and live in Sidekick.' : 'Changes requested on ' + ent.name + '.');
+    toast(approved ? ent.name + ' is approved and live in Sidekick.' : 'Changes requested on ' + ent.name + '. ' + (ent.submittedBy || 'The submitter') + ' has been notified.');
   };
 
   const approve = () => {
@@ -349,18 +400,19 @@ function useAdminStore() {
   };
 
   const openReview = (id: string) => {
-    set(s => ({ notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n) }));
+    set(s => ({ notifications: s.notifications.map(n => n.entityId === id && n.kind !== 'changes' ? { ...n, read: true } : n) }));
     go('review', { reviewId: id });
   };
 
-  /** Dashboard "Edit": drafts reopen in the wizard on the step they were left on. */
+  /**
+   * Dashboard "Edit" (and the submitter's "changes requested" notification): Changes requested opens
+   * "Make changes", drafts reopen in the wizard on the step they were left on, others open Edit entity.
+   */
   const editEntity = (e: Entity) => {
-    if (e.status === 'draft') {
-      go('wizard', {
-        draft: { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] },
-        draftId: e.id, step: e.step || 1,
-      });
-    } else {
+    set(readChangesNotifs(e.id));
+    if (e.status === 'changes') startRevision(e);
+    else if (e.status === 'draft') go('wizard', { draft: entityDraft(e), draftId: e.id, step: e.step || 1 });
+    else {
       const ed = toEditDraft(e);
       go('edit', { editId: e.id, editDraft: ed, editOriginal: JSON.stringify(ed) });
     }

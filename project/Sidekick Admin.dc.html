@@ -90,6 +90,7 @@
       [data-r="pop"] { position: fixed !important; top: 72px !important; left: 16px !important; right: 16px !important; width: auto !important; }
       [data-r="page"] { padding: 24px 16px 40px !important; gap: 24px !important; }
       [data-r="flow-body"] { padding: 24px 16px !important; gap: 24px !important; }
+      [data-r="feedback"] { padding: 16px !important; }
       main h1 { font-size: 24px !important; line-height: 36px !important; }
       [data-r="page-ill"] { width: 64px !important; height: 44px !important; }
       [data-r="crumbs"] li { display: none !important; }
@@ -163,7 +164,7 @@
       [data-r="modal-actions"] > div { width: 100%; min-width: 0 !important; }
       [data-r="modal-scroll"] { height: 50vh !important; max-height: 50vh !important; }
       [data-r="modal-body"] { height: auto !important; }
-      [data-r="toast"] { left: 16px !important; right: 16px !important; bottom: 16px !important; width: auto !important; max-width: none !important; }
+      [data-r="toast"] { left: 16px !important; right: 16px !important; width: auto !important; max-width: none !important; }
     }
     @keyframes sk-spin { to { transform: rotate(360deg); } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
@@ -199,8 +200,10 @@
                     <button type="button" onClick="{{ n.open }}" style="display: flex; gap: 16px; align-items: flex-start; width: 100%; padding: 16px 24px; border: none; background: transparent; text-align: left; cursor: pointer; font-family: 'Nunito Sans', sans-serif;" style-hover="background: #EBF3F9;" style-focus="outline: 2px solid #004488; outline-offset: -2px;">
                       <span aria-hidden="true" style="{{ n.dotStyle }}"></span>
                       <span style="display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0;">
-                        <span style="font-size: 14px; line-height: 20px; color: #1F1E1E;"><strong>{{ n.by }}</strong> {{ n.verb }} <strong>{{ n.entity }}</strong> for review</span>
+                        <span style="font-size: 14px; line-height: 20px; color: #1F1E1E;"><strong>{{ n.by }}</strong> {{ n.verb }} <strong>{{ n.entity }}</strong>{{ n.tail }}</span>
+                        <sc-if value="{{ n.note }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; line-height: 20px; color: #4B4B49; overflow-wrap: anywhere;">{{ n.note }}</span></sc-if>
                         <span style="font-size: 12px; line-height: 16px; color: #6E6E6D;">{{ n.meta }}</span>
+                        <sc-if value="{{ n.cta }}" hint-placeholder-val="{{ false }}"></sc-if>
                       </span>
                     </button>
                   </li>
@@ -436,7 +439,12 @@
                             </div>
                             <span role="cell" data-r="c-upd" style="min-width: 0; font-size: 14px; line-height: 24px; color: #1F1E1E">{{ row.updated }}</span>
                             <div role="cell" data-r="c-act" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
-                              <button type="button" onClick="{{ row.edit }}" aria-label="{{ row.editLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><img src="assets/icons/c/edit_outlined_16-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"><span style="font-size: 14px">{{ row.editText }}</span></button>
+                              <sc-if value="{{ row.showReview }}" hint-placeholder-val="{{ false }}">
+                                <button type="button" onClick="{{ row.openReview }}" aria-label="{{ row.reviewLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><span style="font-size: 14px">Review</span></button>
+                              </sc-if>
+                              <sc-if value="{{ row.showEdit }}" hint-placeholder-val="{{ true }}">
+                                <button type="button" onClick="{{ row.edit }}" aria-label="{{ row.editLabel }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;"><img src="assets/icons/c/edit_outlined_16-blue.svg" alt="" aria-hidden="true" width="16" height="16" style="display: block; flex-shrink: 0;"><span style="font-size: 14px">{{ row.editText }}</span></button>
+                              </sc-if>
                               <button type="button" onClick="{{ row.toggle }}" aria-expanded="{{ row.open }}" aria-label="{{ row.chevLabel }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 4px; cursor: pointer;" style-hover="background: #F1F0EE;" style-focus="outline: 2px solid #004488; outline-offset: 0;">
                                 <img src="assets/icons/c/chevron_down_outlined_24-dark.svg" alt="" aria-hidden="true" width="24" height="24" style="{{ row.chevronStyle }}">
                               </button>
@@ -511,6 +519,17 @@
               </sc-if>
             </div>
             </div>
+
+            <sc-if value="{{ showFeedback }}" hint-placeholder-val="{{ false }}">
+              <section role="note" data-r="feedback" aria-label="Reviewer feedback" style="display: flex; gap: 16px; align-items: flex-start; padding: 24px; border-radius: 8px; background: #FDECEC; border: 1px solid #F0A3A3;">
+                <img src="assets/icons/c/info_outlined_24-red.svg" alt="" aria-hidden="true" width="24" height="24" style="display: block; flex-shrink: 0;">
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+                  <span style="font-family: 'Nunito Sans', sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; color: #4B4B49;">{{ fbTitle }}</span>
+                  <p style="margin: 0; font-size: 16px; line-height: 24px; color: #1F1E1E; overflow-wrap: anywhere; white-space: pre-wrap;">{{ fbComment }}</p>
+                  
+                </div>
+              </section>
+            </sc-if>
 
             <sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
               <ol aria-label="Progress" data-r="stepper" style="list-style: none; margin: 0 auto; padding: 0 0 32px; display: flex; align-items: center; width: 400px; max-width: 100%;">
@@ -808,8 +827,11 @@
             </sc-if>
           </div>
 
-          <div data-r="footer" style="position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 32px; background: #FFFFFF; flex-wrap: wrap;">
+          <div data-r="footer" ref="{{ footerRef }}" style="position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 32px; background: #FFFFFF; flex-wrap: wrap;">
             <div data-r="footer-left" style="display: flex; align-items: center; min-height: 48px;">
+              <sc-if value="{{ resubmitHint }}" hint-placeholder-val="{{ false }}">
+                <span role="status" style="font-size: 14px; line-height: 20px; color: #4B4B49;">{{ resubmitHint }}</span>
+              </sc-if>
               <sc-if value="{{ showDelete }}" hint-placeholder-val="{{ false }}">
                 <button type="button" onClick="{{ askDelete }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 8px 0; cursor: pointer; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; color: #004488;" style-hover="text-decoration: underline;" style-focus="outline: 2px solid #004488; outline-offset: 2px;">
                   <span>Delete entity</span>
@@ -825,6 +847,9 @@
                   <sc-if value="{{ showSaveDraft }}" hint-placeholder-val="{{ false }}">
                     <div data-r="fdraft" style="display: flex;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="transparent" tone="primary" size="large" className="text-l-sb" disabled="{{ draftSaveDisabled }}" onClick="{{ saveDraft }}" hint-size="160px,48px">Save as draft</x-import></div>
                   </sc-if>
+                  <sc-if value="{{ showReturnReview }}" hint-placeholder-val="{{ false }}">
+                    <div data-r="fdraft" style="display: flex;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="transparent" tone="primary" size="large" className="text-l-sb" onClick="{{ returnReview }}" hint-size="176px,48px">Return to review</x-import></div>
+                  </sc-if>
                   <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
                     <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" disabled="{{ submitting }}" onClick="{{ onBack }}" hint-size="144px,48px">Back</x-import></div>
                   </sc-if>
@@ -834,7 +859,7 @@
               <sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}">
                 <div data-r="footer-grp" style="display: flex; gap: 16px;">
                   <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="outlined" size="large" className="text-l-sb" onClick="{{ backToDashboard }}" hint-size="144px,48px">Cancel</x-import></div>
-                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="144px,48px">Save</x-import></div>
+                  <div data-r="fbtn" style="display: flex; min-width: 144px;"><x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Button" variant="filled" size="large" className="text-l-sb" disabled="{{ saveDisabled }}" onClick="{{ saveEdit }}" hint-size="144px,48px">{{ saveLabel }}</x-import></div>
                 </div>
               </sc-if>
               <sc-if value="{{ showDecision }}" hint-placeholder-val="{{ false }}">
@@ -1032,7 +1057,7 @@
   </sc-if>
 
   <sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
-    <div role="status" data-r="toast" aria-live="polite" style="position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px);">
+    <div role="status" data-r="toast" aria-live="polite" style="{{ toastStyle }}">
       <x-import component-from-global-scope="PantryDesignSystemPDS_a1dbf4.Toast" tone="{{ toastTone }}" message="{{ toastMessage }}" actions="{{ toastActions }}" dismissible="{{ true }}" onDismiss="{{ dismissToast }}" hint-size="400px,64px"></x-import>
     </div>
   </sc-if>
@@ -1123,10 +1148,11 @@ const ENTITY_DESC = {
 };
 const STATUS = {
   published: { label: 'Active', bg: '#EAF5F0', border: '#97D0B9', fg: '#04633C' },
-  pending: { label: 'Pending approval', bg: '#FDF3D9', border: '#F8B775', fg: '#906700' },
+  pending: { label: 'Pending review', bg: '#FDF3D9', border: '#F8B775', fg: '#906700' },
   changes: { label: 'Changes requested', bg: '#FDECEC', border: '#F0A3A3', fg: '#B00000' },
   draft: { label: 'Draft', bg: '#F1F0EE', border: '#C2C1C0', fg: '#4B4B49' }
 };
+const VERB_LABEL = { submitted: 'Submitted', updated: 'Updated', resubmitted: 'Resubmitted' };
 const fmtDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const ACCEPT = ['txt', 'md'];
 const TEXT_EXT = ['txt', 'md'];
@@ -1161,7 +1187,7 @@ class Component extends DCLogic {
     draft: null, step: 1, editId: null, editDraft: null, editOriginal: '', reviewId: null,
     bellOpen: false, userOpen: false,
     toast: null, preview: null,
-    changes: null, submitting: false, approving: false,
+    changes: null, submitting: false, approving: false, resubmitId: null, feedback: null, revBase: '',
     tableDragOver: false, fileDragOver: false, dragging: null, uploadError: '',
     collapsed: {}, showAll: {}, sumExpanded: {}, dragCat: null, removing: null, uploadErrors: {},
     categories: [...CATEGORIES], newCat: null, deleting: null,
@@ -1170,6 +1196,16 @@ class Component extends DCLogic {
   };
   headerRef = React.createRef();
   fileInputRef = React.createRef();
+  footerRef = React.createRef();
+  syncFoot() {
+    const el = this.footerRef.current;
+    if (el !== this._footEl) {
+      if (this._ro) { this._ro.disconnect(); if (el) this._ro.observe(el); }
+      this._footEl = el;
+    }
+    const h = el ? Math.round(el.getBoundingClientRect().height) : 0;
+    if (h !== (this.state.footH || 0)) this.setState({ footH: h });
+  }
 
   componentDidMount() {
     this._doc = (e) => {
@@ -1197,10 +1233,13 @@ class Component extends DCLogic {
     document.addEventListener('keydown', this._key);
     this._rs = () => { if (this.state.drawerOpen && window.innerWidth >= 1024) this.setState({ drawerOpen: false }); };
     window.addEventListener('resize', this._rs);
+    if (typeof ResizeObserver !== 'undefined') this._ro = new ResizeObserver(() => this.syncFoot());
+    this.syncFoot();
     this._tick = setInterval(() => this.forceUpdate(), 30000);
     this.setState({ ...this.navPatch(this.startKey()), ...(this.emptyDash() ? { entities: [] } : {}) });
   }
   componentDidUpdate(prev) {
+    this.syncFoot();
     if (prev.emptyDashboard !== this.props.emptyDashboard) this.setState({ entities: this.emptyDash() ? [] : SEED_ALL });
     if (prev.startScreen !== this.props.startScreen || prev.sampleFiles !== this.props.sampleFiles) this.setState(this.navPatch(this.startKey()));
   }
@@ -1208,13 +1247,17 @@ class Component extends DCLogic {
     document.removeEventListener('mousedown', this._doc);
     document.removeEventListener('keydown', this._key);
     window.removeEventListener('resize', this._rs);
+    if (this._ro) this._ro.disconnect();
     clearInterval(this._tick); clearTimeout(this._toastT); Object.values(this._up || {}).forEach(clearInterval);
   }
 
   go(screen, extra, opts) {
     const s = this.state; const d = s.draft;
-    let saved = null;
-    if (!(opts && opts.noSave) && s.screen === 'wizard' && screen !== 'wizard' && d && d.category && d.entity) {
+    let saved = null; let revised = null;
+    if (!(opts && opts.noSave) && s.screen === 'wizard' && screen !== 'wizard' && s.resubmitId && d) {
+      const prev = s.entities.find(e => e.id === s.resubmitId);
+      if (prev && draftKey(d) !== draftKey(this.entityDraft(prev))) revised = { ...prev, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), updatedAt: Date.now() };
+    } else if (!(opts && opts.noSave) && s.screen === 'wizard' && screen !== 'wizard' && d && d.category && d.entity) {
       const id = s.draftId || ('d' + Date.now());
       saved = { id, category: d.category, name: d.entity, source: d.source || '—', tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'draft', step: s.step, updatedAt: Date.now() };
     }
@@ -1222,11 +1265,13 @@ class Component extends DCLogic {
     if (screen === 'wizard' && extra && extra.draft) extra.draftBase = draftKey(extra.draft);
     this.setState(st => ({
       screen, bellOpen: false, userOpen: false, drawerOpen: false, fileMenu: null, uploadError: '',
-      ...(st.screen === 'wizard' && screen !== 'wizard' ? { draft: null, draftId: null, step: 1 } : {}),
+      ...(st.screen === 'wizard' && screen !== 'wizard' ? { draft: null, draftId: null, step: 1, resubmitId: null, feedback: null, revBase: '' } : {}),
       ...(saved ? { entities: [saved, ...st.entities.filter(e => e.id !== saved.id)] } : {}),
+      ...(revised ? { entities: st.entities.map(e => e.id === revised.id ? revised : e) } : {}),
       ...(extra || {})
     }));
     if (saved) this.toast('Draft saved to Entities.', 'info');
+    if (revised) this.toast('Your changes to ' + revised.name + ' are saved. Submit for review when you’re ready.', 'info');
     window.scrollTo(0, 0);
   }
   toast(message, tone, actions) {
@@ -1404,42 +1449,69 @@ class Component extends DCLogic {
     return '';
   }
 
-  notify(entity, verb) {
-    const n = { id: 'n' + Date.now(), entityId: entity.id, by: this.me().name, verb, entity: entity.name, category: entity.category, at: Date.now(), read: false };
-    this.setState(s => ({ notifications: [n, ...s.notifications.filter(x => x.entityId !== entity.id)] }));
+  notify(entity, verb, opt) {
+    const o = opt || {}; const me = this.me();
+    const n = { id: 'n' + Date.now() + Math.random().toString(36).slice(2, 6), entityId: entity.id, to: o.to || 'approvers', kind: o.kind || 'review', by: me.name, byId: me.id, verb, entity: entity.name, category: entity.category, comment: o.comment || '', at: Date.now(), read: false };
+    this.setState(s => ({ notifications: [n, ...s.notifications.filter(x => !(x.entityId === entity.id && x.to === n.to))] }));
+  }
+  myNotifs() { const me = this.me(); return this.state.notifications.filter(n => n.to === me.id || ((n.to || 'approvers') === 'approvers' && me.canApprove)); }
+  submitterId(e) { return e.submittedById || ((Object.values(USERS).find(u => u.name === e.submittedBy)) || {}).id; }
+  entityDraft(e) { return { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] }; }
+  startRevision(e) {
+    const draft = JSON.parse(JSON.stringify(this.entityDraft(e)));
+    this.go('wizard', { draft, draftId: null, step: 3, resubmitId: e.id, revBase: e.revBase || draftKey(this.entityDraft(e)), feedback: { comment: e.comment || '', by: e.commentBy || 'The reviewer', at: e.commentAt || e.updatedAt || Date.now() } });
+  }
+  openEdit(id) {
+    const e = this.state.entities.find(x => x.id === id); if (!e) return;
+    this.setState(s => ({ notifications: s.notifications.map(n => n.entityId === id && n.kind === 'changes' ? { ...n, read: true } : n) }));
+    if (e.status === 'changes') { this.startRevision(e); return; }
+    if (e.status === 'draft') this.go('wizard', { draft: { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] }, draftId: e.id, step: e.step || 1 });
+    else this.go('edit', { editId: e.id, editDraft: cloneEntity(e), editOriginal: JSON.stringify(cloneEntity(e)) });
   }
   submit() {
     const d = this.state.draft;
     this.setState({ submitting: true });
+    if (this.state.resubmitId) {
+      const id = this.state.resubmitId; const me = this.me();
+      setTimeout(() => {
+        const prev = this.state.entities.find(e => e.id === id); if (!prev) { this.setState({ submitting: false }); return; }
+        const ent = { ...prev, category: d.category, name: d.entity, source: d.source, tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'pending', verb: 'resubmitted', submittedBy: me.name, submittedById: me.id, submittedAt: Date.now(), updatedAt: Date.now(), lastFeedback: { comment: prev.comment || '', by: prev.commentBy || '', at: prev.commentAt || 0 }, comment: '', commentBy: '', revBase: '' };
+        this.setState(s => ({ entities: s.entities.map(e => e.id === id ? ent : e), notifications: s.notifications.map(n => n.entityId === id && n.kind === 'changes' ? { ...n, read: true } : n), draft: null, draftId: null, step: 1, submitting: false, screen: 'success', resubmitId: null, feedback: null, revBase: '' }));
+        this.notify(ent, 'resubmitted');
+        window.scrollTo(0, 0);
+      }, 900);
+      return;
+    }
     setTimeout(() => {
-      const ent = { id: 'e' + Date.now(), category: d.category, name: d.entity, source: d.source, tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'pending', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'submitted' };
+      const ent = { id: 'e' + Date.now(), category: d.category, name: d.entity, source: d.source, tables: d.tables, files: d.files.filter(x => x.status === 'done'), status: 'pending', submittedBy: this.me().name, submittedById: this.me().id, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'submitted' };
       this.setState(s => ({ entities: [ent, ...s.entities.filter(e => e.id !== s.draftId)], draft: null, draftId: null, step: 1, submitting: false, screen: 'success' }));
       this.notify(ent, 'submitted');
       window.scrollTo(0, 0);
     }, 900);
   }
   saveEdit() {
-    const d = this.state.editDraft; const id = this.state.editId;
-    let saved;
-    this.setState(s => ({ entities: s.entities.map(e => { if (e.id !== id) return e; saved = { ...e, category: d.category, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '', submittedBy: this.me().name, submittedAt: Date.now(), updatedAt: Date.now(), verb: 'updated' }; return saved; }) }), () => {
-      this.notify(saved, 'updated');
-      this.toast('Changes to ' + saved.name + ' sent for approval.');
-    });
+    const d = this.state.editDraft; const id = this.state.editId; const me = this.me();
+    const prev = this.state.entities.find(e => e.id === id); if (!prev) return;
+    const verb = prev.status === 'changes' ? 'resubmitted' : 'updated';
+    const saved = { ...prev, category: d.category, name: d.entity, source: d.source, tables: d.tables, status: 'pending', comment: '', commentBy: '', submittedBy: me.name, submittedById: me.id, submittedAt: Date.now(), updatedAt: Date.now(), verb };
+    this.setState(s => ({ entities: s.entities.map(e => e.id === id ? saved : e), notifications: s.notifications.map(n => n.entityId === id && n.kind === 'changes' ? { ...n, read: true } : n) }), () => this.notify(saved, verb));
     this.go('dashboard', { editDraft: null, editId: null });
+    this.toast(verb === 'resubmitted' ? 'Resubmitted ' + saved.name + ' for review. Approvers have been notified.' : 'Changes to ' + saved.name + ' sent for approval.');
   }
   decide(approved, comment) {
     const id = this.state.reviewId;
-    const ent = this.state.entities.find(e => e.id === id);
+    const ent = this.state.entities.find(e => e.id === id); if (!ent) return;
+    const toId = this.submitterId(ent);
     this.setState(s => ({
-      entities: s.entities.map(e => e.id !== id ? e : approved ? { ...e, status: 'published', comment: '', commentBy: '', approvedBy: this.me().name, approvedAt: Date.now(), updatedAt: Date.now() } : { ...e, status: 'changes', comment, commentBy: this.me().name, updatedAt: Date.now() }),
-      notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n),
+      entities: s.entities.map(e => e.id !== id ? e : approved ? { ...e, status: 'published', comment: '', commentBy: '', approvedBy: this.me().name, approvedAt: Date.now(), updatedAt: Date.now() } : { ...e, status: 'changes', comment, commentBy: this.me().name, commentAt: Date.now(), revBase: draftKey(this.entityDraft(e)), updatedAt: Date.now() }),
+      notifications: s.notifications.map(n => n.entityId === id && n.kind !== 'changes' ? { ...n, read: true } : n),
       changes: null, approving: false
-    }));
+    }), () => { if (!approved && toId) this.notify(ent, 'requested changes on', { to: toId, kind: 'changes', comment }); });
     this.go('dashboard', { reviewId: null });
-    this.toast(approved ? ent.name + ' is approved and live in Sidekick.' : 'Changes requested on ' + ent.name + '.');
+    this.toast(approved ? ent.name + ' is approved and live in Sidekick.' : 'Changes requested on ' + ent.name + '. ' + (ent.submittedBy || 'The submitter') + ' has been notified.');
   }
   openReview(id) {
-    this.setState(s => ({ notifications: s.notifications.map(n => n.entityId === id ? { ...n, read: true } : n) }));
+    this.setState(s => ({ notifications: s.notifications.map(n => n.entityId === id && n.kind !== 'changes' ? { ...n, read: true } : n) }));
     this.go('review', { reviewId: id });
   }
 
@@ -1453,8 +1525,8 @@ class Component extends DCLogic {
     const isSummary = (isWizard && s.step === 3) || isReview;
     const reviewEnt = isReview ? s.entities.find(e => e.id === s.reviewId) : null;
 
-    const unread = s.notifications.filter(n => !n.read).length;
-    const notifs = me.canApprove ? s.notifications : [];
+    const notifs = this.myNotifs();
+    const unread = notifs.filter(n => !n.read).length;
 
     const navDefs = [['Home', 'home', 'nav-home'], ['Entity dashboard', 'dashboard', 'nav-entitydash'], ['Trace tool', null, 'nav-trace'], ['Evaluation', null, 'nav-eval']];
     const activeNav = scr === 'home' ? 0 : 1;
@@ -1472,7 +1544,7 @@ class Component extends DCLogic {
       this.go(target, isEdit ? { editDraft: null, editId: null } : {});
     };
     const crumbDefs = [['Home', 'home'], ['Entity dashboard', 'dashboard']];
-    if (isWizard) crumbDefs.push(['New entity']);
+    if (isWizard) crumbDefs.push([s.resubmitId ? 'Make changes' : 'New entity']);
     if (isEdit) crumbDefs.push(['Edit entity']);
     if (isReview) crumbDefs.push(['Review submission']);
     if (scr === 'success') crumbDefs.push(['Submitted for review']);
@@ -1516,17 +1588,18 @@ class Component extends DCLogic {
           tableCount: String(e.tables.length), fieldCount: String(fieldCount(e.tables)),
           updated: fmtDate(e.updatedAt || Date.now()),
           tagText: st.label,
-          tagButton: pending && me.canApprove,
-          tagStatic: !(pending && me.canApprove),
+          tagButton: false, tagStatic: true,
+          showReview: pending && me.canApprove, showEdit: !(pending && me.canApprove),
+          reviewIcon: icoStyle('show_password_outlined_24', 16, { color: '#004488' }),
           tagStyle: { display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 32, maxWidth: '100%', padding: '4px 16px', borderRadius: 4, fontSize: 14, lineHeight: '20px', fontWeight: 500, background: st.bg, border: '1px solid ' + st.border, color: st.fg },
           dotStyle: { width: 8, height: 8, borderRadius: '50%', background: st.fg, flexShrink: 0 },
-          reviewLabel: 'Pending approval — review ' + e.name,
+          reviewLabel: 'Review ' + e.name,
           comment: e.status === 'changes' ? e.comment : '', commentBy: e.commentBy || '',
           editText: isDraft ? 'Edit' : 'Edit',
           editLabel: (isDraft ? 'Continue editing ' : 'Edit ') + (e.name || 'Untitled entity'),
           toggleLabel: e.name + (open ? ', collapse details' : ', expand details'),
           toggle: stop(() => this.setState(x => ({ expanded: { ...x.expanded, [e.id]: !x.expanded[e.id] } }))),
-          edit: stop(() => { if (isDraft) this.go('wizard', { draft: { category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [] }, draftId: e.id, step: e.step || 1 }); else this.go('edit', { editId: e.id, editDraft: cloneEntity(e), editOriginal: JSON.stringify(cloneEntity(e)) }); }),
+          edit: stop(() => this.openEdit(e.id)),
           openReview: stop(() => this.openReview(e.id)),
           chevLabel: (open ? 'Collapse ' : 'Expand ') + e.name,
           chevronStyle: { display: 'block', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' },
@@ -1537,7 +1610,7 @@ class Component extends DCLogic {
     }));
 
     // Form
-    const existingNames = s.entities.filter(e => !(isEdit && e.id === s.editId) && e.id !== s.draftId).map(e => e.name);
+    const existingNames = s.entities.filter(e => !(isEdit && e.id === s.editId) && e.id !== s.draftId && e.id !== s.resubmitId).map(e => e.name);
     const baseEntities = ENTITY_OPTIONS[f.category] || ALL_ENTITY_NAMES;
     const entityOpts = [...baseEntities, ...(f.entity && !baseEntities.includes(f.entity) ? [f.entity] : [])].map(n => ({ label: n, value: n, disabled: existingNames.includes(n), meta: existingNames.includes(n) ? 'Already added' : '' }));
     const srcTables = SOURCES[f.source] || [];
@@ -1547,7 +1620,9 @@ class Component extends DCLogic {
     // Steps
     const d = s.draft || emptyDraft();
     const m1 = this.step1Missing(d); const m2 = this.step2Missing(d);
-    const reachable = [true, !m1, !m1 && !m2];
+    const isRev = isWizard && !!s.resubmitId;
+    const revChanged = isRev && draftKey(d) !== s.revBase;
+    const reachable = isRev ? [true, true, true] : [true, !m1, !m1 && !m2];
     const stepLabels = ['Data & schema', 'Prompts & evals', 'Review & submit'];
     const steps = stepLabels.map((label, i) => {
       const n = i + 1; const done = n < s.step; const cur = n === s.step;
@@ -1638,6 +1713,7 @@ class Component extends DCLogic {
       if (reviewEnt.status === 'published' && reviewEnt.approvedBy) reviewNote = 'Approved by ' + reviewEnt.approvedBy + (reviewEnt.approvedAt ? ' on ' + fmtDate(reviewEnt.approvedAt) : '') + '.';
       else if (reviewEnt.status !== 'pending') reviewNote = 'This submission was already reviewed.';
       else if (!me.canApprove) reviewNote = 'You don\'t have approval rights. Only approvers can approve or request changes.';
+      else if (reviewEnt.lastFeedback && reviewEnt.lastFeedback.comment) reviewNote = 'Resubmitted after ' + (reviewEnt.lastFeedback.by || 'a reviewer') + ' requested changes: “' + reviewEnt.lastFeedback.comment + '”';
     }
     const showDecision = !!reviewEnt && reviewEnt.status === 'pending' && me.canApprove;
 
@@ -1649,7 +1725,8 @@ class Component extends DCLogic {
 
     let flowTitle = 'New Entity'; let flowSubtitle = ''; let flowLabel = 'New entity — ' + stepLabels[s.step - 1];
     if (isEdit) { flowTitle = 'Edit Entity'; flowLabel = 'Edit entity'; }
-    if (isReview) { flowTitle = 'Review submission'; flowLabel = 'Review submission'; flowSubtitle = reviewEnt ? (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt) + (reviewEnt.status === 'published' && reviewEnt.approvedBy ? ' · Approved by ' + reviewEnt.approvedBy : '') : ''; }
+    if (isRev) { flowTitle = 'Make Changes'; flowLabel = 'Make changes — ' + stepLabels[s.step - 1]; flowSubtitle = [d.entity, d.category].filter(Boolean).join(' · '); }
+    if (isReview) { flowTitle = 'Review submission'; flowLabel = 'Review submission'; flowSubtitle = reviewEnt ? (VERB_LABEL[reviewEnt.verb] || 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt) + (reviewEnt.status === 'published' && reviewEnt.approvedBy ? ' · Approved by ' + reviewEnt.approvedBy : '') : ''; }
 
     const ch = s.changes;
     const pf = this.liveFile(); const fileDirty = this.editDirty();
@@ -1661,21 +1738,23 @@ class Component extends DCLogic {
     const firstName = me.first;
 
     return {
-      headerRef: this.headerRef, fileInputRef: this.fileInputRef,
+      headerRef: this.headerRef, fileInputRef: this.fileInputRef, footerRef: this.footerRef,
+      toastStyle: { position: 'fixed', right: 24, bottom: (s.footH || 0) + (typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 24), zIndex: 100, width: 400, maxWidth: 'calc(100vw - 48px)', transition: 'bottom 150ms ease' },
       user: me,
       userButtonLabel: me.name + ', switch user',
       bellOpen: s.bellOpen, userOpen: s.userOpen,
-      showDot: me.canApprove && unread > 0,
-      bellLabel: me.canApprove && unread ? 'Notifications, ' + unread + ' unread' : 'Notifications',
+      showDot: unread > 0,
+      bellLabel: unread ? 'Notifications, ' + unread + ' unread' : 'Notifications',
       toggleBell: () => this.setState(st => ({ bellOpen: !st.bellOpen, userOpen: false })),
       toggleUser: () => this.setState(st => ({ userOpen: !st.userOpen, bellOpen: false })),
       hasNotifs: notifs.length > 0, noNotifs: notifs.length === 0,
       emptyNotifText: me.canApprove ? 'You\'re all caught up.' : 'No notifications yet.',
       notifs: notifs.map(n => ({
-        by: n.by, verb: n.verb, entity: n.entity,
-        meta: n.category + ' · ' + ago(n.at),
+        by: n.by, verb: n.kind === 'changes' ? 'requested changes on' : n.verb, entity: n.entity, tail: n.kind === 'changes' ? '' : ' for review',
+        note: n.kind === 'changes' && n.comment ? '“' + (n.comment.length > 90 ? n.comment.slice(0, 88).trim() + '…' : n.comment) + '”' : '',
+        meta: n.category + ' · ' + ago(n.at), cta: n.kind === 'changes' ? 'Make changes' : '',
         dotStyle: { width: 8, height: 8, marginTop: 8, borderRadius: '50%', flexShrink: 0, background: n.read ? 'transparent' : '#B00000' },
-        open: () => this.openReview(n.entityId)
+        open: () => n.kind === 'changes' ? this.openEdit(n.entityId) : this.openReview(n.entityId)
       })),
       userOptions: Object.values(USERS).map(u => ({ name: u.name, initials: u.initials, role: u.role, current: u.id === s.user, pick: () => this.setState({ user: u.id, userOpen: false }) })),
 
@@ -1698,7 +1777,7 @@ class Component extends DCLogic {
       fCat: s.fCat, fStatus: s.fStatus, fSrc: s.fSrc,
       showQueue: (this.props.approvalQueue ?? false) && me.canApprove && s.entities.filter(e => e.status === 'pending').length > 0,
       queueTitle: plural(s.entities.filter(e => e.status === 'pending').length, 'submission') + ' waiting on your approval',
-      queue: s.entities.filter(e => e.status === 'pending').map(e => ({ name: e.name, meta: e.category + ' · ' + (e.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + e.submittedBy + ' · ' + ago(e.submittedAt), label: 'Review ' + e.name, open: () => this.openReview(e.id) })),
+      queue: s.entities.filter(e => e.status === 'pending').map(e => ({ name: e.name, meta: e.category + ' · ' + (VERB_LABEL[e.verb] || 'Submitted') + ' by ' + e.submittedBy + ' · ' + ago(e.submittedAt), label: 'Review ' + e.name, open: () => this.openReview(e.id) })),
       manageMeta: plural(all.length, 'entity').replace('entitys', 'entities') + ' · organized across ' + plural(allCats, 'category').replace('categorys', 'categories'),
       createLabel: 'Add new entity',
       createBody: 'Define an entity, connect its source tables, and configure the fields Sidekick can use.',
@@ -1778,15 +1857,22 @@ class Component extends DCLogic {
       modalDelete: { 'aria-label': 'Delete entity', style: modalStyle },
       showBack: isWizard && s.step > 1, submitting: s.submitting,
       onBack: () => { this.setState({ step: Math.max(1, s.step - 1), uploadError: '' }); window.scrollTo(0, 0); },
-      showSaveDraft: isWizard && draftKey(s.draft) !== (s.draftBase || ''), draftSaveDisabled: s.submitting || isDraftEmpty, saveDraft: () => this.saveDraft(),
-      nextDisabled: s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2)),
-      nextLabel: s.step === 3 ? (s.submitting ? 'Submitting…' : 'Submit') : 'Next',
+      showSaveDraft: isWizard && !isRev && draftKey(s.draft) !== (s.draftBase || ''),
+      showReturnReview: isRev && s.step < 3, returnReview: () => { this.setState({ step: 3, uploadError: '' }); window.scrollTo(0, 0); },
+      resubmitHint: isRev && s.step === 3 && !revChanged ? 'Make at least one change to submit for review.' : '',
+      showFeedback: isRev && !!s.feedback,
+      fbTitle: s.feedback ? s.feedback.by + ' requested changes · ' + fmtDate(s.feedback.at) : '',
+      fbComment: s.feedback ? '“' + (s.feedback.comment || 'No comment added.') + '”' : '',
+      fbStatus: revChanged ? 'You’ve made changes. Submit for review when you’re ready.' : 'Make the requested changes in any step, then submit for review. You can return to Review & submit at any time.', draftSaveDisabled: s.submitting || isDraftEmpty, saveDraft: () => this.saveDraft(),
+      nextDisabled: s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2) || (isRev && !revChanged)),
+      nextLabel: s.step === 3 ? (s.submitting ? 'Submitting…' : isRev ? 'Submit' : 'Submit') : 'Next',
       onNext: () => { if (s.step < 3) { this.setState({ step: s.step + 1, uploadError: '' }); window.scrollTo(0, 0); } else this.submit(); },
       backToDashboard: () => {
         this.go('dashboard', isEdit ? { editDraft: null, editId: null } : {});
       },
       saveDisabled: !editDirty || !!footerHint,
       saveEdit: () => this.saveEdit(),
+      saveLabel: isEdit && (s.entities.find(e => e.id === s.editId) || {}).status === 'changes' ? 'Resubmit for review' : 'Save',
       showDecision,
       approving: s.approving, approveLabel: s.approving ? 'Approving…' : 'Approve',
       approve: () => { this.setState({ approving: true }); setTimeout(() => this.decide(true), 700); },

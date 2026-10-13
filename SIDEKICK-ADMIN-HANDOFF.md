@@ -6,7 +6,7 @@ Read this file first. It describes a working React implementation of the **Sidek
 
 Sidekick Admin is an internal tool for managing the "entities" Sidekick can answer questions about. An entity is a category, a data source, its tables and field descriptions, and supporting files (prompts, KB articles, thresholds, evals, Markdown context). New entities and edits go through an approval workflow.
 
-- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype, updated from `Sidekick Admin-handoff.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
+- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_1.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
 - **Implementation:** `app/`, which is React 19, Vite 8 and TypeScript 5.9. There's no backend: state lives in memory and uploads are simulated.
 
 ## Run it
@@ -62,7 +62,7 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 | Status | Label | Tag colors (background / border / text) |
 |---|---|---|
 | `published` | Active | `#EAF5F0` / `#97D0B9` / `#04633C` |
-| `pending` | Pending approval | `#FDF3D9` / `#F8B775` / `#906700` |
+| `pending` | Pending review | `#FDF3D9` / `#F8B775` / `#906700` |
 | `changes` | Changes requested | `#FDECEC` / `#F0A3A3` / `#B00000` |
 | `draft` | Draft | `#F1F0EE` / `#C2C1C0` / `#4B4B49` |
 
@@ -84,6 +84,14 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
 **Files:** only `.txt` and `.md` are accepted. Text files opened from the wizard can be edited in the preview (Edit → Save changes). Closing or cancelling with unsaved edits asks "Discard unsaved changes?". Edited files show "Last edited <date, time> by <name>".
 
+**Request changes → Make changes → Resubmit:**
+- When an approver requests changes, the submitter gets a bell notification quoting the comment (approvers get submissions; each user only sees their own notifications).
+- "Edit" on a Changes requested entity, or clicking that notification, opens **Make Changes**: the wizard on Review & submit, all steps reachable, the reviewer's feedback in a red box above the stepper, breadcrumb "Make changes".
+- Submit stays disabled, with "Make at least one change to submit for review." in the footer, until the entity differs from when changes were requested. Steps 1–2 show **Return to review** instead of Save as draft.
+- Leaving with changes keeps them on the entity (still Changes requested). Submitting sets it to Pending review with verb "Resubmitted", and the approver's Review screen notes "Resubmitted after … requested changes: “…”".
+- On the dashboard, approvers see a **Review** link (instead of Edit) on Pending review rows; status tags are no longer clickable.
+- Toasts sit just above the sticky flow footer.
+
 **Approval info:** approved entities record who approved them and when; it shows in the expanded dashboard row and on Review submission.
 
 **Responsive:** below 1024px the side nav becomes a hamburger + drawer. On phones, breadcrumbs collapse to a back link, rows and file lists stack, file actions move into a "⋯" menu, modals become bottom sheets and footer buttons go full width.
@@ -91,15 +99,15 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 **Leaving the wizard** by any route (breadcrumb, side nav or logo) saves a grey **Draft** row, once a category and entity are chosen. Editing a draft reopens it on the step where it was left. "Add new entity" always starts fresh.
 
 **Submitting:**
-- Creates a Pending approval entity and a notification.
+- Creates a Pending review entity and a notification.
 - Gary's bell shows a red dot. Priya never sees notifications.
 
 **Approving:**
-- Gary opens a submission from the bell or by clicking the Pending approval tag.
+- Gary opens a submission from the bell or with the Review link on its dashboard row.
 - **Approve** sets the entity to Active.
 - **Request changes** needs a comment. The entity becomes Changes requested, and the comment shows in its expanded row and at the top of Edit entity.
 
-**Edit entity:** Data & schema only (Category can be changed). Save stays disabled until something changes. Saving sends the entity back to Pending approval.
+**Edit entity:** Data & schema only (Category can be changed). Save stays disabled until something changes. Saving sends the entity back to Pending review (the button reads "Resubmit for review" if changes were requested).
 
 **Toasts:** Pantry toasts close after 5 seconds, or 8 seconds when they have an action. Deleting a field shows a toast with Undo.
 

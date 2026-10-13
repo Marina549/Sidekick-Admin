@@ -41,9 +41,6 @@ a:hover { color: #002D56; }
 .sk-note--info { background: #EBF3F9; border: 1px solid #A4C9E2; }
 
 .sk-tag { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; max-width: 100%; padding: 4px 16px; border-radius: 4px; font-family: 'Nunito Sans', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; text-align: left; }
-button.sk-tag { cursor: pointer; }
-button.sk-tag:hover { background: #FBE7B5 !important; }
-button.sk-tag:focus-visible { outline: 2px solid #004488; outline-offset: 2px; }
 
 /* ---- header ---- */
 
@@ -115,7 +112,7 @@ button.sk-tag:focus-visible { outline: 2px solid #004488; outline-offset: 2px; }
 
 /* ---- toast ---- */
 
-.sk-toast { position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px); }
+.sk-toast { position: fixed; right: 24px; bottom: 24px; z-index: 100; width: 400px; max-width: calc(100vw - 48px); transition: bottom 150ms ease; }
 
 /* ---- modal content ---- */
 

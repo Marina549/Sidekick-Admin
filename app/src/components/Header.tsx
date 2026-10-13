@@ -4,11 +4,16 @@ import { ImgIcon } from './Icon';
 import { asset } from '../asset';
 
 export function Header() {
-  const { s, me, now, set, go, openReview } = useAdmin();
-  const unread = s.notifications.filter(n => !n.read).length;
-  // Only approvers get review notifications.
-  const notifs = me.canApprove ? s.notifications : [];
-  const showDot = me.canApprove && unread > 0;
+  const { s, me, now, set, go, openReview, editEntity } = useAdmin();
+  // Approvers get review requests; a submitter gets "changes requested" on their own entities.
+  const notifs = s.notifications.filter(n => n.to === me.id || (n.to === 'approvers' && me.canApprove));
+  const unread = notifs.filter(n => !n.read).length;
+  const showDot = unread > 0;
+  const open = (n: (typeof notifs)[number]) => {
+    const e = s.entities.find(x => x.id === n.entityId);
+    if (n.kind === 'changes') { if (e) editEntity(e); } else openReview(n.entityId);
+  };
+  const quote = (c: string) => '“' + (c.length > 90 ? c.slice(0, 88).trim() + '…' : c) + '”';
 
   return (
     <header className="sk-header" data-r="header">
@@ -47,12 +52,17 @@ export function Header() {
                 <ul>
                   {notifs.map(n => (
                     <li key={n.id}>
-                      <button type="button" className="sk-menu__item" onClick={() => openReview(n.entityId)}>
+                      <button type="button" className="sk-menu__item" onClick={() => open(n)}>
                         <span aria-hidden="true" style={{ width: 8, height: 8, marginTop: 8, borderRadius: '50%', flexShrink: 0, background: n.read ? 'transparent' : '#B00000' }} />
                         <span style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, minWidth: 0 }}>
                           <span style={{ fontSize: 14, lineHeight: '20px', color: '#1F1E1E' }}>
-                            <strong>{n.by}</strong> {n.verb} <strong>{n.entity}</strong> for review
+                            {n.kind === 'changes'
+                              ? <><strong>{n.by}</strong> requested changes on <strong>{n.entity}</strong></>
+                              : <><strong>{n.by}</strong> {n.verb} <strong>{n.entity}</strong> for review</>}
                           </span>
+                          {n.kind === 'changes' && n.comment && (
+                            <span style={{ fontSize: 14, lineHeight: '20px', color: '#4B4B49', overflowWrap: 'anywhere' }}>{quote(n.comment)}</span>
+                          )}
                           <span style={{ fontSize: 12, lineHeight: '16px', color: '#6E6E6D' }}>{n.category} · {ago(n.at, now)}</span>
                         </span>
                       </button>

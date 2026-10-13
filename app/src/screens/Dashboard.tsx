@@ -96,7 +96,7 @@ function EntityRow({ entity: e, first }: { entity: Entity; first: boolean }) {
   const open = !!s.expanded[e.id];
   const st = STATUS[e.status];
   const desc = ENTITY_DESC[e.name];
-  // Approvers can open a pending submission straight from its tag.
+  // Approvers review a pending submission instead of editing it.
   const reviewable = e.status === 'pending' && me.canApprove;
   const stop = (fn: () => void) => (ev: MouseEvent) => { ev.stopPropagation(); fn(); };
   const toggle = stop(() => set(x => ({ expanded: { ...x.expanded, [e.id]: !x.expanded[e.id] } })));
@@ -118,18 +118,20 @@ function EntityRow({ entity: e, first }: { entity: Entity; first: boolean }) {
         <span role="cell" data-r="col-tables">{e.tables.length}</span>
         <span role="cell" data-r="col-fields">{fieldCount(e.tables)}</span>
         <div role="cell" data-r="c-status" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4, minWidth: 0 }}>
-          {reviewable ? (
-            <button type="button" className="sk-tag" title="Review submission" aria-label={'Pending approval — review ' + e.name} onClick={stop(() => openReview(e.id))} style={{ background: st.bg, border: '1px solid ' + st.border, color: st.fg }}>{st.label}</button>
-          ) : (
-            <span className="sk-tag" style={{ background: st.bg, border: '1px solid ' + st.border, color: st.fg }}>{st.label}</span>
-          )}
+          <span className="sk-tag" style={{ background: st.bg, border: '1px solid ' + st.border, color: st.fg }}>{st.label}</span>
         </div>
         <span role="cell" data-r="c-upd" style={{ minWidth: 0 }}>{fmtDate(e.updatedAt)}</span>
         <div role="cell" data-r="c-act" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
-          <button type="button" className="sk-link" style={{ padding: '8px 0' }} onClick={stop(() => editEntity(e))} aria-label={(isDraft ? 'Continue editing ' : 'Edit ') + name}>
-            <ImgIcon src="c/edit_outlined_16-blue.svg" size={16} />
-            <span>Edit</span>
-          </button>
+          {reviewable ? (
+            <button type="button" className="sk-link" style={{ padding: '8px 0' }} onClick={stop(() => openReview(e.id))} aria-label={'Review ' + name}>
+              <span>Review</span>
+            </button>
+          ) : (
+            <button type="button" className="sk-link" style={{ padding: '8px 0' }} onClick={stop(() => editEntity(e))} aria-label={(isDraft ? 'Continue editing ' : 'Edit ') + name}>
+              <ImgIcon src="c/edit_outlined_16-blue.svg" size={16} />
+              <span>Edit</span>
+            </button>
+          )}
           <button type="button" className="sk-icon-btn" onClick={toggle} aria-expanded={open} aria-label={(open ? 'Collapse ' : 'Expand ') + name}>
             <ImgIcon src="c/chevron_down_outlined_24-dark.svg" size={24} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' }} />
           </button>

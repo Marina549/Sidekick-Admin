@@ -44,15 +44,24 @@ export interface Entity {
   updatedAt: number;
   step?: Step;
   submittedBy?: string;
+  submittedById?: UserId;
   submittedAt?: number;
-  verb?: 'submitted' | 'updated';
+  verb?: Verb;
+  /** Reviewer's "Request changes" comment, while status is 'changes'. */
   comment?: string;
   commentBy?: string;
+  commentAt?: number;
+  /** draftKey() of the entity when changes were requested; resubmitting needs at least one change. */
+  revBase?: string;
+  /** The feedback a resubmission answered, shown to the approver. */
+  lastFeedback?: { comment: string; by: string; at: number };
   approvedBy?: string;
   approvedAt?: number;
 }
 
 export type Step = 1 | 2 | 3;
+export type Verb = 'submitted' | 'updated' | 'resubmitted';
+export const VERB_LABEL: Record<Verb, string> = { submitted: 'Submitted', updated: 'Updated', resubmitted: 'Resubmitted' };
 
 /** Working copy used by the New entity wizard. */
 export interface Draft {
@@ -76,8 +85,12 @@ export interface EditDraft {
 export interface Notification {
   id: string;
   entityId: string;
+  /** 'approvers' = everyone who can approve; otherwise one user (the submitter, for "changes"). */
+  to: 'approvers' | UserId;
+  kind: 'review' | 'changes';
+  comment: string;
   by: string;
-  verb: 'submitted' | 'updated';
+  verb: Verb;
   entity: string;
   category: string;
   at: number;
@@ -150,7 +163,7 @@ export const ENTITY_DESC: Record<string, string> = {
 
 export const STATUS: Record<EntityStatus, { label: string; bg: string; border: string; fg: string }> = {
   published: { label: 'Active', bg: '#EAF5F0', border: '#97D0B9', fg: '#04633C' },
-  pending: { label: 'Pending approval', bg: '#FDF3D9', border: '#F8B775', fg: '#906700' },
+  pending: { label: 'Pending review', bg: '#FDF3D9', border: '#F8B775', fg: '#906700' },
   changes: { label: 'Changes requested', bg: '#FDECEC', border: '#F0A3A3', fg: '#B00000' },
   draft: { label: 'Draft', bg: '#F1F0EE', border: '#C2C1C0', fg: '#4B4B49' },
 };
@@ -194,6 +207,10 @@ export const draftKey = (d: Draft | null) => d
   : '';
 export const emptyDraft = (): Draft => ({ category: '', entity: '', source: '', tables: [], files: [] });
 export const cloneTables = (tables: Table[]): Table[] => tables.map(t => ({ ...t, fields: t.fields.map(f => ({ ...f })) }));
+/** An entity as a wizard draft (the shape draftKey() compares). */
+export const entityDraft = (e: Entity): Draft => ({
+  category: e.category, entity: e.name, source: e.source === '—' ? '' : e.source, tables: e.tables, files: e.files || [],
+});
 export const toEditDraft = (e: Entity): EditDraft => ({
   category: e.category, entity: e.name, source: e.source, tables: cloneTables(e.tables),
   comment: e.comment || '', commentBy: e.commentBy || '',

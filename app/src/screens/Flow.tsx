@@ -1,7 +1,7 @@
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ImgIcon } from '../components/Icon';
 import { Button } from '../components/pds';
-import { STEP_LABELS, ago, draftKey, emptyDraft, step1Missing, step2Missing, type Step } from '../data';
+import { STEP_LABELS, VERB_LABEL, ago, draftKey, emptyDraft, fmtDate, step1Missing, step2Missing, type Step } from '../data';
 import { useAdmin } from '../store';
 import { DataSchemaForm } from './flow/DataSchemaForm';
 import { PromptsEvals } from './flow/PromptsEvals';
@@ -19,16 +19,20 @@ export function Flow() {
   const d = s.draft || emptyDraft();
   const m1 = step1Missing(d);
   const m2 = step2Missing(d);
+  // "Make changes": revising a Changes requested entity. Submit needs at least one change.
+  const isRev = isWizard && !!s.resubmitId;
+  const revChanged = isRev && draftKey(s.draft) !== s.revBase;
 
   let title = 'New Entity';
   let subtitle = '';
   let label = 'New entity — ' + STEP_LABELS[s.step - 1];
+  if (isRev) { title = 'Make Changes'; label = 'Make changes — ' + STEP_LABELS[s.step - 1]; subtitle = [d.entity, d.category].filter(Boolean).join(' · '); }
   if (isEdit) { title = 'Edit Entity'; label = 'Edit entity'; }
   if (isReview) {
     title = 'Review submission';
     label = 'Review submission';
     if (reviewEnt?.submittedBy) {
-      subtitle = (reviewEnt.verb === 'updated' ? 'Updated' : 'Submitted') + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt || now, now)
+      subtitle = VERB_LABEL[reviewEnt.verb || 'submitted'] + ' by ' + reviewEnt.submittedBy + ' · ' + ago(reviewEnt.submittedAt || now, now)
         + (reviewEnt.status === 'published' && reviewEnt.approvedBy ? ' · Approved by ' + reviewEnt.approvedBy : '');
     }
   }
@@ -37,7 +41,7 @@ export function Flow() {
   const showFiles = isWizard && s.step === 2;
   const showSummary = (isWizard && s.step === 3) || isReview;
 
-  const nextDisabled = s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2));
+  const nextDisabled = s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2) || (isRev && !revChanged));
   const onNext = () => {
     if (s.step < 3) { set({ step: (s.step + 1) as Step }); window.scrollTo(0, 0); } else submit();
   };
@@ -52,7 +56,8 @@ export function Flow() {
   const deleteTarget = isEdit ? s.editId : isWizard ? s.draftId : null;
   const showDelete = !!deleteTarget && s.entities.some(e => e.id === deleteTarget);
   // "Save as draft" appears once the draft differs from how it was opened.
-  const showSaveDraft = isWizard && draftKey(s.draft) !== s.draftBase;
+  const showSaveDraft = isWizard && !isRev && draftKey(s.draft) !== s.draftBase;
+  const editingChanges = isEdit && s.entities.find(e => e.id === s.editId)?.status === 'changes';
   const draftEmpty = !d.category && !d.entity && !d.source && !d.tables.length && !d.files.length;
 
   return (
@@ -69,7 +74,16 @@ export function Flow() {
           </div>
         </div>
 
-        {isWizard && <Stepper reachable={[true, !m1, !m1 && !m2]} />}
+        {isRev && s.feedback && (
+          <section role="note" data-r="feedback" aria-label="Reviewer feedback" className="sk-feedback">
+            <ImgIcon src="c/info_outlined_24-red.svg" size={24} />
+            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <span style={{ fontSize: 14, lineHeight: '20px', color: '#4B4B49' }}>{s.feedback.by} requested changes · {fmtDate(s.feedback.at)}</span>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: '24px', color: '#1F1E1E', overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' }}>“{s.feedback.comment || 'No comment added.'}”</p>
+            </div>
+          </section>
+        )}
+        {isWizard && <Stepper reachable={isRev ? [true, true, true] : [true, !m1, !m1 && !m2]} />}
         {isWizard && (
           <p data-r="step-mobile" style={{ margin: '-8px 0 0', textAlign: 'center', fontFamily: 'Poppins, sans-serif', fontWeight: 500, fontSize: 14, lineHeight: '24px', color: '#4B4B49' }}>
             Step {s.step} of 3 · {STEP_LABELS[s.step - 1]}
@@ -82,6 +96,9 @@ export function Flow() {
 
       <div className="sk-flow__footer" data-r="footer">
         <div data-r="footer-left" style={{ display: 'flex', alignItems: 'center', minHeight: 48 }}>
+          {isRev && s.step === 3 && !revChanged && (
+            <span role="status" style={{ fontSize: 14, lineHeight: '20px', color: '#4B4B49' }}>Make at least one change to submit for review.</span>
+          )}
           {showDelete && (
             <button type="button" className="sk-link" style={{ padding: '8px 0', fontSize: 16 }} onClick={askDelete}>
               <span>Delete entity</span>
@@ -94,6 +111,11 @@ export function Flow() {
             {showSaveDraft && (
               <div data-r="fdraft" style={{ display: 'flex' }}>
                 <Button variant="transparent" size="large" className="text-l-sb" disabled={s.submitting || draftEmpty} onClick={saveDraft}>Save as draft</Button>
+              </div>
+            )}
+            {isRev && s.step < 3 && (
+              <div data-r="fdraft" style={{ display: 'flex' }}>
+                <Button variant="transparent" size="large" className="text-l-sb" onClick={() => { set({ step: 3 }); window.scrollTo(0, 0); }}>Return to review</Button>
               </div>
             )}
             {s.step > 1 && (
@@ -114,7 +136,7 @@ export function Flow() {
               <Button variant="outlined" size="large" className="text-l-sb" onClick={() => go('dashboard', { editDraft: null, editId: null })}>Cancel</Button>
             </div>
             <div data-r="fbtn" style={{ display: 'flex', minWidth: 144 }}>
-              <Button variant="filled" size="large" className="text-l-sb" disabled={!editDirty || editIncomplete} onClick={saveEdit}>Save</Button>
+              <Button variant="filled" size="large" className="text-l-sb" disabled={!editDirty || editIncomplete} onClick={saveEdit}>{editingChanges ? 'Resubmit for review' : 'Save'}</Button>
             </div>
           </div>
         )}
