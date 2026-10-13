@@ -6,7 +6,7 @@ Read this file first. It describes a working React implementation of the **Sidek
 
 Sidekick Admin is an internal tool for managing the "entities" Sidekick can answer questions about. An entity is a category, a data source, its tables and field descriptions, and supporting files (prompts, KB articles, thresholds, evals, Markdown context). New entities and edits go through an approval workflow.
 
-- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_2.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
+- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_3.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
 - **Implementation:** `app/`, which is React 19, Vite 8 and TypeScript 5.9. There's no backend: state lives in memory and uploads are simulated.
 
 ## Run it
@@ -82,7 +82,7 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
 **Categories:** the Category dropdown ends with "+ Create new category", which opens a modal (name required, no duplicates, max 40 characters) and selects the new category. A new category offers every predefined entity. In Edit entity the category can now be changed.
 
-**Fields** have a type (String, Integer, Decimal, Boolean, Date, Timestamp), shown in a Type column. "Add field" includes a type dropdown.
+**Fields** have a data type (`varchar`, `integer`, `float`, `double`), shown in a "Data Type" column (columns 176px / 120px / flexible / 80px, 24px gap). "Add field" and editing an existing field both include a data type dropdown. Older type names saved in a browser (String, Boolean, Decimal, Date, Timestamp…) are mapped to these by `normType()` in `data.ts`.
 
 **Files:** only `.txt` and `.md` are accepted. Text files opened from the wizard can be edited in the preview (Edit → Save changes). Closing or cancelling with unsaved edits asks "Discard unsaved changes?". Edited files show "Last edited <date, time> by <name>".
 

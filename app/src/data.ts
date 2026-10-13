@@ -118,15 +118,15 @@ export const SOURCES: Record<string, string[]> = {
 };
 
 const TABLE_FIELDS: Record<string, [string, string, string][]> = {
-  'ott_orders': [['order-id', 'String', 'Unique order identifier'], ['tilled_at', 'Timestamp', 'Timestamp the order was tilled'], ['on_time_flag', 'Boolean', '']],
-  'ott_oss_Entitys': [['late_count', 'Integer', 'Orders tilled after stage-by time'], ['missed_count', 'Integer', 'Orders never tilled']],
-  'coe-daily': [['store_id', 'String', 'Store number'], ['pick_rate', 'Decimal', 'Items picked per labor hour'], ['coe_score', 'Integer', '']],
-  'fa-flash': [['item_id', 'String', 'Item UPC'], ['flash_available', 'Boolean', '1 when the item can be flashed to customers'], ['updated_at', 'Timestamp', '']],
-  'oth_summary': [['store_id', 'String', 'Store number'], ['handoff_count', 'Integer', 'Orders handed off to customers'], ['avg_wait_min', 'Decimal', '']],
-  'order_events': [['event_id', 'String', 'Unique event identifier'], ['order-id', 'String', 'Unique order identifier'], ['event_type', 'String', '']],
-  'store_daily_kpis': [['store_id', 'String', 'Store number'], ['business_date', 'Date', 'Calendar day the KPIs cover'], ['orders_per_hour', 'Decimal', 'Orders completed per labor hour']],
-  'picking_sessions': [['session_id', 'String', 'Unique picking session identifier'], ['picker_id', 'String', 'Associate who ran the session'], ['session_minutes', 'Integer', '']],
-  'substitutions': [['order-id', 'String', 'Unique order identifier'], ['item_id', 'String', 'Original item UPC'], ['sub_accepted', 'Boolean', '']],
+  'ott_orders': [['order-id', 'varchar', 'Unique order identifier'], ['tilled_at', 'varchar', 'Timestamp the order was tilled'], ['on_time_flag', 'integer', '']],
+  'ott_oss_Entitys': [['late_count', 'integer', 'Orders tilled after stage-by time'], ['missed_count', 'integer', 'Orders never tilled']],
+  'coe-daily': [['store_id', 'varchar', 'Store number'], ['pick_rate', 'float', 'Items picked per labor hour'], ['coe_score', 'integer', '']],
+  'fa-flash': [['item_id', 'varchar', 'Item UPC'], ['flash_available', 'integer', '1 when the item can be flashed to customers'], ['updated_at', 'varchar', '']],
+  'oth_summary': [['store_id', 'varchar', 'Store number'], ['handoff_count', 'integer', 'Orders handed off to customers'], ['avg_wait_min', 'double', '']],
+  'order_events': [['event_id', 'varchar', 'Unique event identifier'], ['order-id', 'varchar', 'Unique order identifier'], ['event_type', 'varchar', '']],
+  'store_daily_kpis': [['store_id', 'varchar', 'Store number'], ['business_date', 'varchar', 'Calendar day the KPIs cover'], ['orders_per_hour', 'double', 'Orders completed per labor hour']],
+  'picking_sessions': [['session_id', 'varchar', 'Unique picking session identifier'], ['picker_id', 'varchar', 'Associate who ran the session'], ['session_minutes', 'integer', '']],
+  'substitutions': [['order-id', 'varchar', 'Unique order identifier'], ['item_id', 'varchar', 'Original item UPC'], ['sub_accepted', 'integer', '']],
 };
 
 /** Descriptions "Generate with AI" returns, and that seeded entities already have. */
@@ -143,7 +143,13 @@ export const AI_DESCRIPTIONS: Record<string, string> = {
 export const fieldsFor = (table: string, fill: boolean): Field[] =>
   (TABLE_FIELDS[table] || []).map(([name, type, desc]) => ({ name, type, desc: desc || (fill ? AI_DESCRIPTIONS[name] || '' : '') }));
 
-export const FIELD_TYPES = ['String', 'Integer', 'Decimal', 'Boolean', 'Date', 'Timestamp'];
+export const FIELD_TYPES = ['varchar', 'integer', 'float', 'double'];
+// Earlier versions used friendlier type names; data saved in a browser may still have them.
+const LEGACY_TYPES: Record<string, string> = { string: 'varchar', decimal: 'float', boolean: 'integer', date: 'varchar', timestamp: 'varchar' };
+export const normType = (t?: string) => {
+  const k = (t || '').toLowerCase();
+  return FIELD_TYPES.includes(k) ? k : LEGACY_TYPES[k] || 'varchar';
+};
 /** Shown in the Entity dropdown before a category is picked. */
 export const ALL_ENTITY_NAMES = Object.values(ENTITY_OPTIONS).flat();
 

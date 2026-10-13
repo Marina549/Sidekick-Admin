@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { AI_DESCRIPTIONS, FIELD_TYPES, cloneTables, type Table } from '../data';
+import { AI_DESCRIPTIONS, FIELD_TYPES, cloneTables, normType, type Table } from '../data';
 import { ImgIcon } from './Icon';
 import { Button } from './pds';
 import { Select } from './Select';
@@ -18,6 +18,7 @@ interface Props {
   emptyText?: string;
 }
 
+const typeOptions = FIELD_TYPES.map(t => ({ label: t, value: t }));
 const humanize = (n: string) => { const s = n.replace(/[_-]+/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
 
 /**
@@ -30,14 +31,14 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
   const [edit, setEdit] = useState<{ t: number; f: number } | null>(null);
   const [text, setText] = useState('');
   const [name, setName] = useState('');
-  const [type, setType] = useState('String');
+  const [type, setType] = useState('varchar');
   const [nameError, setNameError] = useState('');
   const [generating, setGenerating] = useState(false);
   const genTimer = useRef(0);
   useEffect(() => () => clearTimeout(genTimer.current), []);
 
-  const cancel = () => { clearTimeout(genTimer.current); setEdit(null); setText(''); setName(''); setType('String'); setGenerating(false); setNameError(''); };
-  const start = (t: number, f: number, initial = '') => { cancel(); setEdit({ t, f }); setText(initial); };
+  const cancel = () => { clearTimeout(genTimer.current); setEdit(null); setText(''); setName(''); setType('varchar'); setGenerating(false); setNameError(''); };
+  const start = (t: number, f: number, initial = '') => { cancel(); setEdit({ t, f }); setText(initial); setType(normType(tables[t].fields[f].type)); };
 
   const save = () => {
     if (!edit || !text.trim()) return;
@@ -50,6 +51,7 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
       onChange?.(next, { type: 'add', table: next[edit.t].name, field: n });
     } else {
       next[edit.t].fields[edit.f].desc = text.trim();
+      next[edit.t].fields[edit.f].type = type;
       onChange?.(next, { type: 'edit' });
     }
     cancel();
@@ -87,7 +89,7 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
     <div role="table" aria-label="Schema annotation" className="sk-schema" data-r="st-root">
       <div role="row" className="sk-schema__row sk-schema__head" data-r="st-hrow">
         <span role="columnheader">Field</span>
-        <span role="columnheader">Type</span>
+        <span role="columnheader">Data Type</span>
         <span role="columnheader">Description</span>
         <span />
       </div>
@@ -112,7 +114,9 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
                 return (
                   <div key={f.name} role="row" className="sk-schema__editor" data-r="st-edit">
                     <span role="cell" className="sk-schema__name" style={{ paddingTop: 8 }}>{f.name}</span>
-                    <span role="cell" className="sk-schema__type" style={{ paddingTop: 8 }}>{f.type || '—'}</span>
+                    <div role="cell" style={{ minWidth: 0 }}>
+                      <Select size="small" value={type} options={typeOptions} onChange={setType} ariaLabel={'Data type for ' + f.name} />
+                    </div>
                     <div role="cell" className="sk-schema__editor-cell">
                       <div className="sk-schema__editor-line">
                         <input type="text" className="sk-schema__input" aria-label={'Description for ' + f.name} value={text} onChange={e => setText(e.target.value)} onKeyDown={onKey} autoFocus disabled={generating} placeholder="Add description" />
@@ -127,7 +131,7 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
                 return (
                   <div key={f.name} role="row" className="sk-schema__row" data-r="st-row">
                     <span role="cell" className="sk-schema__name" data-r="st-name">{f.name}</span>
-                    <span role="cell" className="sk-schema__type" data-r="st-type">{f.type || '—'}</span>
+                    <span role="cell" className="sk-schema__type" data-r="st-type">{normType(f.type)}</span>
                     <div role="cell" data-r="st-desc" style={{ paddingRight: 16 }}>
                       <button type="button" className="sk-schema__add-desc" onClick={() => start(ti, fi, f.desc)} aria-label={'Add description for ' + f.name}>Add description</button>
                     </div>
@@ -140,12 +144,12 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
               return (
                 <div key={f.name} role="row" className="sk-schema__row" data-r="st-row">
                   <span role="cell" className="sk-schema__name" data-r="st-name">{f.name}</span>
-                  <span role="cell" className="sk-schema__type" data-r="st-type">{f.type || '—'}</span>
+                  <span role="cell" className="sk-schema__type" data-r="st-type">{normType(f.type)}</span>
                   <span role="cell" data-r="st-desc" style={{ paddingRight: 16 }}>{f.desc}</span>
                   <div className="sk-schema__actions" data-r="st-act">
                     {editable && (
                       <>
-                        <button type="button" className="sk-icon-btn sk-icon-btn--navy" aria-label={'Edit description for ' + f.name} onClick={() => start(ti, fi, f.desc)}><ImgIcon src="c/edit_outlined_16-navy.svg" size={16} /></button>
+                        <button type="button" className="sk-icon-btn sk-icon-btn--navy" aria-label={'Edit ' + f.name} onClick={() => start(ti, fi, f.desc)}><ImgIcon src="c/edit_outlined_16-navy.svg" size={16} /></button>
                         <button type="button" className="sk-icon-btn sk-icon-btn--navy" aria-label={'Delete field ' + f.name} onClick={() => del(ti, fi)}><ImgIcon src="c/trash_outlined_16-navy.svg" size={16} /></button>
                       </>
                     )}
@@ -154,13 +158,13 @@ export function SchemaTable({ tables, editable = false, onChange, emptyTitle = '
               );
             })}
             {adding && (
-              <div role="row" className="sk-schema__editor sk-schema__editor--new" data-r="st-edit">
-                <div role="cell" style={{ paddingRight: 16 }}>
+              <div role="row" className="sk-schema__editor" data-r="st-edit">
+                <div role="cell" style={{ minWidth: 0 }}>
                   <input type="text" className="sk-schema__input" style={{ width: '100%', maxWidth: 'none', minWidth: 0 }} aria-label="New field name" value={name} onChange={e => { setName(e.target.value); setNameError(''); }} onKeyDown={onKey} autoFocus placeholder="Field name" />
                   {nameError && <span style={{ display: 'block', fontSize: 12, lineHeight: '16px', color: '#B00000', paddingTop: 8 }}>{nameError}</span>}
                 </div>
-                <div role="cell" style={{ paddingRight: 16 }}>
-                  <Select size="small" value={type} options={FIELD_TYPES.map(t => ({ label: t, value: t }))} onChange={setType} ariaLabel="New field type" />
+                <div role="cell" style={{ minWidth: 0 }}>
+                  <Select size="small" value={type} options={typeOptions} onChange={setType} ariaLabel="New field data type" />
                 </div>
                 <div role="cell" className="sk-schema__editor-cell">
                   <div className="sk-schema__editor-line">
