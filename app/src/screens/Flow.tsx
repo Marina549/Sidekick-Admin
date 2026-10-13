@@ -43,6 +43,7 @@ export function Flow() {
 
   const nextDisabled = s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2) || (isRev && !revChanged));
   const onNext = () => {
+    set({ toast: null });
     if (s.step < 3) { set({ step: (s.step + 1) as Step }); window.scrollTo(0, 0); } else submit();
   };
 

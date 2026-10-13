@@ -1179,10 +1179,15 @@ const fieldCount = (tables) => tables.reduce((a, t) => a + t.fields.length, 0);
 const sizeText = (b) => b >= 1024 * 1024 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
 const ago = (ts) => { const m = Math.floor((Date.now() - ts) / 60000); if (m < 1) return 'Just now'; if (m < 60) return m + ' min ago'; const h = Math.floor(m / 60); return h + (h === 1 ? ' hour ago' : ' hours ago'); };
 
+const STORE_KEY = 'sidekick-admin-state-v1';
+function readStore() {
+  try { const raw = localStorage.getItem(STORE_KEY); if (!raw) return null; const o = JSON.parse(raw); if (!o || !Array.isArray(o.entities)) return null; const out = { entities: o.entities }; if (Array.isArray(o.notifications)) out.notifications = o.notifications; if (o.user && USERS[o.user]) out.user = o.user; if (Array.isArray(o.categories) && o.categories.length) out.categories = o.categories; return out; } catch (e) { return null; }
+}
 class Component extends DCLogic {
+  _saved = readStore();
   state = {
     user: 'priya', screen: 'home', navOpen: false, drawerOpen: false, fileMenu: null,
-    entities: [], notifications: [],
+    entities: (this._saved && this._saved.entities) || [], notifications: (this._saved && this._saved.notifications) || [],
     search: '', fCat: '', fStatus: '', fSrc: '', draftAt: 0, expanded: {},
     draft: null, step: 1, editId: null, editDraft: null, editOriginal: '', reviewId: null,
     bellOpen: false, userOpen: false,
@@ -1236,14 +1241,35 @@ class Component extends DCLogic {
     if (typeof ResizeObserver !== 'undefined') this._ro = new ResizeObserver(() => this.syncFoot());
     this.syncFoot();
     this._tick = setInterval(() => this.forceUpdate(), 30000);
-    this.setState({ ...this.navPatch(this.startKey()), ...(this.emptyDash() ? { entities: [] } : {}) });
+    this._empSeen = !!this.emptyDash(); this._mountedAt = Date.now();
+    const saved = this._saved || readStore();
+    this.setState({ ...this.navPatch(this.startKey()), ...(saved || (this.emptyDash() ? { entities: [] } : { entities: SEED_ALL })) });
+    this._storage = (e) => { if (e.key !== STORE_KEY) return; const o = readStore(); if (o) { this._pk = [o.entities, o.notifications || this.state.notifications, o.user || this.state.user, o.categories || this.state.categories]; this.setState(o); } };
+    window.addEventListener('storage', this._storage);
+  }
+  persist() {
+    const s = this.state;
+    try {
+      const strip = (e) => ({ ...e, files: (e.files || []).map(f => { const { url, ...rest } = f; return rest; }) });
+      if (!this._mountedAt) return;
+      localStorage.setItem(STORE_KEY, JSON.stringify({ entities: s.entities.map(strip), notifications: s.notifications, user: s.user, categories: s.categories }));
+    } catch (e) {}
   }
   componentDidUpdate(prev) {
     this.syncFoot();
-    if (prev.emptyDashboard !== this.props.emptyDashboard) this.setState({ entities: this.emptyDash() ? [] : SEED_ALL });
+    const st = this.state;
+    if (this._pk && (this._pk[0] !== st.entities || this._pk[1] !== st.notifications || this._pk[2] !== st.user || this._pk[3] !== st.categories)) this.persist();
+    this._pk = [st.entities, st.notifications, st.user, st.categories];
+    if (prev.emptyDashboard !== this.props.emptyDashboard && this.props.emptyDashboard !== undefined) {
+      const emp = !!this.props.emptyDashboard;
+      // Ignore prop values the host applies while loading; only a deliberate toggle replaces saved data.
+      if (emp !== this._empSeen && Date.now() - (this._mountedAt || 0) > 2000) this.setState({ entities: emp ? [] : SEED_ALL, notifications: [] });
+      this._empSeen = emp;
+    }
     if (prev.startScreen !== this.props.startScreen || prev.sampleFiles !== this.props.sampleFiles) this.setState(this.navPatch(this.startKey()));
   }
   componentWillUnmount() {
+    if (this._storage) window.removeEventListener('storage', this._storage);
     document.removeEventListener('mousedown', this._doc);
     document.removeEventListener('keydown', this._key);
     window.removeEventListener('resize', this._rs);
@@ -1866,7 +1892,7 @@ class Component extends DCLogic {
       fbStatus: revChanged ? 'You’ve made changes. Submit for review when you’re ready.' : 'Make the requested changes in any step, then submit for review. You can return to Review & submit at any time.', draftSaveDisabled: s.submitting || isDraftEmpty, saveDraft: () => this.saveDraft(),
       nextDisabled: s.submitting || (s.step === 1 ? !!m1 : s.step === 2 ? !!m2 : !!(m1 || m2) || (isRev && !revChanged)),
       nextLabel: s.step === 3 ? (s.submitting ? 'Submitting…' : isRev ? 'Submit' : 'Submit') : 'Next',
-      onNext: () => { if (s.step < 3) { this.setState({ step: s.step + 1, uploadError: '' }); window.scrollTo(0, 0); } else this.submit(); },
+      onNext: () => { clearTimeout(this._toastT); if (this.state.toast) this.setState({ toast: null }); if (s.step < 3) { this.setState({ step: s.step + 1, uploadError: '' }); window.scrollTo(0, 0); } else this.submit(); },
       backToDashboard: () => {
         this.go('dashboard', isEdit ? { editDraft: null, editId: null } : {});
       },

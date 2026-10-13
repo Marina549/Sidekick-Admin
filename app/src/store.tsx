@@ -67,12 +67,50 @@ export interface State {
   toast: { message: string; tone: ToastTone; actions: ToastAction[] } | null;
 }
 
-// The design opens on an empty Entity dashboard. Add ?sample to the URL to start with example entities.
-const withSamples = typeof location !== 'undefined' && new URLSearchParams(location.search).has('sample');
+// Entities, notifications, the signed-in user and categories persist in this browser (and sync across tabs).
+const STORE_KEY = 'sidekick-admin-state-v1';
+type Saved = Pick<State, 'entities'> & Partial<Pick<State, 'notifications' | 'user' | 'categories'>>;
+
+function readStore(): Saved | null {
+  try {
+    const o = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    if (!o || !Array.isArray(o.entities)) return null;
+    const out: Saved = { entities: o.entities };
+    if (Array.isArray(o.notifications)) out.notifications = o.notifications;
+    if (o.user && o.user in USERS) out.user = o.user;
+    if (Array.isArray(o.categories) && o.categories.length) out.categories = o.categories;
+    return out;
+  } catch {
+    return null;
+  }
+}
+
+function writeStore(s: State) {
+  // Object URLs of uploaded files don't survive a reload, so only the text content is kept.
+  const entities = s.entities.map(e => ({ ...e, files: e.files.map(({ url: _url, ...rest }) => rest) }));
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({ entities, notifications: s.notifications, user: s.user, categories: s.categories }));
+  } catch { /* storage full or disabled: keep working in memory */ }
+}
+
+/**
+ * The design opens on an empty Entity dashboard, or on what was saved last time.
+ * ?sample replaces that with example entities; the parameter is then dropped so a reload keeps your changes.
+ */
+function startingData(): Saved {
+  const params = new URLSearchParams(location.search);
+  if (params.has('sample')) {
+    params.delete('sample');
+    const q = params.toString();
+    history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+    return { entities: SEED_ENTITIES, notifications: [] };
+  }
+  return readStore() || { entities: [] };
+}
 
 const initialState: State = {
   user: 'priya', screen: 'dashboard', navOpen: false,
-  entities: withSamples ? SEED_ENTITIES : [], notifications: [],
+  entities: [], notifications: [],
   search: '', fCat: '', fStatus: '', fSrc: '', expanded: {},
   categories: [...CATEGORIES], newCat: null, deleting: null,
   draft: null, draftId: null, draftBase: '', step: 1, submitting: false,
@@ -87,7 +125,7 @@ const initialState: State = {
 type Patch = Partial<State> | ((s: State) => Partial<State> | null);
 
 function useAdminStore() {
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState<State>(() => ({ ...initialState, ...startingData() }));
   const ref = useRef(state);
   ref.current = state;
   const [now, setNow] = useState(() => Date.now());
@@ -454,16 +492,26 @@ function useAdminStore() {
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
     const tick = window.setInterval(() => setNow(Date.now()), 30000);
+    // Another tab saved changes: pick them up.
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== STORE_KEY) return;
+      const o = readStore();
+      if (o) set(o);
+    };
+    window.addEventListener('storage', onStorage);
     const t = timers.current;
     return () => {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('storage', onStorage);
       clearInterval(tick);
       clearTimeout(t.toast);
       Object.values(t.uploads).forEach(clearInterval);
     };
   }, []);
+
+  useEffect(() => { writeStore(state); }, [state.entities, state.notifications, state.user, state.categories]);
 
   return {
     s: state, me, now, set, go, toast,

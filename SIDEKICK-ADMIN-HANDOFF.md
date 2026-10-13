@@ -6,7 +6,7 @@ Read this file first. It describes a working React implementation of the **Sidek
 
 Sidekick Admin is an internal tool for managing the "entities" Sidekick can answer questions about. An entity is a category, a data source, its tables and field descriptions, and supporting files (prompts, KB articles, thresholds, evals, Markdown context). New entities and edits go through an approval workflow.
 
-- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_1.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
+- **Design source:** `project/Sidekick Admin.dc.html` (Claude Design prototype; latest revision from `Sidekick Admin-handoff_2.zip`). The earlier design history is in `chats/chat1.md` to `chats/chat3.md`; the latest revision came without chats.
 - **Implementation:** `app/`, which is React 19, Vite 8 and TypeScript 5.9. There's no backend: state lives in memory and uploads are simulated.
 
 ## Run it
@@ -18,7 +18,9 @@ npm run dev      # http://localhost:5173
 npm run build    # tsc -b && vite build; must pass with no errors
 ```
 
-The app opens on an **empty Entity dashboard**, as in the design. Add `?sample` to the URL (e.g. `http://localhost:5173/?sample`) to start with example entities and the "Late order recovery" draft.
+The app opens on an **empty Entity dashboard**, as in the design, or on whatever was saved last time: entities, notifications, the signed-in user and categories persist in the browser's `localStorage` (key `sidekick-admin-state-v1`) and sync across open tabs. An open wizard is not saved; leaving it saves a draft as usual. Uploaded files keep their text content but not their original binary.
+
+Add `?sample` to the URL (e.g. `http://localhost:5173/?sample`) to **replace** the saved data with example entities and the "Late order recovery" draft; the parameter is then removed from the address bar so a reload keeps your changes. To start completely fresh, clear the site's storage in the browser.
 
 Live demo (GitHub Pages, redeployed on every push to `main`): https://marina549.github.io/Sidekick-Admin-repo/
 
@@ -109,7 +111,7 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
 **Edit entity:** Data & schema only (Category can be changed). Save stays disabled until something changes. Saving sends the entity back to Pending review (the button reads "Resubmit for review" if changes were requested).
 
-**Toasts:** Pantry toasts close after 5 seconds, or 8 seconds when they have an action. Deleting a field shows a toast with Undo.
+**Toasts:** Pantry toasts close after 5 seconds, or 8 seconds when they have an action, and Next/Submit dismisses any open toast. Deleting a field shows a toast with Undo.
 
 **Escape** closes, in order: the drawer, the file "⋯" menu, the Discard modal, the Create category modal, the Delete modal, the Remove modal, the Preview (asking first if there are unsaved edits), the Request changes modal, then the popovers.
 
@@ -129,7 +131,7 @@ Static assets (logo, illustrations, icons) are in `app/public/assets/`.
 
 ## Known gaps and decisions
 
-- There is no backend or persistence. To wire up an API, replace the actions in `store.tsx` (`submit`, `saveEdit`, `decide`, `addFiles`/`startUpload`, `confirmRemove`).
+- There is no backend; persistence is per-browser `localStorage` only. To wire up an API, replace the actions in `store.tsx` (`submit`, `saveEdit`, `decide`, `addFiles`/`startUpload`, `confirmRemove`).
 - Trace Tool and Evaluation (Home cards and nav items) aren't built.
 - Changes made relative to the prototype:
   - "No data sources selected" only shows when no source is picked. In the prototype it always showed.
